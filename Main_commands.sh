@@ -31,8 +31,8 @@ category1 = data.frame() ## [0.0001,0.001)
 category2 = data.frame() ## [0.001,0.01)
 category3 = data.frame() ## [0.01,0.05)
 category4 = data.frame() ## [0.05]
-for(i in 1:14) {
-	tmp = fread(paste0("freeze10.14k.chr",${i}+8,".afreq"))
+for(i in 1:22) {
+	tmp = fread(paste0("freeze10.14k.chr",i,".afreq"))
 	tmp = tmp[which(tmp$ALT_FREQS >= 0.0001),]
 	tmp1 = tmp[which(tmp$ALT_FREQS >= 0.0001 & tmp$ALT_FREQS < 0.001),]
 	category1 = rbind(category1,tmp1)
@@ -49,6 +49,33 @@ for(i in 1:14) {
 	}
 
 save(category1,category2,category3,category4,file="allele_frequence_cutoff_4cat_09132022.rda")
+
+write.table(category1,file="category1_0.0001_0.001.csv",row.names=F,col.names=T,sep="\t",dec=".",quote=F)
+write.table(category2,file="category2_0.001_0.01.csv",row.names=F,col.names=T,sep="\t",dec=".",quote=F)
+write.table(category3,file="category3_0.01_0.05.csv",row.names=F,col.names=T,sep="\t",dec=".",quote=F)
+write.table(category4,file="category4_0.05.csv",row.names=F,col.names=T,sep="\t",dec=".",quote=F)
+
+## Category 1
+
+for i in  {1..22} ; do 
+plink2 --bfile plink_format/freeze10.14k.chr${i}.0.0001 --extract subset_for_h2_calc/category1_0.0001_0.001/category1_0.0001_0.001.csv --make-bed --out subset_for_h2_calc/category1_0.0001_0.001/category1_chr${i}  ; 
+done
+
+## Category 2
+for i in  {1..22} ; do 
+plink2 --bfile plink_format/freeze10.14k.chr${i}.0.0001 --extract subset_for_h2_calc/category2_0.001_0.01/category2_0.001_0.01.csv --make-bed --out subset_for_h2_calc/category2_0.001_0.01/category2_chr${i}  ; 
+done
+
+##Category3	
+for i in  {1..22} ; do 
+plink2 --bfile plink_format/freeze10.14k.chr${i}.0.0001 --extract subset_for_h2_calc/category3_0.01_0.05/category3_0.01_0.05.csv --make-bed --out subset_for_h2_calc/category3_0.01_0.05/category3_chr${i}  ; 
+done
+
+##Category4
+for i in  {1..22} ; do 
+plink2 --bfile plink_format/freeze10.14k.chr${i}.0.0001 --extract subset_for_h2_calc/category4_0.05/category4_0.05.csv --make-bed --out subset_for_h2_calc/category4_0.05/category4_chr${i}  ; 
+done
+
 
 
 ###### Merge BEDs ######
