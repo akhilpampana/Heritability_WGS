@@ -155,38 +155,14 @@ plink --bfile cat4_chr_all --extract cat4.prune.in --make-bed --out cat4_chr_all
 ### LD score calculation
 /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile cat4_chr_all_hqp  
 
-###### Merge BEDs ###### skip already done above
-#${list_beds} contains the list of the autosomes (excepted chr 1) for merging
-
-plink \
-	--bfile ${BED_file_merged} \
-	--merge-list ${list_beds} \
-	--make-bed \
-	--maf 0.0001 \
-	--geno 0.05  \
-	--hwe 0.000001 \
-	--mind 0.05 \
-	--out ${BED_file_merged_QC} \
-	--threads ${ncpu}
-
-
-###### PRS ###### Not using skip
-#Simple PRS as a cohort QC check
-#${scoreSNP} contains the effect sizes of the SNPs selected to construct the PRS
-
-#plink \
-#	--bfile ${BED_file_merged} \
-#	--threads ${ncpu}  \
-#	--score ${scoreSNP} \
-#	--out P
-
 
 ###### Computing IBD ######
 #Computing IBD segments. For computational reasons, it is recomended to prune/select common SNPs for faster runtime.
 module load KING/2.1.2-foss-2016a
 
-king -b cat4_chr_all_hqp.bed --ibdseg --prefix cat4_chr_all_hqp --cpus 4 --seglength 3
 king -b ../category3_0.01_0.05/cat3_chr_all_hqp.bed --ibdseg --prefix ../category3_0.01_0.05/cat3_chr_all_hqp --cpus 4 --seglength 3
+king -b cat4_chr_all_hqp.bed --ibdseg --prefix cat4_chr_all_hqp --cpus 4 --seglength 3
+
 
 king -b ${BED_file_merged_QC}.bed  \
 	--ibdseg \
@@ -199,7 +175,42 @@ king -b ${BED_file_merged_QC}.bed  \
 #Construct a GRM, extracting a list of variants (see 01_LD_bins.R to create LD bins from a bed of a MAF range)
 #GRM constructed by part (one part computed per script on an array job)
 
+
+### task array category 1 - script in server
+softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1  \
+--bfile heritability/subset_for_h2_calc/category2_0.001_0.01/cat2_chr_all_hqp \
+--extract subset_for_h2_calc/category2_0.001_0.01/parts/cat2_chr${SLURM_ARRAY_TASK_ID}_hqp.bim \
+--make-grm\
+--out subset_for_h2_calc/category2_0.001_0.01/cat2_chr${SLURM_ARRAY_TASK_ID}_hqp
+--make-grm-alg 1 \
+
+
+### task array category 2 - script in server
+#category2_0.001_0.01/parts/
+## subset in r
+require(data.table)
+data = fread("cat2_chr_all_hqp.bim")
+for(i in 1:22){
+	data1 = data[which(data$V1 == i),]
+	write.table(data1[,"V2"],file=paste0("cat2_chr",i,"_hqp.bim"),sep="\t",col.names=F,dec=".",quote=F,row.names=F)
+	}
+
+softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 \
+--bfile heritability/subset_for_h2_calc/category2_0.001_0.01/cat2_chr_all_hqp \
+--extract subset_for_h2_calc/category2_0.001_0.01/parts/cat2_chr${SLURM_ARRAY_TASK_ID}_hqp.bim \
+--make-grm \
+--out subset_for_h2_calc/category2_0.001_0.01/cat2_chr${SLURM_ARRAY_TASK_ID}_hqp \
+--make-grm-alg 1
+
+#Merge all GRM parts together
+
+cat cat2_chr*_hqp.grm.id > cat2_hqp.grm.id
+cat cat2_chr*_hqp.grm.bin > cat2_hqp.grm.bin
+cat cat2_chr*_hqp.grm.N.bin >  cat2_hqp.grm.N.bin
+
+## Cat3
 gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile cat3_chr_all_hqp --make-grm-alg 1 --thread-num 4 --out test
+## Cat4
 gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile cat4_chr_all_hqp --make-grm-alg 1 --thread-num 4 --out test
 
 
@@ -261,6 +272,16 @@ GCTA \
 	--out ${PCA_out}
 
 
+##cat1
+../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm category1_0.0001_0.001/test --pca 20 --threads 10 --out category1_0.0001_0.001/test
+##cat2
+../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm category2_0.001_0.01/cat2_hqp --pca 20 --threads 10 --out category2_0.001_0.01/test
+##cat3
+../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1  --grm test --pca 20 --threads 10 --out test
+##cat4
+../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm test --pca 20 --threads 10 --out test
+
+
 plink2 \
 	--bfile ${BED_file_merged_QC} \
 	--extract ${list_variants_bin} \
@@ -283,7 +304,13 @@ GCTA \
 	--qcovar ${PCA_out} \
 	--reml-no-lrt
 
+### cat 1
 
+### cat 2
 
+### cat 3
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm test --reml-no-constrain --pheno phenotypes/Combined_4cohorts_NTproBNP_08222022.phen --qcovar category3_0.01_0.05/test.eigenvec --out test --thread-num 10 --reml-no-lrt
+### cat 4
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm test --reml-no-constrain --pheno phenotypes/Combined_4cohorts_NTproBNP_08222022.phen --qcovar category4_0.05/test.eigenvec --out test --thread-num 10 --reml-no-lrt
 
 
