@@ -61,24 +61,99 @@ for i in  {1..22} ; do
 plink2 --bfile plink_format/freeze10.14k.chr${i}.0.0001 --extract subset_for_h2_calc/category1_0.0001_0.001/category1_0.0001_0.001.csv --make-bed --out subset_for_h2_calc/category1_0.0001_0.001/category1_chr${i}  ; 
 done
 
+module load PLINK
+cd subset_for_h2_calc/category1_0.0001_0.001/
+for i in {1..22}; do
+plink2 --bfile category1_chr${i} --set-all-var-ids @:#:'$r':'$a'  --new-id-max-allele-len 1000 --max-alleles 2 --make-bed --out cat1_chr${i}
+done
+
+ls -l | grep cat1 | grep bed | awk ' { print $9 } ' | sed 's|.bed||g' > merge
+module load PLINK/1.90-foss-2016a
+plink --bfile cat1_chr1 --merge-list merge --make-bed --out cat1_chr_all
+
+### Prunning to generate high quality variants
+for i in {1..22}; do
+plink --bfile cat1_chr${i} --indep-pairwise 50 5 0.1 --out cat1_${i}
+done
+
+## subset to prunned variants
+for i in {1..22}; do
+plink --bfile cat1_chr${i} --extract cat1_${i}.prune.in --make-bed --out cat1_chr${i}_hqp
+done
+
+
+ls -l | grep hqp | grep bed | awk ' { print $9 } ' | sed 's|.bed||g' > merge
+module load PLINK/1.90-foss-2016a
+plink --bfile cat1_chr1_hqp --merge-list merge --make-bed --out cat1_chr_all_hqp
+
+
+
 ## Category 2
+
 for i in  {1..22} ; do 
 plink2 --bfile plink_format/freeze10.14k.chr${i}.0.0001 --extract subset_for_h2_calc/category2_0.001_0.01/category2_0.001_0.01.csv --make-bed --out subset_for_h2_calc/category2_0.001_0.01/category2_chr${i}  ; 
 done
 
-##Category3	
+module load PLINK
+cd subset_for_h2_calc/category2_0.001_0.01/
+for i in {1..22}; do
+plink2 --bfile category2_chr${i} --set-all-var-ids @:#:'$r':'$a'  --new-id-max-allele-len 1000 --max-alleles 2 --make-bed --out cat2_chr${i}
+done
+
+ls -l | grep cat2 | grep bed | awk ' { print $9 } ' | sed 's|.bed||g' > merge
+module load PLINK/1.90-foss-2016a
+plink --bfile cat2_chr1 --merge-list merge --make-bed --out cat2_chr_all
+
+### Prunning to generate high quality variants
+plink --bfile cat2_chr_all --indep-pairwise 50 5 0.1 --out cat2
+
+## subset to prunned variants
+plink --bfile cat2_chr_all --extract cat2.prune.in --make-bed --out cat2_chr_all_hqp
+
+### Category 3	
 for i in  {1..22} ; do 
 plink2 --bfile plink_format/freeze10.14k.chr${i}.0.0001 --extract subset_for_h2_calc/category3_0.01_0.05/category3_0.01_0.05.csv --make-bed --out subset_for_h2_calc/category3_0.01_0.05/category3_chr${i}  ; 
 done
 
-##Category4
+module load PLINK
+cd subset_for_h2_calc/category3_0.01_0.05/
+for i in {1..22}; do
+plink2 --bfile category3_chr${i} --set-all-var-ids @:#:'$r':'$a'  --new-id-max-allele-len 1000 --max-alleles 2 --make-bed --out cat3_chr${i}
+done
+
+ls -l | grep cat3 | grep bed | awk ' { print $9 } ' | sed 's|.bed||g' > merge
+module load PLINK/1.90-foss-2016a
+plink --bfile cat3_chr1 --merge-list merge --make-bed --out cat3_chr_all
+
+### Prunning to generate high quality variants
+plink --bfile cat3_chr_all --indep-pairwise 50 5 0.1 --out cat3
+
+## subset to prunned variants
+plink --bfile cat3_chr_all --extract cat3.prune.in --make-bed --out cat3_chr_all_hqp
+
+### Category 4
 for i in  {1..22} ; do 
 plink2 --bfile plink_format/freeze10.14k.chr${i}.0.0001 --extract subset_for_h2_calc/category4_0.05/category4_0.05.csv --make-bed --out subset_for_h2_calc/category4_0.05/category4_chr${i}  ; 
 done
 
+cd subset_for_h2_calc/category4_0.05/
+for i in {1..22}; do
+plink2 --bfile category4_chr${i} --set-all-var-ids @:#:'$r':'$a'  --new-id-max-allele-len 1000 --max-alleles 2 --make-bed --out cat4_chr${i}
+done
+
+ls -l | grep bed | awk ' { print $9 } ' | sed 's|.bed||g' > merge
+module load PLINK/1.90-foss-2016a
+plink --bfile cat4_chr1 --merge-list merge --make-bed --out cat4_chr_all
+
+### Prunning to generate high quality variants
+plink --bfile cat4_chr_all --indep-pairwise 50 5 0.1 --out cat4
 
 
-###### Merge BEDs ######
+## subset to prunned variants
+plink --bfile cat4_chr_all --extract cat4.prune.in --make-bed --out cat4_chr_all_hqp
+
+
+###### Merge BEDs ###### skip already done above
 #${list_beds} contains the list of the autosomes (excepted chr 1) for merging
 
 plink \
@@ -93,19 +168,23 @@ plink \
 	--threads ${ncpu}
 
 
-###### PRS ######
+###### PRS ###### Not using skip
 #Simple PRS as a cohort QC check
 #${scoreSNP} contains the effect sizes of the SNPs selected to construct the PRS
 
-plink \
-	--bfile ${BED_file_merged} \
-	--threads ${ncpu}  \
-	--score ${scoreSNP} \
-	--out P
+#plink \
+#	--bfile ${BED_file_merged} \
+#	--threads ${ncpu}  \
+#	--score ${scoreSNP} \
+#	--out P
 
 
 ###### Computing IBD ######
 #Computing IBD segments. For computational reasons, it is recomended to prune/select common SNPs for faster runtime.
+module load KING/2.1.2-foss-2016a
+
+king -b cat4_chr_all_hqp.bed --ibdseg --prefix cat4_chr_all_hqp --cpus 4 --seglength 3
+king -b ../category3_0.01_0.05/cat3_chr_all_hqp.bed --ibdseg --prefix ../category3_0.01_0.05/cat3_chr_all_hqp --cpus 4 --seglength 3
 
 king -b ${BED_file_merged_QC}.bed  \
 	--ibdseg \
