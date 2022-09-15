@@ -152,6 +152,8 @@ plink --bfile cat4_chr_all --indep-pairwise 50 5 0.1 --out cat4
 ## subset to prunned variants
 plink --bfile cat4_chr_all --extract cat4.prune.in --make-bed --out cat4_chr_all_hqp
 
+### LD score calculation
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile cat4_chr_all_hqp  
 
 ###### Merge BEDs ###### skip already done above
 #${list_beds} contains the list of the autosomes (excepted chr 1) for merging
@@ -197,14 +199,9 @@ king -b ${BED_file_merged_QC}.bed  \
 #Construct a GRM, extracting a list of variants (see 01_LD_bins.R to create LD bins from a bed of a MAF range)
 #GRM constructed by part (one part computed per script on an array job)
 
-i={1..99}
-GCTA \
-	--bfile ${BED_file_merged_QC} \
-	--extract ${list_variants_LD_bin} \
-	--make-grm-part 99 "$i" \
-	--thread-num ${ncpu} \
-	--out ${GRM_out} \
-	--make-grm-alg 1
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile cat3_chr_all_hqp --make-grm-alg 1 --thread-num 4 --out test
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile cat4_chr_all_hqp --make-grm-alg 1 --thread-num 4 --out test
+
 
 
 #Merge all GRM parts together
