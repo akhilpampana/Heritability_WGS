@@ -55,7 +55,7 @@ write.table(category2,file="category2_0.001_0.01.csv",row.names=F,col.names=T,se
 write.table(category3,file="category3_0.01_0.05.csv",row.names=F,col.names=T,sep="\t",dec=".",quote=F)
 write.table(category4,file="category4_0.05.csv",row.names=F,col.names=T,sep="\t",dec=".",quote=F)
 
-## Category 1
+## Category 1 ##merge not working 
 
 for i in  {1..22} ; do 
 plink2 --bfile plink_format/freeze10.14k.chr${i}.0.0001 --extract subset_for_h2_calc/category1_0.0001_0.001/category1_0.0001_0.001.csv --make-bed --out subset_for_h2_calc/category1_0.0001_0.001/category1_chr${i}  ; 
