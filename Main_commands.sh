@@ -11,7 +11,6 @@ sample_list="/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/phen
 
 ###### Create BED files and perform first filtering on SVM variants and other QC metrics
 
-
 for i in  {1..22} ; do
     	bcftools view -m2 -M2  -Ou  -i'FILTER="PASS"' --threads "$ncpu" -S "$sample_list" --force-samples /data/project/Arora_lab/akhil/TOPMED/COMPLETE/GENOTYPES/freeze.10a.chr"$i".pass_only.gtonly.minDP10.vcf.gz | 
 	bcftools  annotate --threads "$ncpu" -Ob -I +'%CHROM:%POS:%REF:%ALT' > /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/gwas/heritability/freeze10.14k.chr"$i".pass.bcf ;
@@ -23,16 +22,27 @@ for i in {1..22}; do
 plink2 --bfile freeze10.14k.chr${i}.0.0001 --freq --out freeze10.14k.chr${i}
 done
 
-### prunning overall
+### Subset variants as per freeze10 pca's generation encore
+module load PLINK
+for i in {1..22}; do
+plink2 --bfile originial/freeze10.14k.chr${i}.0.0001 --extract variants to filter to --make-bed  --out plink_format/prunned_list_included_in_encore_pcs_generation/freeze10.14k.chr${i}.pruned
+done
+
+module load PLINK
+for i in {1..22}; do
+plink2 --bfile freeze10.14k.chr${i}.pruned --set-all-var-ids @:#:'$r':'$a'  --new-id-max-allele-len 1000 --max-alleles 2 --make-bed --out freeze10.14k.chr${i}.pruned
+done
+
+ls -l | grep bed | awk ' { print $9 } ' | sed 's|.bed||g' > merge
 module load PLINK/1.90-foss-2016a
-for i in {1..22}; do
-plink --bfile freeze10.14k.chr${i}.0.0001 --indep-pairwise 50 5 0.1 --out freeze10.14k.chr${i}
-done
+plink --bfile freeze10.14k.chr1.pruned --merge-list merge --make-bed --out freeze10.14k.hqp_encore
 
-for i in {1..22}; do
-plink2 --bfile freeze10.14k.chr${i}.0.0001 --extract freeze10.14k.chr${i}.prune.in --make-bed  --out freeze10.14k.chr${i}.pruned
-done
+module load KING/2.1.2-foss-2016a
+#king -b freeze10.14k.hqp_encore.bed --unrelated --degree 2
+king -b freeze10.14k.hqp_encore.bed --kinship    
 
+
+### plink to gds conversion to run king using genesis package in r
 
 
 for i in {1..22}; do
