@@ -221,7 +221,7 @@ plink --bfile category4_0.05/cat4_chr_all_hqp --keep /data/project/Arora_lab/akh
 ### LD score calculation
 ../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1  --bfile cat4_chr_all_hqp_unrel --ld-score-region 200 --out chr_all_unrel --thread-num 100
 
-### Categories based on quartiles as suggested in the paper
+### Categories based on quartiles as suggested in the paper  ## remove monomorphic variants before cuting to snps based on quartiles
 
 ###############################################################################################################################################################
 # 							 		GRM CREATION						       			      #
@@ -373,7 +373,7 @@ done
 
 module load PLINK/1.90-foss-2016a
 for i in {1..22}; do
-plink2 --bfile ../../heritability/plink_format/originial/freeze10.14k.chr${i}.0.0001_var --clump ../../gwas_orginal/GWAS_NTproBNP_updated_14k.txt.gz  --clump-p1 5e-9	 --clump-p2 0.01   --clump-r2 0.60 --clump-kb 250  --out conditional_analysis/snps_for_conditioning/freeze10.14k.chr${i}.0.0001
+plink --bfile ../../heritability/plink_format/originial/freeze10.14k.chr${i}.0.0001_var --clump overall_gwas_09162022.csv  --clump-p1 5e-9	 --clump-p2 0.01   --clump-r2 0.60 --clump-kb 250  --out conditional_analysis/snps_for_conditioning/freeze10.14k.chr${i}.0.0001
 done
 
 
