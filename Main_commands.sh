@@ -86,7 +86,8 @@ ls -l | grep hqp | grep bed | awk ' { print $9 } ' | sed 's|.bed||g' > merge
 module load PLINK/1.90-foss-2016a
 plink --bfile cat1_chr1_hqp --merge-list merge --make-bed --out cat1_chr_all_hqp
 
-
+## LD score calculation
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile cat3_chr_all_hqp --ld-score-region 200 --out test --thread-num 100
 
 ## Category 2
 
@@ -110,6 +111,9 @@ plink --bfile cat2_chr_all --indep-pairwise 50 5 0.1 --out cat2
 ## subset to prunned variants
 plink --bfile cat2_chr_all --extract cat2.prune.in --make-bed --out cat2_chr_all_hqp
 
+## LD score calculation
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile cat3_chr_all_hqp --ld-score-region 200 --out test --thread-num 100
+
 ### Category 3	
 for i in  {1..22} ; do 
 plink2 --bfile plink_format/freeze10.14k.chr${i}.0.0001 --extract subset_for_h2_calc/category3_0.01_0.05/category3_0.01_0.05.csv --make-bed --out subset_for_h2_calc/category3_0.01_0.05/category3_chr${i}  ; 
@@ -130,6 +134,9 @@ plink --bfile cat3_chr_all --indep-pairwise 50 5 0.1 --out cat3
 
 ## subset to prunned variants
 plink --bfile cat3_chr_all --extract cat3.prune.in --make-bed --out cat3_chr_all_hqp
+
+## LD score calculation
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile cat3_chr_all_hqp --ld-score-region 200 --out test --thread-num 100
 
 ### Category 4
 for i in  {1..22} ; do 
@@ -153,7 +160,8 @@ plink --bfile cat4_chr_all --indep-pairwise 50 5 0.1 --out cat4
 plink --bfile cat4_chr_all --extract cat4.prune.in --make-bed --out cat4_chr_all_hqp
 
 ### LD score calculation
-/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile cat4_chr_all_hqp  
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile cat4_chr_all_hqp --ld-score-region 200 --out test1 --thread-num 100
+
 
 
 ###### Computing IBD ######
@@ -217,10 +225,14 @@ gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile cat4_chr_all_hqp --make-gr
 
 #Merge all GRM parts together
 
+cat cat2_chr*_hqp.grm.id   > test.grm.id
+cat cat2_chr*_hqp.grm.bin > test.grm.bin
+cat cat2_chr*_hqp.grm.N.bin > test.grm.N.bin
+
+
 cat ${GRM_out}.part_99_*.grm.id > ${GRM_out}.grm.id
 cat ${GRM_out}.part_99_*.grm.bin > ${GRM_out}.grm.bin
 cat ${GRM_out}.part_99_*.grm.N.bin > ${GRM_out}.grm.N.bin
-
 
 ###### Extract unrelated samples ######
 #Here we keep a relatedness threshold of 0.05
@@ -231,10 +243,13 @@ GCTA \
 	--make-grm \
 	--out ${GRM_out}_unrelated
 
+for i in {1..22}; do
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm  cat2_chr${i}_hqp --grm-cutoff 0.05 --make-grm --out category4_0.05/cat2_chr${i}_hqp_unrelated
+done
 
 ###### Create a file containing multiple GRMs in a directory (need full path) ######
 
-for i in *.grm.bin ; do readlink -f "$i"  | cut -d'.' -f1-2 >>  ${mgrm_file_path}; done
+for i in *unrelated.grm.bin ; do readlink -f "$i"  | cut -d'.' -f1-2 >>  path; done
 
 
 ###### Filter variants wihin a MAF range ######
@@ -293,6 +308,9 @@ plink2 \
 ###### REML ######
 #Run unconstrained REML from multiple GRMs (for GREML-LDMS), fitting PCs as quantitative covariates
 #REML-no-lrt doesn't calculate the reduced model
+
+## phenotype subset 6 different phenotypes
+cat phenotypes/Combined_4cohorts_NTproBNP_08222022.tsv | awk ' { print 0,"\t",$1,"\t" $10 } ' > phenotypes/Combined_4cohorts_NTproBNP_08222022.phen
 
 GCTA \
 	--reml \
