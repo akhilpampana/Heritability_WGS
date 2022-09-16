@@ -23,8 +23,21 @@ for i in {1..22}; do
 plink2 --bfile freeze10.14k.chr${i}.0.0001 --freq --out freeze10.14k.chr${i}
 done
 
+### prunning overall
+module load PLINK/1.90-foss-2016a
+for i in {1..22}; do
+plink --bfile freeze10.14k.chr${i}.0.0001 --indep-pairwise 50 5 0.1 --out freeze10.14k.chr${i}
+done
 
-### Subset Variants to 4 bins [0.05],[0.01,0.05),[0.001,0.01),[0.0001,0.001)
+for i in {1..22}; do
+plink2 --bfile freeze10.14k.chr${i}.0.0001 --extract freeze10.14k.chr${i}.prune.in --make-bed  --out freeze10.14k.chr${i}.pruned
+done
+
+
+
+for i in {1..22}; do
+plink --bfile freeze10.14k.chr${i}.0.0001 --indep-pairwise 50 5 0.1 --out freeze10.14k.chr${i}
+done### Subset Variants to 4 bins [0.05],[0.01,0.05),[0.001,0.01),[0.0001,0.001)
 #module load R => R
 require(data.table)
 category1 = data.frame() ## [0.0001,0.001)
@@ -244,7 +257,7 @@ GCTA \
 	--out ${GRM_out}_unrelated
 
 for i in {1..22}; do
-/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm  cat2_chr${i}_hqp --grm-cutoff 0.05 --make-grm --out category4_0.05/cat2_chr${i}_hqp_unrelated
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm  cat2_chr${i}_hqp --grm-cutoff 0.05 --make-grm --out category4_0.05/cat2_chr${i}_hqp_unrelated
 done
 
 ###### Create a file containing multiple GRMs in a directory (need full path) ######
