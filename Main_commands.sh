@@ -159,7 +159,7 @@ plink --bfile category2_0.001_0.01/cat2_chr_all_hqp --keep /data/project/Arora_l
 
 
 ## LD score calculation
-gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile cat3_chr_all_hqp --ld-score-region 200 --out test --thread-num 100
+../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1  --bfile cat2_chr_all_hqp_unrel --ld-score-region 200 --out cat2_chr_all_hqp_unrel --thread-num 100
 
 ###############################################################################################################################################################
 # 							   category3 - [0.01,0.05)						       			      #
@@ -189,7 +189,7 @@ plink --bfile category3_0.01_0.05/cat3_chr_all_hqp --keep /data/project/Arora_la
 
 
 ## LD score calculation
-gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile cat3_chr_all_hqp --ld-score-region 200 --out test --thread-num 100
+../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile cat3_chr_all_hqp_unrel --ld-score-region 200 --out cat3_chr_all_hqp_unrel --thread-num 100
 
 ###############################################################################################################################################################
 # 							 	  category4 - [0.05]						       			      #
@@ -219,9 +219,9 @@ plink --bfile category4_0.05/cat4_chr_all_hqp --keep /data/project/Arora_lab/akh
 
 
 ### LD score calculation
-gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile cat4_chr_all_hqp --ld-score-region 200 --out test1 --thread-num 100
+../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1  --bfile cat4_chr_all_hqp_unrel --ld-score-region 200 --out chr_all_unrel --thread-num 100
 
-
+### Categories based on quartiles as suggested in the paper
 
 ###############################################################################################################################################################
 # 							 		GRM CREATION						       			      #
@@ -365,9 +365,15 @@ gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm test --reml-no-constrain --p
 ###############################################################################
 # 	Clumping and thresholding to get variants for conditional analysis    #
 ###############################################################################
+module load PLINK ## update rsids to chr:pos:ref:alt
+for i in {1..22}; do 
+plink --bfile  ../../heritability/plink_format/originial/freeze10.14k.chr${i}.0.0001 --set-all-var-ids @:#:'$r':'$a'  --new-id-max-allele-len 1000  --make-bed --out ../../heritability/plink_format/originial/freeze10.14k.chr${i}.0.0001_var ; 
+done
+
+
 module load PLINK/1.90-foss-2016a
 for i in {1..22}; do
-plink2 --bfile  ../../heritability/plink_format/originial/freeze10.14k.chr${i}.0.0001 --clump ../../gwas_orginal/GWAS_NTproBNP_updated_14k.txt.gz  --clump-p1 5e-9	 --clump-p2 0.01   --clump-r2 0.60 --clump-kb 250  --out conditional_analysis/snps_for_conditioning/freeze10.14k.chr${i}.0.0001
+plink2 --bfile ../../heritability/plink_format/originial/freeze10.14k.chr${i}.0.0001_var --clump ../../gwas_orginal/GWAS_NTproBNP_updated_14k.txt.gz  --clump-p1 5e-9	 --clump-p2 0.01   --clump-r2 0.60 --clump-kb 250  --out conditional_analysis/snps_for_conditioning/freeze10.14k.chr${i}.0.0001
 done
 
 
