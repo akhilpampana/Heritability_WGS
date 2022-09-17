@@ -68,7 +68,8 @@ done
 
 
 ###############################################################################################################################################################
-# 					Subset Variants to 4 MAF bins [0.05],[0.01,0.05),[0.001,0.01),[0.0001,0.001)		                 	      #
+# 		Subset Variants to 4 MAF bins [0.05],[0.01,0.05),[0.001,0.01),[0.0001,0.001) based on allele frequences of unrelated individuals	      #
+#																			      #
 ###############################################################################################################################################################
 #module load R => R
 require(data.table)
@@ -77,23 +78,23 @@ category2 = data.frame() ## [0.001,0.01)
 category3 = data.frame() ## [0.01,0.05)
 category4 = data.frame() ## [0.05]
 for(i in 1:22) {
-	tmp = fread(paste0("freeze10.14k.chr",i,".afreq"))
-	tmp = tmp[which(tmp$ALT_FREQS >= 0.0001),]
-	tmp1 = tmp[which(tmp$ALT_FREQS >= 0.0001 & tmp$ALT_FREQS < 0.001),]
+	tmp = fread(paste0("freeze10.14k.chr",i,".0.0001_var_unrel.frq"))
+	tmp = tmp[which(tmp$MAF >= 0.0001),]
+	tmp1 = tmp[which(tmp$MAF >= 0.0001 & tmp$MAF < 0.001),]
 	category1 = rbind(category1,tmp1)
 
-	tmp1 = tmp[which(tmp$ALT_FREQS >= 0.001 & tmp$ALT_FREQS < 0.01),]
+	tmp1 = tmp[which(tmp$MAF >= 0.001 & tmp$MAF < 0.01),]
 	category2 = rbind(category2,tmp1)
 	
-	tmp1 = tmp[which(tmp$ALT_FREQS >= 0.01 & tmp$ALT_FREQS < 0.05),]
+	tmp1 = tmp[which(tmp$MAF >= 0.01 & tmp$MAF < 0.05),]
 	category3 = rbind(category3,tmp1)
 	
-	tmp1 = tmp[which(tmp$ALT_FREQS >= 0.05),]
+	tmp1 = tmp[which(tmp$MAF >= 0.05),]
 	category4 = rbind(category4,tmp1)
 	
 	}
 
-save(category1,category2,category3,category4,file="allele_frequence_cutoff_4cat_09132022.rda")
+save(category1,category2,category3,category4,file="allele_frequence_cutoff_4cat_unrel_09162022.rda")
 
 write.table(category1,file="category1_0.0001_0.001.csv",row.names=F,col.names=T,sep="\t",dec=".",quote=F)
 write.table(category2,file="category2_0.001_0.01.csv",row.names=F,col.names=T,sep="\t",dec=".",quote=F)
