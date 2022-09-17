@@ -57,6 +57,17 @@ king -b freeze10.14k.hqp_encore.bed --kinship
  # IN house R script used
 
 ###############################################################################################################################################################
+# 								Subset to unrelated individuals								      #
+###############################################################################################################################################################
+
+module load PLINK/1.90-foss-2016a
+for i in {1..22}; do
+plink --bfile freeze10.14k.chr${i}.0.0001_var --keep /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/gwas/heritability/plink_format/prunned_list_included_in_encore_pcs_generation/unrelated_kinship_0.025.txt --make-bed --out freeze10.14k.chr${i}.0.0001_var_unrel
+plink --bfile freeze10.14k.chr${i}.0.0001_var_unrel --freq --out freeze10.14k.chr${i}.0.0001_var_unrel
+done
+
+
+###############################################################################################################################################################
 # 					Subset Variants to 4 MAF bins [0.05],[0.01,0.05),[0.001,0.01),[0.0001,0.001)		                 	      #
 ###############################################################################################################################################################
 #module load R => R
@@ -191,6 +202,9 @@ plink --bfile category3_0.01_0.05/cat3_chr_all_hqp --keep /data/project/Arora_la
 ## LD score calculation
 ../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile cat3_chr_all_hqp_unrel --ld-score-region 200 --out cat3_chr_all_hqp_unrel --thread-num 100
 
+
+
+
 ###############################################################################################################################################################
 # 							 	  category4 - [0.05]						       			      #
 ###############################################################################################################################################################
@@ -221,7 +235,26 @@ plink --bfile category4_0.05/cat4_chr_all_hqp --keep /data/project/Arora_lab/akh
 ### LD score calculation
 ../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1  --bfile cat4_chr_all_hqp_unrel --ld-score-region 200 --out chr_all_unrel --thread-num 100
 
-### Categories based on quartiles as suggested in the paper  ## remove monomorphic variants before cuting to snps based on quartiles
+### Categories based on quartiles as suggested in the paper  ## remove monomorphic variants before cuting to snps based on quartiles - code from gcta tutorial
+
+lds_seg = read.table("cat4_chr_all_hqp_unrel.score.ld",header=T,colClasses=c("character",rep("numeric",8)))
+quartiles=summary(lds_seg$ldscore_SNP)
+
+lb1 = which(lds_seg$ldscore_SNP <= quartiles[2])
+lb2 = which(lds_seg$ldscore_SNP > quartiles[2] & lds_seg$ldscore_SNP <= quartiles[3])
+lb3 = which(lds_seg$ldscore_SNP > quartiles[3] & lds_seg$ldscore_SNP <= quartiles[5])
+lb4 = which(lds_seg$ldscore_SNP > quartiles[5])
+
+lb1_snp = lds_seg$SNP[lb1]
+lb2_snp = lds_seg$SNP[lb2]
+lb3_snp = lds_seg$SNP[lb3]
+lb4_snp = lds_seg$SNP[lb4]
+
+write.table(lb1_snp, "snp_group1.txt", row.names=F, quote=F, col.names=F)
+write.table(lb2_snp, "snp_group2.txt", row.names=F, quote=F, col.names=F)
+write.table(lb3_snp, "snp_group3.txt", row.names=F, quote=F, col.names=F)
+write.table(lb4_snp, "snp_group4.txt", row.names=F, quote=F, col.names=F)
+
 
 ###############################################################################################################################################################
 # 							 		GRM CREATION						       			      #
