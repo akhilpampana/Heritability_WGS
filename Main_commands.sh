@@ -115,15 +115,19 @@ ls -l | grep bed | awk ' { print $9 } ' | sed 's|.bed||g' > merge
 module load PLINK/1.90-foss-2016a
 plink --bfile category1_chr1 --merge-list merge --make-bed --out cat1_chr_all
 
+### Remove variants based on geno 0.05 , mind 0.05, phwe < 1e-6 
+for i in {1..22}; do
+plink --bfile category1_chr${i} --geno 0.05 --mind 0.05 --hwe 1e-6 --make-bed --out category1_chr${i}_qc
+done
 
 ### Prunning to generate high quality variants
 for i in {1..22}; do
-plink --bfile cat1_chr${i} --indep-pairwise 50 5 0.1 --out cat1_${i}
+plink --bfile category1_chr${i}_qc --indep-pairwise 50 5 0.1 --out cat1_${i}
 done
 
 ## subset to prunned variants
 for i in {1..22}; do
-plink --bfile cat1_chr${i} --extract cat1_${i}.prune.in --make-bed --out cat1_chr${i}_hqp
+plink --bfile category1_chr${i}_qc --extract cat1_${i}.prune.in --make-bed --out cat1_chr${i}_hqp
 done
 
 #/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/gwas/heritability/plink_format/prunned_list_included_in_encore_pcs_generation/unrelated_kinship_0.025.txt
@@ -153,6 +157,9 @@ ls -l | grep bed | awk ' { print $9 } ' | sed 's|.bed||g' > merge
 module load PLINK/1.90-foss-2016a
 plink --bfile category2_chr1 --merge-list merge --make-bed --out cat2_chr_all
 
+### Remove variants based on geno 0.05 , mind 0.05, phwe < 1e-6 
+plink --bfile cat2_chr_all --geno 0.05 --mind 0.05 --hwe 1e-6 --make-bed --out cat2_chr
+
 ### Prunning to generate high quality variants
 plink --bfile cat2_chr_all --indep-pairwise 50 5 0.1 --out cat2
 
@@ -177,6 +184,9 @@ cd subset_for_h2_calc/category3_0.01_0.05/unrelated
 ls -l | grep bed | awk ' { print $9 } ' | sed 's|.bed||g' > merge
 module load PLINK/1.90-foss-2016a
 plink --bfile category3_chr1 --merge-list merge --make-bed --out cat3_chr_all
+
+### Remove variants based on geno 0.05 , mind 0.05, phwe < 1e-6 
+plink --bfile cat3_chr_all --geno 0.05 --mind 0.05 --hwe 1e-6 --make-bed --out cat3_chr
 
 ### Prunning to generate high quality variants
 plink --bfile cat3_chr_all --indep-pairwise 50 5 0.1 --out cat3
@@ -204,6 +214,9 @@ cd subset_for_h2_calc/category4_0.05/unrelated/
 ls -l | grep bed | awk ' { print $9 } ' | sed 's|.bed||g' > merge
 module load PLINK/1.90-foss-2016a
 plink --bfile category40_chr1 --merge-list merge --make-bed --out cat4_chr_all
+
+### Remove variants based on geno 0.05 , mind 0.05, phwe < 1e-6 
+plink --bfile cat4_chr_all --geno 0.05 --mind 0.05 --hwe 1e-6 --make-bed --out cat4_chr
 
 ### Prunning to generate high quality variants
 plink --bfile cat4_chr_all --indep-pairwise 50 5 0.1 --out cat4
