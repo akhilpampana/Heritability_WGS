@@ -106,18 +106,15 @@ write.table(category4,file="category4_0.05.csv",row.names=F,col.names=T,sep="\t"
 ###############################################################################################################################################################
 
 for i in  {1..22} ; do 
-plink2 --bfile plink_format/freeze10.14k.chr${i}.0.0001 --extract subset_for_h2_calc/category1_0.0001_0.001/category1_0.0001_0.001.csv --make-bed --out subset_for_h2_calc/category1_0.0001_0.001/category1_chr${i}  ; 
+plink2 --bfile plink_format/original/freeze10.14k.chr${i}.0.0001_var_unrel --extract plink_format/original/category1_0.0001_0.001.csv --make-bed --out subset_for_h2_calc/category1_0.0001_0.001/unrelated/category1_chr${i}  ; 
 done
 
-module load PLINK
-cd subset_for_h2_calc/category1_0.0001_0.001/
-for i in {1..22}; do
-plink2 --bfile category1_chr${i} --set-all-var-ids @:#:'$r':'$a'  --new-id-max-allele-len 1000 --max-alleles 2 --make-bed --out cat1_chr${i}
-done
 
-ls -l | grep cat1 | grep bed | awk ' { print $9 } ' | sed 's|.bed||g' > merge
+cd subset_for_h2_calc/category1_0.0001_0.001/unrelated/
+ls -l | grep bed | awk ' { print $9 } ' | sed 's|.bed||g' > merge
 module load PLINK/1.90-foss-2016a
-plink --bfile cat1_chr1 --merge-list merge --make-bed --out cat1_chr_all
+plink --bfile category1_chr1 --merge-list merge --make-bed --out cat1_chr_all
+
 
 ### Prunning to generate high quality variants
 for i in {1..22}; do
@@ -147,18 +144,14 @@ gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile cat3_chr_all_hqp --ld-scor
 ###############################################################################################################################################################
 
 for i in  {1..22} ; do 
-plink2 --bfile plink_format/freeze10.14k.chr${i}.0.0001 --extract subset_for_h2_calc/category2_0.001_0.01/category2_0.001_0.01.csv --make-bed --out subset_for_h2_calc/category2_0.001_0.01/category2_chr${i}  ; 
+plink2 --bfile plink_format/original/freeze10.14k.chr${i}.0.0001_var_unrel --extract plink_format/original/category2_0.001_0.01.csv --make-bed --out subset_for_h2_calc/category2_0.001_0.01/unrelated/category2_chr${i}  ; 
 done
 
-module load PLINK
-cd subset_for_h2_calc/category2_0.001_0.01/
-for i in {1..22}; do
-plink2 --bfile category2_chr${i} --set-all-var-ids @:#:'$r':'$a'  --new-id-max-allele-len 1000 --max-alleles 2 --make-bed --out cat2_chr${i}
-done
 
-ls -l | grep cat2 | grep bed | awk ' { print $9 } ' | sed 's|.bed||g' > merge
+cd subset_for_h2_calc/category2_0.001_0.01/unrelated/
+ls -l | grep bed | awk ' { print $9 } ' | sed 's|.bed||g' > merge
 module load PLINK/1.90-foss-2016a
-plink --bfile cat2_chr1 --merge-list merge --make-bed --out cat2_chr_all
+plink --bfile category2_chr1 --merge-list merge --make-bed --out cat2_chr_all
 
 ### Prunning to generate high quality variants
 plink --bfile cat2_chr_all --indep-pairwise 50 5 0.1 --out cat2
@@ -177,18 +170,13 @@ plink --bfile category2_0.001_0.01/cat2_chr_all_hqp --keep /data/project/Arora_l
 # 							   category3 - [0.01,0.05)						       			      #
 ###############################################################################################################################################################
 for i in  {1..22} ; do 
-plink2 --bfile plink_format/freeze10.14k.chr${i}.0.0001 --extract subset_for_h2_calc/category3_0.01_0.05/category3_0.01_0.05.csv --make-bed --out subset_for_h2_calc/category3_0.01_0.05/category3_chr${i}  ; 
+plink2 --bfile plink_format/original/freeze10.14k.chr${i}.0.0001_var_unrel --extract plink_format/original/category3_0.01_0.05.csv  --make-bed --out subset_for_h2_calc/category3_0.01_0.05/unrelated/category3_chr${i}  ; 
 done
 
-module load PLINK
-cd subset_for_h2_calc/category3_0.01_0.05/
-for i in {1..22}; do
-plink2 --bfile category3_chr${i} --set-all-var-ids @:#:'$r':'$a'  --new-id-max-allele-len 1000 --max-alleles 2 --make-bed --out cat3_chr${i}
-done
-
-ls -l | grep cat3 | grep bed | awk ' { print $9 } ' | sed 's|.bed||g' > merge
+cd subset_for_h2_calc/category3_0.01_0.05/unrelated
+ls -l | grep bed | awk ' { print $9 } ' | sed 's|.bed||g' > merge
 module load PLINK/1.90-foss-2016a
-plink --bfile cat3_chr1 --merge-list merge --make-bed --out cat3_chr_all
+plink --bfile category3_chr1 --merge-list merge --make-bed --out cat3_chr_all
 
 ### Prunning to generate high quality variants
 plink --bfile cat3_chr_all --indep-pairwise 50 5 0.1 --out cat3
@@ -205,22 +193,17 @@ plink --bfile category3_0.01_0.05/cat3_chr_all_hqp --keep /data/project/Arora_la
 
 
 
-
 ###############################################################################################################################################################
 # 							 	  category4 - [0.05]						       			      #
 ###############################################################################################################################################################
 for i in  {1..22} ; do 
-plink2 --bfile plink_format/freeze10.14k.chr${i}.0.0001 --extract subset_for_h2_calc/category4_0.05/category4_0.05.csv --make-bed --out subset_for_h2_calc/category4_0.05/category4_chr${i}  ; 
+plink2 --bfile plink_format/original/freeze10.14k.chr${i}.0.0001_var_unrel --extract plink_format/original/category4_0.05.csv --make-bed --out subset_for_h2_calc/category4_0.05/unrelated/category4_chr${i}  ; 
 done
 
-cd subset_for_h2_calc/category4_0.05/
-for i in {1..22}; do
-plink2 --bfile category4_chr${i} --set-all-var-ids @:#:'$r':'$a'  --new-id-max-allele-len 1000 --max-alleles 2 --make-bed --out cat4_chr${i}
-done
-
+cd subset_for_h2_calc/category4_0.05/unrelated/
 ls -l | grep bed | awk ' { print $9 } ' | sed 's|.bed||g' > merge
 module load PLINK/1.90-foss-2016a
-plink --bfile cat4_chr1 --merge-list merge --make-bed --out cat4_chr_all
+plink --bfile category40_chr1 --merge-list merge --make-bed --out cat4_chr_all
 
 ### Prunning to generate high quality variants
 plink --bfile cat4_chr_all --indep-pairwise 50 5 0.1 --out cat4
