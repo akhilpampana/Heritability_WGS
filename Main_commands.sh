@@ -130,18 +130,10 @@ for i in {1..22}; do
 plink --bfile category1_chr${i}_qc --extract cat1_${i}.prune.in --make-bed --out cat1_chr${i}_hqp
 done
 
-#/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/gwas/heritability/plink_format/prunned_list_included_in_encore_pcs_generation/unrelated_kinship_0.025.txt
-ls -l | grep hqp | grep bed | awk ' { print $9 } ' | sed 's|.bed||g' > merge
-module load PLINK/1.90-foss-2016a
-plink --bfile cat1_chr1_hqp --merge-list merge --make-bed --out cat1_chr_all_hqp
-
-## Subset to unrelated individuals based on kinship < 0.025 calc
-for i in {1..22}; do
-plink --bfile category1_0.0001_0.001/cat1_chr${i}_hqp --keep /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/gwas/heritability/plink_format/prunned_list_included_in_encore_pcs_generation/unrelated_kinship_0.025.txt --make-bed --out category1_0.0001_0.001/cat1_chr${i}_hqp_unrel
-done
-
 ## LD score calculation to do 
-gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile cat3_chr_all_hqp --ld-score-region 200 --out test --thread-num 100
+for i in {1..22}; do
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile cat1_chr${i}_hqp --ld-score-region 200 --out  cat1_chr${i}_hqp --thread-num 100
+done
 
 ###############################################################################################################################################################
 # 							   category2 - [0.001,0.01)						       			      #
@@ -166,10 +158,6 @@ plink --bfile cat2_chr --indep-pairwise 50 5 0.1 --out cat2
 ## subset to prunned variants
 plink --bfile cat2_chr --extract cat2.prune.in --make-bed --out cat2_chr_hqp
 
-## subset to unrelated individuals
-plink --bfile category2_0.001_0.01/cat2_chr_all_hqp --keep /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/gwas/heritability/plink_format/prunned_list_included_in_encore_pcs_generation/unrelated_kinship_0.025.txt --make-bed --out category2_0.001_0.01/cat2_chr_all_hqp_unrel
-
-
 ## LD score calculation
 ../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1  --bfile cat2_chr_all_hqp_unrel --ld-score-region 200 --out cat2_chr_all_hqp_unrel --thread-num 100
 
@@ -193,10 +181,6 @@ plink --bfile cat3_chr --indep-pairwise 50 5 0.1 --out cat3
 
 ## subset to prunned variants
 plink --bfile cat3_chr --extract cat3.prune.in --make-bed --out cat3_chr_all_hqp
-
-## subset to unrelated individuals
-plink --bfile category3_0.01_0.05/cat3_chr_all_hqp --keep /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/gwas/heritability/plink_format/prunned_list_included_in_encore_pcs_generation/unrelated_kinship_0.025.txt --make-bed --out category3_0.01_0.05/cat3_chr_all_hqp_unrel
-
 
 ## LD score calculation
 ../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile cat3_chr_all_hqp_unrel --ld-score-region 200 --out cat3_chr_all_hqp_unrel --thread-num 100
@@ -224,12 +208,8 @@ plink --bfile cat4_chr --indep-pairwise 50 5 0.1 --out cat4
 ### subset to prunned variants
 plink --bfile cat4_chr --extract cat4.prune.in --make-bed --out cat4_chr_hqp
 
-## subset to unrelated individuals
-plink --bfile category4_0.05/cat4_chr_all_hqp --keep /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/gwas/heritability/plink_format/prunned_list_included_in_encore_pcs_generation/unrelated_kinship_0.025.txt --make-bed --out category4_0.05/cat4_chr_all_hqp_unrel
-
-
 ### LD score calculation
-../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1  --bfile cat4_chr_all_hqp_unrel --ld-score-region 200 --out chr_all_unrel --thread-num 100
+../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1  --bfile cat4_chr_hqp --ld-score-region 200 --out chr_all_unrel --thread-num 100
 
 ### Categories based on quartiles as suggested in the paper  ## remove monomorphic variants before cuting to snps based on quartiles - code from gcta tutorial
 
