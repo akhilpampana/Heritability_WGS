@@ -1,10 +1,10 @@
-########################################
-# Script used to run GCTA/plink/bcftools for the analyses in the GREML-LDMS WGS 2022 paper
-# It contains the most important commands for performing GREML-LDMS from WGS
-# The Online Methods describe with greater details all the QC steps performed
-# Some steps are added from the original github page
-# Additional R scripts are also available in this git
-########################################
+##############################################################################################################################################################
+# Script used to run GCTA/plink/bcftools for the analyses in the GREML-LDMS WGS 2022 paper						    		     #	
+# It contains the most important commands for performing GREML-LDMS from WGS										     #	
+# The Online Methods describe with greater details all the QC steps performed										     #
+# Some steps are added from the original github page													     #
+# Additional R scripts are also available in this git													     #
+##############################################################################################################################################################
 
 #### Variables
 ncpu=12 
@@ -158,8 +158,11 @@ plink --bfile cat2_chr --indep-pairwise 50 5 0.1 --out cat2
 ## subset to prunned variants
 plink --bfile cat2_chr --extract cat2.prune.in --make-bed --out cat2_chr_hqp
 
-## LD score calculation
-../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1  --bfile cat2_chr_all_hqp_unrel --ld-score-region 200 --out cat2_chr_all_hqp_unrel --thread-num 100
+## LD score calculation to do 
+for i in {1..22}; do
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile cat2_chr${i}_hqp --ld-score-region 200 --out  cat2_chr${i}_hqp --thread-num 100
+done
+
 
 ###############################################################################################################################################################
 # 							   category3 - [0.01,0.05)						       			      #
@@ -185,6 +188,13 @@ plink --bfile cat3_chr --extract cat3.prune.in --make-bed --out cat3_chr_all_hqp
 ## LD score calculation
 ../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile cat3_chr_all_hqp_unrel --ld-score-region 200 --out cat3_chr_all_hqp_unrel --thread-num 100
 
+
+### GRM CREATION
+../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile cat3_chr_hqp --make-grm-alg 1 --thread-num 4 --out cat3_chr_hqp
+
+
+### GRM cutoff 
+../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile cat3_chr_hqp --grm-cutoff 0.05 --make-grm --out cat3_chr_hqp
 
 
 ###############################################################################################################################################################
@@ -231,6 +241,12 @@ write.table(lb2_snp, "snp_group2.txt", row.names=F, quote=F, col.names=F)
 write.table(lb3_snp, "snp_group3.txt", row.names=F, quote=F, col.names=F)
 write.table(lb4_snp, "snp_group4.txt", row.names=F, quote=F, col.names=F)
 
+### GRM CREATION
+../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile cat4_chr_hqp --make-grm-alg 1 --thread-num 4 --out cat4_chr_hqp
+
+
+### GRM cutoff 
+../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile cat4_chr_hqp --grm-cutoff 0.05 --make-grm --out cat4_chr_hqp
 
 ###############################################################################################################################################################
 # 							 		GRM CREATION						       			      #
