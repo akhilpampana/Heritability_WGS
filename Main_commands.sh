@@ -135,6 +135,39 @@ for i in {1..22}; do
 gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile cat1_chr${i}_hqp --ld-score-region 200 --out  cat1_chr${i}_hqp --thread-num 100
 done
 
+### Categories based on quartiles as suggested in the paper  ## remove monomorphic variants before cuting to snps based on quartiles - code from gcta tutorial - to do 
+
+require(data.table)
+category1 = data.frame() 
+category2 = data.frame() 
+category3 = data.frame() 
+category4 = data.frame() 
+for(i in 1:22) {
+lds_seg = read.table(paste0("cat2_chr",i,"_hqp.score.ld"),header=T,colClasses=c("character",rep("numeric",8)))
+quartiles=summary(lds_seg$ldscore_SNP)
+
+lb1 = which(lds_seg$ldscore_SNP <= quartiles[2])
+lb2 = which(lds_seg$ldscore_SNP > quartiles[2] & lds_seg$ldscore_SNP <= quartiles[3])
+lb3 = which(lds_seg$ldscore_SNP > quartiles[3] & lds_seg$ldscore_SNP <= quartiles[5])
+lb4 = which(lds_seg$ldscore_SNP > quartiles[5])
+
+lb1_snp = lds_seg$SNP[lb1]
+lb2_snp = lds_seg$SNP[lb2]
+lb3_snp = lds_seg$SNP[lb3]
+lb4_snp = lds_seg$SNP[lb4]
+
+category1 = rbind(category1,lb1_snp)
+category2 = rbind(category2,lb2_snp)
+category3 = rbind(category3,lb3_snp)
+category4 = rbind(category4,lb4_snp)
+}
+
+write.table(category1, "snp_group1.txt", row.names=F, quote=F, col.names=F)
+write.table(category2, "snp_group2.txt", row.names=F, quote=F, col.names=F)
+write.table(category3, "snp_group3.txt", row.names=F, quote=F, col.names=F)
+write.table(category4, "snp_group4.txt", row.names=F, quote=F, col.names=F)
+
+
 ###############################################################################################################################################################
 # 							   category2 - [0.001,0.01)						       			      #
 ###############################################################################################################################################################
@@ -162,6 +195,39 @@ plink --bfile cat2_chr --extract cat2.prune.in --make-bed --out cat2_chr_hqp
 for i in {1..22}; do
 gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile cat2_chr${i}_hqp --ld-score-region 200 --out  cat2_chr${i}_hqp --thread-num 100
 done
+
+
+### Categories based on quartiles as suggested in the paper  ## remove monomorphic variants before cuting to snps based on quartiles - code from gcta tutorial
+
+require(data.table)
+category1 = data.frame() 
+category2 = data.frame() 
+category3 = data.frame() 
+category4 = data.frame() 
+for(i in 1:22) {
+lds_seg = read.table(paste0("cat2_chr",i,"_hqp.score.ld"),header=T,colClasses=c("character",rep("numeric",8)))
+quartiles=summary(lds_seg$ldscore_SNP)
+
+lb1 = which(lds_seg$ldscore_SNP <= quartiles[2])
+lb2 = which(lds_seg$ldscore_SNP > quartiles[2] & lds_seg$ldscore_SNP <= quartiles[3])
+lb3 = which(lds_seg$ldscore_SNP > quartiles[3] & lds_seg$ldscore_SNP <= quartiles[5])
+lb4 = which(lds_seg$ldscore_SNP > quartiles[5])
+
+lb1_snp = lds_seg$SNP[lb1]
+lb2_snp = lds_seg$SNP[lb2]
+lb3_snp = lds_seg$SNP[lb3]
+lb4_snp = lds_seg$SNP[lb4]
+
+category1 = rbind(category1,lb1_snp)
+category2 = rbind(category2,lb2_snp)
+category3 = rbind(category3,lb3_snp)
+category4 = rbind(category4,lb4_snp)
+}
+
+write.table(category1, "snp_group1.txt", row.names=F, quote=F, col.names=F)
+write.table(category2, "snp_group2.txt", row.names=F, quote=F, col.names=F)
+write.table(category3, "snp_group3.txt", row.names=F, quote=F, col.names=F)
+write.table(category4, "snp_group4.txt", row.names=F, quote=F, col.names=F)
 
 
 ###############################################################################################################################################################
@@ -335,9 +401,9 @@ for i in *unrelated.grm.bin ; do readlink -f "$i"  | cut -d'.' -f1-2 >>  path; d
 ##cat2
 ../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm category2_0.001_0.01/cat2_hqp --pca 20 --threads 10 --out category2_0.001_0.01/test
 ##cat3
-../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1  --grm test --pca 20 --threads 10 --out test
+../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1  --grm  cat3_chr_hqp --pca 20 --threads 10 --out  cat3_chr_hqp
 ##cat4
-../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm test --pca 20 --threads 10 --out test
+../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1  --grm cat4_chr_hqp --pca 20 --threads 10 --out cat4_chr_hqp
 
 
 
