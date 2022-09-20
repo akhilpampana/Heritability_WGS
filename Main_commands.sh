@@ -537,5 +537,12 @@ plink --bfile ../../heritability/plink_format/original/freeze10.14k.chr${i}.0.00
 done
 
 
+module load PLINK/1.90-foss-2016a
+for i in {1..22}; do
+plink --bfile ../../heritability/plink_format/original/freeze10.14k.chr${i}.0.0001_var --clump overall_gwas_09162022.csv --clump-p1 5e-7 --clump-p2 0.0001 --clump-r2 0.60 --clump-kb 500 --out freeze10.14k.chr${i}.0.0001_5e07
+done
+
+
+
 
 
