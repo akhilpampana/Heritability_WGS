@@ -151,10 +151,10 @@ lb2 = which(lds_seg$ldscore_SNP > quartiles[2] & lds_seg$ldscore_SNP <= quartile
 lb3 = which(lds_seg$ldscore_SNP > quartiles[3] & lds_seg$ldscore_SNP <= quartiles[5])
 lb4 = which(lds_seg$ldscore_SNP > quartiles[5])
 
-lb1_snp = lds_seg$SNP[lb1]
-lb2_snp = lds_seg$SNP[lb2]
-lb3_snp = lds_seg$SNP[lb3]
-lb4_snp = lds_seg$SNP[lb4]
+lb1_snp = as.data.frame(lds_seg$SNP[lb1])
+lb2_snp = as.data.frame(lds_seg$SNP[lb2])
+lb3_snp =  as.data.frame(lds_seg$SNP[lb3])
+lb4_snp =  as.data.frame(lds_seg$SNP[lb4])
 
 category1 = rbind(category1,lb1_snp)
 category2 = rbind(category2,lb2_snp)
