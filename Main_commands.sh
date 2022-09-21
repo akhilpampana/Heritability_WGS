@@ -565,7 +565,7 @@ for(i in 1:length(chr)){
 	loci1 = loci1[,c("SNP","BP","P")]
 	loci1 = merge(loci1,gwas,by.x=c("SNP"),by.y=c("SNP"))
 	loci1 = loci1[,c("SNP","CHR","POS","SNPID","AF_Allele2","N","BETA","SE","p.value")]
-	colnames(loci1)[c(5,7,8,9)] = c("MAF","beta","SE","pvalues")
+	colnames(loci1)[c(1,3,5,7,8,9)] = c("snp","position","MAF","beta","SE","pvalues")
 	loci1$varbeta = loci1$SE*loci1$SE
 	loci1 = as.list(loci1)
 	loci1$N = 14843
@@ -574,6 +574,7 @@ for(i in 1:length(chr)){
 	res1= data.frame()
 	for(j in 1:length(variants)){
 		final2 = final1[which(final1$var %in% variants[j]),]
+		final2 = final2[!duplicated(final2$snp),]
 		final2 = as.list(final2)
 		final2$type = "quant"
 		myresults = coloc.signals(loci1,final2)
