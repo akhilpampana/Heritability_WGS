@@ -524,17 +524,68 @@ for i in {1..22}; do
 plink --bfile  ../../heritability/plink_format/originial/freeze10.14k.chr${i}.0.0001 --set-all-var-ids @:#:'$r':'$a'  --new-id-max-allele-len 1000  --make-bed --out ../../heritability/plink_format/originial/freeze10.14k.chr${i}.0.0001_var ; 
 done
 
-
+### 45 variants among 5 cytobands where identified
 module load PLINK/1.90-foss-2016a
 for i in {1..22}; do
 plink --bfile ../../heritability/plink_format/originial/freeze10.14k.chr${i}.0.0001_var --clump overall_gwas_09162022.csv  --clump-p1 5e-9	 --clump-p2 0.01   --clump-r2 0.60 --clump-kb 500  --out conditional_analysis/snps_for_conditioning/freeze10.14k.chr${i}.0.0001
 done
 
+### Subset to each loci and do suggestive significance fitering +/- 500kb per loci (ran in R)
+module load PLINK/1.90-foss-2016a 
 
-module load PLINK/1.90-foss-2016a
-for i in {1..22}; do
-plink --bfile ../../heritability/plink_format/original/freeze10.14k.chr${i}.0.0001_var --clump overall_gwas_09162022.csv --clump-p1 5e-9 --clump-p2 0.0001 --clump-r2 0.60 --clump-kb 500 --out freeze10.14k.chr${i}.0.0001_new
-done
+load("overall_loci_09202022.rda")
+for(i in 1:5) {
+  system(paste0("plink --bfile ../heritability/plink_format/original/freeze10.14k.chr",df$chr[i],".0.0001_var --chr ",df$chr[i]," --to-bp ",df$pos_500kb[i]," --from-bp ",df$neg_500kb[i]," --make-bed --out /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/gwas/coloc/chr",df$chr[i],"loci",i,"")) 
+}
+
+
+plink --bfile chr1loci1 --clump ../conditional_analysis/snps_for_conditioning/overall_gwas_09162022.csv --clump-p1 5e-9 --clump-p2 5e-7 --clump-r2 0.60 --clump-kb 500 --out chr1loci1
+plink --bfile chr4loci2 --clump ../conditional_analysis/snps_for_conditioning/overall_gwas_09162022.csv --clump-p1 5e-9 --clump-p2 5e-7 --clump-r2 0.60 --clump-kb 500 --out chr4loci2
+plink --bfile chr8loci3 --clump ../conditional_analysis/snps_for_conditioning/overall_gwas_09162022.csv --clump-p1 5e-9 --clump-p2 5e-7 --clump-r2 0.60 --clump-kb 500 --out chr8loci3
+plink --bfile chr8loci4 --clump ../conditional_analysis/snps_for_conditioning/overall_gwas_09162022.csv --clump-p1 5e-9 --clump-p2 5e-7 --clump-r2 0.60 --clump-kb 500 --out chr8loci4
+plink --bfile chr12loci5 --clump ../conditional_analysis/snps_for_conditioning/overall_gwas_09162022.csv --clump-p1 5e-9 --clump-p2 5e-7 --clump-r2 0.60 --clump-kb 500 --out chr12loci5
+
+
+
+### upload 5 loci's to R
+chr = c(1,4,8,8,12)
+fin = data.frame()
+for(i in 1:length(chr)){
+	loci1 = fread(paste0("chr",chr[i],"loci",i,".clumped"))
+	loci1 = loci1[,c("SNP","BP","P")]
+	loci1 = merge(loci1,gwas,by.x=c("SNP"),by.y=c("SNP"))
+	loci1 = loci1[,c("SNP","CHR","POS","SNPID","AF_Allele2","N","BETA","SE","p.value")]
+	colnames(loci1)[c(5,7,8,9)] = c("MAF","beta","SE","pvalues")
+	loci1$varbeta = loci1$SE*loci1$SE
+	loci1 = as.list(loci1)
+	loci1$N = 14843
+	loci1$type = "quant"
+	print(str(loci1))
+	res1= data.frame()
+	for(j in 1:length(variants)){
+		final2 = final1[which(final1$var %in% variants[j]),]
+		final2 = as.list(final2)
+		final2$type = "quant"
+		myresults = coloc.abf(loci1,final2)
+		res = subset(myresults$results,SNP.PP.H4>0.001)
+		res$tissue = variants[j]
+		res = as.data.frame(res)
+		res1 = rbind(res,res1)
+		}
+		fin = rbind(fin,res1)
+}
+
+
+ 
+
+
+
+
+
+
+
+
+
 
 
 module load PLINK/1.90-foss-2016a
