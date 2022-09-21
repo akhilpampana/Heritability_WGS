@@ -464,10 +464,16 @@ for i in *unrelated.grm.bin ; do readlink -f "$i"  | cut -d'.' -f1-2 >>  path; d
 ##cat2
 ../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm category2_0.001_0.01/cat2_hqp --pca 20 --threads 10 --out category2_0.001_0.01/test
 ##cat3
-../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1  --grm  cat3_chr_hqp --pca 20 --threads 10 --out  cat3_chr_hqp
-##cat4
-../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1  --grm cat4_chr_hqp --pca 20 --threads 10 --out cat4_chr_hqp
+../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat3_hqp_q1_0.05 --pca 20 --threads 10 --out cat3_hqp_q1_0.05
+../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat3_hqp_q2_0.05 --pca 20 --threads 10 --out cat3_hqp_q2_0.05
+../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat3_hqp_q3_0.05 --pca 20 --threads 10 --out cat3_hqp_q3_0.05
+../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat3_hqp_q4_0.05 --pca 20 --threads 10 --out cat3_hqp_q4_0.05
 
+##cat4
+../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat4_hqp_q1_0.05 --pca 20 --threads 10 --out cat4_hqp_q1_0.05
+../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat4_hqp_q2_0.05 --pca 20 --threads 10 --out cat4_hqp_q2_0.05
+../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat4_hqp_q3_0.05 --pca 20 --threads 10 --out cat4_hqp_q3_0.05
+../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat4_hqp_q4_0.05 --pca 20 --threads 10 --out cat4_hqp_q4_0.05
 
 
 ###############################################################################################################################################################
@@ -494,10 +500,16 @@ GCTA \
 ### cat 2
 
 ### cat 3
-gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm test --reml-no-constrain --pheno phenotypes/Combined_4cohorts_NTproBNP_08222022.phen --qcovar category3_0.01_0.05/test.eigenvec --out test --thread-num 10 --reml-no-lrt
-### cat 4
-gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm test --reml-no-constrain --pheno phenotypes/Combined_4cohorts_NTproBNP_08222022.phen --qcovar category4_0.05/test.eigenvec --out test --thread-num 10 --reml-no-lrt
+../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat3_hqp_q1_0.05 --reml-no-constrain --pheno ../../../../../phenotypes/Combined_4cohorts_NTproBNP_08222022.phen --qcovar cat3_hqp_q1_0.05.eigenvec --out cat3_hqp_q1_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat3_hqp_q2_0.05 --reml-no-constrain --pheno ../../../../../phenotypes/Combined_4cohorts_NTproBNP_08222022.phen --qcovar cat3_hqp_q2_0.05.eigenvec --out cat3_hqp_q2_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat3_hqp_q3_0.05 --reml-no-constrain --pheno ../../../../../phenotypes/Combined_4cohorts_NTproBNP_08222022.phen --qcovar cat3_hqp_q3_0.05.eigenvec --out cat3_hqp_q3_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat3_hqp_q4_0.05 --reml-no-constrain --pheno ../../../../../phenotypes/Combined_4cohorts_NTproBNP_08222022.phen --qcovar cat3_hqp_q4_0.05.eigenvec --out cat3_hqp_q4_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
 
+### cat 4
+../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat4_hqp_q1_0.05 --reml-no-constrain --pheno ../../../../../phenotypes/Combined_4cohorts_NTproBNP_08222022.phen --qcovar cat4_hqp_q1_0.05.eigenvec --out cat4_hqp_q1_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat4_hqp_q2_0.05 --reml-no-constrain --pheno ../../../../../phenotypes/Combined_4cohorts_NTproBNP_08222022.phen --qcovar cat4_hqp_q2_0.05.eigenvec --out cat4_hqp_q2_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat4_hqp_q3_0.05 --reml-no-constrain --pheno ../../../../../phenotypes/Combined_4cohorts_NTproBNP_08222022.phen --qcovar cat4_hqp_q3_0.05.eigenvec --out cat4_hqp_q3_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat4_hqp_q4_0.05 --reml-no-constrain --pheno ../../../../../phenotypes/Combined_4cohorts_NTproBNP_08222022.phen --qcovar cat4_hqp_q4_0.05.eigenvec --out cat4_hqp_q4_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
 
 
 ###### Computing IBD ###### Extra
@@ -506,8 +518,6 @@ gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm test --reml-no-constrain --p
 
 #king -b ../category3_0.01_0.05/cat3_chr_all_hqp.bed --ibdseg --prefix ../category3_0.01_0.05/cat3_chr_all_hqp --cpus 4 --seglength 3
 #king -b cat4_chr_all_hqp.bed --ibdseg --prefix cat4_chr_all_hqp --cpus 4 --seglength 3
-
-
 #king -b ${BED_file_merged_QC}.bed  --ibdseg --prefix ${BED_file_merged_QC_out_name} --cpus ${ncpu} --seglength 3
 
 
@@ -516,9 +526,9 @@ gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm test --reml-no-constrain --p
 
 
 
-###############################################################################
-# 	Clumping and thresholding to get variants for conditional analysis    #
-###############################################################################
+######################################################################################################################################################
+# 							Clumping and thresholding to get variants for conditional analysis     			     #
+######################################################################################################################################################
 module load PLINK ## update rsids to chr:pos:ref:alt
 for i in {1..22}; do 
 plink --bfile  ../../heritability/plink_format/originial/freeze10.14k.chr${i}.0.0001 --set-all-var-ids @:#:'$r':'$a'  --new-id-max-allele-len 1000  --make-bed --out ../../heritability/plink_format/originial/freeze10.14k.chr${i}.0.0001_var ; 
@@ -577,22 +587,6 @@ for(i in 1:length(chr)){
 
 
  
-
-
-
-
-
-
-
-
-
-
-
-module load PLINK/1.90-foss-2016a
-for i in {1..22}; do
-plink --bfile ../../heritability/plink_format/original/freeze10.14k.chr${i}.0.0001_var --clump overall_gwas_09162022.csv --clump-p1 5e-7 --clump-p2 0.0001 --clump-r2 0.60 --clump-kb 500 --out freeze10.14k.chr${i}.0.0001_5e07
-done
-
 
 
 
