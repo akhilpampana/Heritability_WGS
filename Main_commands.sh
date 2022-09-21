@@ -576,7 +576,7 @@ for(i in 1:length(chr)){
 		final2 = final1[which(final1$var %in% variants[j]),]
 		final2 = as.list(final2)
 		final2$type = "quant"
-		myresults = coloc.abf(loci1,final2)
+		myresults = coloc.signals(loci1,final2)
 		res = subset(myresults$results,SNP.PP.H4>0.001)
 		res$tissue = variants[j]
 		res = as.data.frame(res)
