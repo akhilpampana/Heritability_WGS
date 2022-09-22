@@ -558,33 +558,44 @@ plink --bfile chr12loci5 --clump ../conditional_analysis/snps_for_conditioning/o
 
 
 ### upload 5 loci's to R
+load("eqtl_datasets_lipids_paper_based_cutoff_5e07.rda")
+
+library(coloc)
 chr = c(1,4,8,8,12)
 fin = data.frame()
 for(i in 1:length(chr)){
-	loci1 = fread(paste0("chr",chr[i],"loci",i,".clumped"))
-	loci1 = loci1[,c("SNP","BP","P")]
-	loci1 = merge(loci1,gwas,by.x=c("SNP"),by.y=c("SNP"))
-	loci1 = loci1[,c("SNP","CHR","POS","SNPID","AF_Allele2","N","BETA","SE","p.value")]
-	colnames(loci1)[c(1,3,5,7,8,9)] = c("snp","position","MAF","beta","SE","pvalues")
-	loci1$varbeta = loci1$SE*loci1$SE
-	loci1 = as.list(loci1)
-	loci1$N = 14843
-	loci1$type = "quant"
-	print(str(loci1))
-	res1= data.frame()
-	for(j in 1:length(variants)){
-		final2 = final1[which(final1$var %in% variants[j]),]
-		final2 = final2[!duplicated(final2$snp),]
-		final2 = as.list(final2)
-		final2$type = "quant"
-		myresults = coloc.abf(loci1,final2)
-		res = subset(myresults$results,SNP.PP.H4>0.001)
-		res$tissue = variants[j]
-		res = as.data.frame(res)
-		res1 = rbind(res,res1)
-		}
-		fin = rbind(fin,res1)
-}
+  loci1 = fread(paste0("chr",chr[i],"loci",i,".clumped"))
+  loci1 = loci1[,c("SNP","BP","P")]
+  loci1 = merge(loci1,gwas,by.x=c("SNP"),by.y=c("SNP"))
+  loci1 = loci1[,c("SNP","CHR","POS","SNPID","AF_Allele2","N","BETA","SE","p.value")]
+  colnames(loci1)[c(1,3,5,7,8,9)] = c("snp","position","MAF","beta","SE","pvalues")
+  loci1$varbeta = loci1$SE*loci1$SE
+  loci1 = as.list(loci1)
+  loci1$N = 14843
+  loci1$type = "quant"
+  print(str(loci1))
+  res1= data.frame()
+  for(j in 1:length(variants)){
+    final2 = final1[which(final1$var %in% variants[j]),]
+    final2$snp = paste0(final2$variant_id_1,":",final2$variant_id_2,":",final2$variant_id_3,":",final2$variant_id_4)
+    final2 = final2[!duplicated(final2$snp),]
+    final2$snp = gsub("chr","",final2$snp)
+    final2 = final2[which(final2$snp %in% loci1$snp)]
+    final2 = as.list(final2)
+    final2$type = "quant"
+    if(length(final2$snp) > 0) {
+      myresults = coloc.abf(loci1,final2)
+      res = subset(myresults$results,SNP.PP.H4>0.001)
+      res$tissue = variants[j]
+      res$gene_id = final2$gene_id[final2$snp %in% res$snp]
+      res = as.data.frame(res)
+      res1 = rbind(res,res1)
+    } else {
+      next 
+    }
+  }
+  fin = rbind(fin,res1)
+  }
 
 
  
