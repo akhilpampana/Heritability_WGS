@@ -142,7 +142,7 @@ category2 = data.frame()
 category3 = data.frame() 
 category4 = data.frame() 
 for(i in 1:22) {
-lds_seg = read.table(paste0("cat2_chr",i,"_hqp.score.ld"),header=T,colClasses=c("character",rep("numeric",8)))
+lds_seg = read.table(paste0("cat1_chr",i,"_hqp.score.ld"),header=T,colClasses=c("character",rep("numeric",8)))
 quartiles=summary(lds_seg$ldscore_SNP)
 
 lb1 = which(lds_seg$ldscore_SNP <= quartiles[2])
@@ -166,6 +166,29 @@ write.table(category2, "snp_group2.txt", row.names=F, quote=F, col.names=F)
 write.table(category3, "snp_group3.txt", row.names=F, quote=F, col.names=F)
 write.table(category4, "snp_group4.txt", row.names=F, quote=F, col.names=F)
 
+
+### SUBSET TO 4 QUARTILES TO GENERATE GRM 
+module load PLINK/1.90-foss-2016a
+for i in {1..22}; do
+plink --bfile cat1_chr${i}_hqp --extract snp_group1.txt --make-bed --out quartiles/cat1_chr${i}_hqp_q1
+plink --bfile cat1_chr${i}_hqp --extract snp_group2.txt --make-bed --out quartiles/cat1_chr${i}_hqp_q2
+plink --bfile cat1_chr${i}_hqp --extract snp_group3.txt --make-bed --out quartiles/cat1_chr${i}_hqp_q3
+plink --bfile cat1_chr${i}_hqp --extract snp_group4.txt --make-bed --out quartiles/cat1_chr${i}_hqp_q4
+done
+
+
+### MERGE TO ONE MEGA FILE
+ls -l | grep q1 | grep bed | awk ' { print $9 } ' | sed 's|.bed||g' > merge
+plink --bfile cat1_chr1_hqp_q1 --merge-list merge --make-bed --out cat1_hqp_q1
+
+ls -l | grep q2 | grep bed | awk ' { print $9 } ' | sed 's|.bed||g' > merge
+plink --bfile cat1_chr1_hqp_q2 --merge-list merge --make-bed --out cat1_hqp_q2
+
+ls -l | grep q3 | grep bed | awk ' { print $9 } ' | sed 's|.bed||g' > merge
+plink --bfile cat1_chr1_hqp_q3 --merge-list merge --make-bed --out cat1_hqp_q3
+
+ls -l | grep q4 | grep bed | awk ' { print $9 } ' | sed 's|.bed||g' > merge
+plink --bfile cat1_chr1_hqp_q4 --merge-list merge --make-bed --out cat1_hqp_q4
 
 ###############################################################################################################################################################
 # 							   category2 - [0.001,0.01)						       			      #
@@ -576,6 +599,8 @@ for(i in 1:length(chr)){
   print(str(loci1))
   res1= data.frame()
   for(j in 1:length(variants)){
+    
+    ## variant gene pairs assoc
     final2 = final1[which(final1$var %in% variants[j]),]
     final2$snp = paste0(final2$variant_id_1,":",final2$variant_id_2,":",final2$variant_id_3,":",final2$variant_id_4)
     final2 = final2[!duplicated(final2$snp),]
@@ -583,13 +608,23 @@ for(i in 1:length(chr)){
     final2 = final2[which(final2$snp %in% loci1$snp)]
     final2 = as.list(final2)
     final2$type = "quant"
+    
+    ### Genes expressions subset
+    #genes1 = genes_final1[which(genes_final1$var %in% genes[j]),]
+    
+    
     if(length(final2$snp) > 0) {
       myresults = coloc.abf(loci1,final2)
       res = subset(myresults$results,SNP.PP.H4>0.001)
       res$tissue = variants[j]
       res$gene_id = final2$gene_id[final2$snp %in% res$snp]
+      res$gwas_beta = loci1$beta[loci1$snp %in% res$snp]
+      res$gwas_se = loci1$SE[loci1$snp %in% res$snp]
+      res$gwas_p = loci1$pvalues[loci1$snp %in% res$snp]
+      res$MAF_gwas = loci1$MAF[loci1$snp %in% res$snp]
       res = as.data.frame(res)
-      res1 = rbind(res,res1)
+      #res = merge(res,genes1,by.x=c("snp"),by.y=c("variant_id"))
+      res1 = rbind(res1,res)
     } else {
       next 
     }
