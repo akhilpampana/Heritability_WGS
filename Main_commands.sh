@@ -190,6 +190,14 @@ plink --bfile cat1_chr1_hqp_q3 --merge-list merge --make-bed --out cat1_hqp_q3
 ls -l | grep q4 | grep bed | awk ' { print $9 } ' | sed 's|.bed||g' > merge
 plink --bfile cat1_chr1_hqp_q4 --merge-list merge --make-bed --out cat1_hqp_q4
 
+
+### GRM CREATION
+Job Submissions in Cheaha and cut into 200 bins 
+
+### Combine GRMs together as suggested in GCTA manual
+
+### 
+
 ###############################################################################################################################################################
 # 							   category2 - [0.001,0.01)						       			      #
 ###############################################################################################################################################################
@@ -483,9 +491,15 @@ for i in *unrelated.grm.bin ; do readlink -f "$i"  | cut -d'.' -f1-2 >>  path; d
 ###############################################################################################################################################################
 
 ##cat1
-../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm category1_0.0001_0.001/test --pca 20 --threads 10 --out category1_0.0001_0.001/test
+../../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat1_hqp_q1_0.05 --pca 20 --threads 10 --out cat1_hqp_q1_0.05
+../../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat1_hqp_q2_0.05 --pca 20 --threads 10 --out cat1_hqp_q2_0.05
+../../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat1_hqp_q3_0.05 --pca 20 --threads 10 --out cat1_hqp_q3_0.05
+../../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat1_hqp_q4_0.05 --pca 20 --threads 10 --out cat1_hqp_q4_0.05
 ##cat2
-../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm category2_0.001_0.01/cat2_hqp --pca 20 --threads 10 --out category2_0.001_0.01/test
+../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat2_hqp_q1_0.05 --pca 20 --threads 10 --out cat2_hqp_q1_0.05
+../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat2_hqp_q2_0.05 --pca 20 --threads 10 --out cat2_hqp_q2_0.05
+../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat2_hqp_q3_0.05 --pca 20 --threads 10 --out cat2_hqp_q3_0.05
+../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat2_hqp_q4_0.05 --pca 20 --threads 10 --out cat2_hqp_q4_0.05
 ##cat3
 ../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat3_hqp_q1_0.05 --pca 20 --threads 10 --out cat3_hqp_q1_0.05
 ../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat3_hqp_q2_0.05 --pca 20 --threads 10 --out cat3_hqp_q2_0.05
@@ -508,19 +522,19 @@ for i in *unrelated.grm.bin ; do readlink -f "$i"  | cut -d'.' -f1-2 >>  path; d
 ## phenotype subset 6 different phenotypes
 cat phenotypes/Combined_4cohorts_NTproBNP_08222022.tsv | awk ' { print 0,"\t",$1,"\t" $10 } ' > phenotypes/Combined_4cohorts_NTproBNP_08222022.phen
 
-GCTA \
-	--reml \
-	--mgrm ${mgrm_file_path} \
-	--reml-no-constrain \
-	--pheno ${phenotype_file} \
-	--out ${REML_output_file} \
-	--thread-num ${ncpu} \
-	--qcovar ${PCA_out} \
-	--reml-no-lrt
-
 ### cat 1
+../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat1_hqp_q1_0.05 --reml-no-constrain --pheno ../../../../../../phenotypes/Combined_4cohorts_NTproBNP_08222022.phen --qcovar cat2_hqp_q1_0.05.eigenvec --out cat1_hqp_q1_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat1_hqp_q2_0.05 --reml-no-constrain --pheno ../../../../../../phenotypes/Combined_4cohorts_NTproBNP_08222022.phen --qcovar cat2_hqp_q2_0.05.eigenvec --out cat1_hqp_q2_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat1_hqp_q3_0.05 --reml-no-constrain --pheno ../../../../../../phenotypes/Combined_4cohorts_NTproBNP_08222022.phen --qcovar cat2_hqp_q3_0.05.eigenvec --out cat1_hqp_q3_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat1_hqp_q4_0.05 --reml-no-constrain --pheno ../../../../../../phenotypes/Combined_4cohorts_NTproBNP_08222022.phen --qcovar cat2_hqp_q4_0.05.eigenvec --out cat1_hqp_q4_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+
 
 ### cat 2
+../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat2_hqp_q1_0.05 --reml-no-constrain --pheno ../../../../../../phenotypes/Combined_4cohorts_NTproBNP_08222022.phen --qcovar cat2_hqp_q1_0.05.eigenvec --out cat2_hqp_q1_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat2_hqp_q2_0.05 --reml-no-constrain --pheno ../../../../../../phenotypes/Combined_4cohorts_NTproBNP_08222022.phen --qcovar cat2_hqp_q2_0.05.eigenvec --out cat2_hqp_q2_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat2_hqp_q3_0.05 --reml-no-constrain --pheno ../../../../../../phenotypes/Combined_4cohorts_NTproBNP_08222022.phen --qcovar cat2_hqp_q3_0.05.eigenvec --out cat2_hqp_q3_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat2_hqp_q4_0.05 --reml-no-constrain --pheno ../../../../../../phenotypes/Combined_4cohorts_NTproBNP_08222022.phen --qcovar cat2_hqp_q4_0.05.eigenvec --out cat2_hqp_q4_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+
 
 ### cat 3
 ../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat3_hqp_q1_0.05 --reml-no-constrain --pheno ../../../../../phenotypes/Combined_4cohorts_NTproBNP_08222022.phen --qcovar cat3_hqp_q1_0.05.eigenvec --out cat3_hqp_q1_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
