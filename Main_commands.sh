@@ -193,6 +193,8 @@ plink --bfile cat1_chr1_hqp_q4 --merge-list merge --make-bed --out cat1_hqp_q4
 
 ### GRM CREATION
 Job Submissions in Cheaha and cut into 200 bins 
+## last jobs didnt ran so did it manually
+gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile cat1_hqp_q1 --remove GRM/cat1_hqp_q1.part_200.grm.id --make-grm --make-grm-alg 1  --out ../TOPMED/BNP/NTproBNP/NTproBNP_14k/gwas/heritability/subset_for_h2_calc/category1_0.0001_0.001/unrelated/quartiles/GRM/Q1/cat1_hqp_q1.part_200_197 --thread-num 2
 
 ### Combine GRMs together as suggested in GCTA manual
 
