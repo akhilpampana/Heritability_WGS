@@ -197,8 +197,19 @@ Job Submissions in Cheaha and cut into 200 bins
 gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile cat1_hqp_q1 --remove GRM/cat1_hqp_q1.part_200.grm.id --make-grm --make-grm-alg 1  --out ../TOPMED/BNP/NTproBNP/NTproBNP_14k/gwas/heritability/subset_for_h2_calc/category1_0.0001_0.001/unrelated/quartiles/GRM/Q1/cat1_hqp_q1.part_200_197 --thread-num 2
 
 ### Combine GRMs together as suggested in GCTA manual
+ls -l | grep id | awk ' { print $9 }' | sed 's|.grm.id||g' > merge
 
-### 
+cat cat1_hqp_q1.part_200_*.grm.id > cat1_hqp_q1.grm.id
+cat cat1_hqp_q1.part_200_*.grm.bin > cat1_hqp_q1.grm.bin
+cat cat1_hqp_q1.part_200_*.grm.N.bin > cat1_hqp_q1.grm.N.bin
+
+
+
+### GRM cutoff 
+../../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm Q1/cat1_hqp_q1 --grm-cutoff 0.05 --make-grm --out Q1/cat1_hqp_q1_0.05
+../../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm Q2/cat1_hqp_q2 --grm-cutoff 0.05 --make-grm --out Q2/cat1_hqp_q2_0.05
+../../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm Q3/cat1_hqp_q3 --grm-cutoff 0.05 --make-grm --out Q3/cat1_hqp_q3_0.05
+../../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm Q4/cat1_hqp_q4 --grm-cutoff 0.05 --make-grm --out Q4/cat1_hqp_q4_0.05
 
 ###############################################################################################################################################################
 # 							   category2 - [0.001,0.01)						       			      #
@@ -493,10 +504,10 @@ for i in *unrelated.grm.bin ; do readlink -f "$i"  | cut -d'.' -f1-2 >>  path; d
 ###############################################################################################################################################################
 
 ##cat1
-../../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat1_hqp_q1_0.05 --pca 20 --threads 10 --out cat1_hqp_q1_0.05
-../../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat1_hqp_q2_0.05 --pca 20 --threads 10 --out cat1_hqp_q2_0.05
-../../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat1_hqp_q3_0.05 --pca 20 --threads 10 --out cat1_hqp_q3_0.05
-../../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat1_hqp_q4_0.05 --pca 20 --threads 10 --out cat1_hqp_q4_0.05
+../../../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat1_hqp_q1_0.05 --pca 20 --threads 10 --out cat1_hqp_q1_0.05
+../../../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat1_hqp_q2_0.05 --pca 20 --threads 10 --out cat1_hqp_q2_0.05
+../../../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat1_hqp_q3_0.05 --pca 20 --threads 10 --out cat1_hqp_q3_0.05
+../../../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat1_hqp_q4_0.05 --pca 20 --threads 10 --out cat1_hqp_q4_0.05
 ##cat2
 ../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat2_hqp_q1_0.05 --pca 20 --threads 10 --out cat2_hqp_q1_0.05
 ../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat2_hqp_q2_0.05 --pca 20 --threads 10 --out cat2_hqp_q2_0.05
