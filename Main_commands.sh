@@ -193,94 +193,39 @@ plink --bfile cat1_chr1_hqp_q4 --merge-list merge --make-bed --out cat1_hqp_q4
 
 
 ### GRM CREATION
-Job Submissions in Cheaha and cut into 200 bins ## jobs dint worked well for next steps - so redoing again
-## last jobs didnt ran so did it manually
-## split samples by number of lines
+### Job submissions for grms creation in 5 parts
 
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q1  --keep sample/xaa --make-grm --make-grm-alg 1  --out Q1/cat1_hqp_q1.part_1 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q1  --keep sample/xab --make-grm --make-grm-alg 1  --out Q1/cat1_hqp_q1.part_2 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q1  --keep sample/xac --make-grm --make-grm-alg 1  --out Q1/cat1_hqp_q1.part_3 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q1  --keep sample/xad --make-grm --make-grm-alg 1  --out Q1/cat1_hqp_q1.part_4 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q1  --keep sample/xae --make-grm --make-grm-alg 1  --out Q1/cat1_hqp_q1.part_5 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q1  --keep sample/xaf --make-grm --make-grm-alg 1  --out Q1/cat1_hqp_q1.part_6 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q1  --keep sample/xag --make-grm --make-grm-alg 1  --out Q1/cat1_hqp_q1.part_7 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q1  --keep sample/xah --make-grm --make-grm-alg 1  --out Q1/cat1_hqp_q1.part_8 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q1  --keep sample/xai --make-grm --make-grm-alg 1  --out Q1/cat1_hqp_q1.part_9 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q1  --keep sample/xaj --make-grm --make-grm-alg 1  --out Q1/cat1_hqp_q1.part_10 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q1  --keep sample/xak --make-grm --make-grm-alg 1  --out Q1/cat1_hqp_q1.part_11 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q1  --keep sample/xal --make-grm --make-grm-alg 1  --out Q1/cat1_hqp_q1.part_12 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q1  --keep sample/xam --make-grm --make-grm-alg 1  --out Q1/cat1_hqp_q1.part_13 --thread-num 2
-
-
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q2  --keep sample/xaa --make-grm --make-grm-alg 1  --out Q2/cat1_hqp_q2.part_1 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q2  --keep sample/xab --make-grm --make-grm-alg 1  --out Q2/cat1_hqp_q2.part_2 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q2  --keep sample/xac --make-grm --make-grm-alg 1  --out Q2/cat1_hqp_q2.part_3 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q2  --keep sample/xad --make-grm --make-grm-alg 1  --out Q2/cat1_hqp_q2.part_4 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q2  --keep sample/xae --make-grm --make-grm-alg 1  --out Q2/cat1_hqp_q2.part_5 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q2  --keep sample/xaf --make-grm --make-grm-alg 1  --out Q2/cat1_hqp_q2.part_6 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q2  --keep sample/xag --make-grm --make-grm-alg 1  --out Q2/cat1_hqp_q2.part_7 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q2  --keep sample/xah --make-grm --make-grm-alg 1  --out Q2/cat1_hqp_q2.part_8 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q2  --keep sample/xai --make-grm --make-grm-alg 1  --out Q2/cat1_hqp_q2.part_9 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q2  --keep sample/xaj --make-grm --make-grm-alg 1  --out Q2/cat1_hqp_q2.part_10 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q2  --keep sample/xak --make-grm --make-grm-alg 1  --out Q2/cat1_hqp_q2.part_11 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q2  --keep sample/xal --make-grm --make-grm-alg 1  --out Q2/cat1_hqp_q2.part_12 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q2  --keep sample/xam --make-grm --make-grm-alg 1  --out Q2/cat1_hqp_q2.part_13 --thread-num 2
-
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q3  --keep sample/xaa --make-grm --make-grm-alg 1  --out Q3/cat1_hqp_q3.part_1 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q3  --keep sample/xab --make-grm --make-grm-alg 1  --out Q3/cat1_hqp_q3.part_2 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q3  --keep sample/xac --make-grm --make-grm-alg 1  --out Q3/cat1_hqp_q3.part_3 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q3  --keep sample/xad --make-grm --make-grm-alg 1  --out Q3/cat1_hqp_q3.part_4 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q3  --keep sample/xae --make-grm --make-grm-alg 1  --out Q3/cat1_hqp_q3.part_5 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q3  --keep sample/xaf --make-grm --make-grm-alg 1  --out Q3/cat1_hqp_q3.part_6 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q3  --keep sample/xag --make-grm --make-grm-alg 1  --out Q3/cat1_hqp_q3.part_7 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q3  --keep sample/xah --make-grm --make-grm-alg 1  --out Q3/cat1_hqp_q3.part_8 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q3  --keep sample/xai --make-grm --make-grm-alg 1  --out Q3/cat1_hqp_q3.part_9 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q3  --keep sample/xaj --make-grm --make-grm-alg 1  --out Q3/cat1_hqp_q3.part_10 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q3  --keep sample/xak --make-grm --make-grm-alg 1  --out Q3/cat1_hqp_q3.part_11 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q3  --keep sample/xal --make-grm --make-grm-alg 1  --out Q3/cat1_hqp_q3.part_12 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q3  --keep sample/xam --make-grm --make-grm-alg 1  --out Q3/cat1_hqp_q3.part_13 --thread-num 2
-
-
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q4 --keep sample/xaa --make-grm --make-grm-alg 1  --out Q4/cat1_hqp_q4.part_1 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q4 --keep sample/xab --make-grm --make-grm-alg 1  --out Q4/cat1_hqp_q4.part_2 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q4 --keep sample/xac --make-grm --make-grm-alg 1  --out Q4/cat1_hqp_q4.part_3 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q4 --keep sample/xad --make-grm --make-grm-alg 1  --out Q4/cat1_hqp_q4.part_4 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q4 --keep sample/xae --make-grm --make-grm-alg 1  --out Q4/cat1_hqp_q4.part_5 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q4 --keep sample/xaf --make-grm --make-grm-alg 1  --out Q4/cat1_hqp_q4.part_6 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q4 --keep sample/xag --make-grm --make-grm-alg 1  --out Q4/cat1_hqp_q4.part_7 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q4 --keep sample/xah --make-grm --make-grm-alg 1  --out Q4/cat1_hqp_q4.part_8 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q4 --keep sample/xai --make-grm --make-grm-alg 1  --out Q4/cat1_hqp_q4.part_9 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q4 --keep sample/xaj --make-grm --make-grm-alg 1  --out Q4/cat1_hqp_q4.part_10 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q4 --keep sample/xak --make-grm --make-grm-alg 1  --out Q4/cat1_hqp_q4.part_11 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q4 --keep sample/xal --make-grm --make-grm-alg 1  --out Q4/cat1_hqp_q4.part_12 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q4 --keep sample/xam --make-grm --make-grm-alg 1  --out Q4/cat1_hqp_q4.part_13 --thread-num 2
-
-
-
-#../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q1 --remove cat1_hqp_q1.part_200.grm.id --make-grm --make-grm-alg 1  --out Q1/cat1_hqp_q1.part_200_197 --thread-num 2
-#../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q2 --remove cat1_hqp_q2.part_200.grm.id --make-grm --make-grm-alg 1  --out Q2/cat1_hqp_q2.part_200_197 --thread-num 2
-#../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q3 --remove cat1_hqp_q3.part_200.grm.id --make-grm --make-grm-alg 1  --out Q3/cat1_hqp_q3.part_200_197 --thread-num 2
-#../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --bfile ../cat1_hqp_q4 --remove cat1_hqp_q4.part_200.grm.id --make-grm --make-grm-alg 1  --out Q4/cat1_hqp_q4.part_200_197 --thread-num 2
 
 ### GRM cutoff
-for i in {1..13}; do
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm Q1/cat1_hqp_q1.part_${i} --grm-cutoff 0.05 --make-grm --out Q1/cat1_hqp_q1.part_${i}_0.05 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm Q2/cat1_hqp_q2.part_${i} --g;srm-cutoff 0.05 --make-grm --out Q2/cat1_hqp_q2.part_${i}_0.05 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm Q3/cat1_hqp_q3.part_${i} --grm-cutoff 0.05 --make-grm --out Q3/cat1_hqp_q3.part_${i}_0.05 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --grm Q4/cat1_hqp_q4.part_${i} --grm-cutoff 0.05 --make-grm --out Q4/cat1_hqp_q4.part_${i}_0.05 --thread-num 2
-done
-
-### Combine GRMs together as suggested in GCTA manual
-#ls -l | grep id | awk ' { print $9 }' | sed 's|.grm.id||g' > merge
+#for i in {1..13}; do
+#../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm Q1/cat1_hqp_q1.part_${i} --grm-cutoff 0.05 --make-grm --out Q1/cat1_hqp_q1.part_${i}_0.05 --thread-num 2
+#../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm Q2/cat1_hqp_q2.part_${i} --g;srm-cutoff 0.05 --make-grm --out Q2/cat1_hqp_q2.part_${i}_0.05 --thread-num 2
+#../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm Q3/cat1_hqp_q3.part_${i} --grm-cutoff 0.05 --make-grm --out Q3/cat1_hqp_q3.part_${i}_0.05 --thread-num 2
+#../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --grm Q4/cat1_hqp_q4.part_${i} --grm-cutoff 0.05 --make-grm --out Q4/cat1_hqp_q4.part_${i}_0.05 --thread-num 2
+#done
 
 
 ### merge files together
-#cat cat1_hqp_q1.part_*_0.05.grm.id > cat1_hqp_q1_0.05.grm.id
-#cat cat1_hqp_q1.part_*_0.05.grm.bin > cat1_hqp_q1_0.05.grm.bin
-#cat cat1_hqp_q1.part_*_0.05.grm.N.bin > cat1_hqp_q1_0.05.grm.N.bin
 
+cat cat1_hqp_q2.part_5_*.grm.id > cat1_hqp_q1.grm.id
+cat cat1_hqp_q2.part_5_*.grm.bin > cat1_hqp_q1.grm.bin
+cat cat1_hqp_q2.part_5_*.grm.N.bin > cat1_hqp_q1.grm.N.bin
 
+cat cat1_hqp_q2.part_5_*.grm.id > cat1_hqp_q2.grm.id
+cat cat1_hqp_q2.part_5_*.grm.bin > cat1_hqp_q2.grm.bin
+cat cat1_hqp_q2.part_5_*.grm.N.bin > cat1_hqp_q2.grm.N.bin
 
+cat cat1_hqp_q3.part_5_*.grm.id > cat1_hqp_q3.grm.id
+cat cat1_hqp_q3.part_5_*.grm.bin > cat1_hqp_q3.grm.bin
+cat cat1_hqp_q3.part_5_*.grm.N.bin > cat1_hqp_q3.grm.N.bin
+
+cat cat1_hqp_q4.part_5_*.grm.id > cat1_hqp_q4.grm.id
+cat cat1_hqp_q4.part_5_*.grm.bin > cat1_hqp_q4.grm.bin
+cat cat1_hqp_q4.part_5_*.grm.N.bin > cat1_hqp_q4.grm.N.bin
+
+				OR
+				
+../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --mgrm Q3/merge --make-grm --out Q3/cat1_hqp_q3
 
 ###############################################################################################################################################################
 # 							   category2 - [0.001,0.01)						       			      #
@@ -373,10 +318,10 @@ plink --bfile cat2_chr1_hqp_q4 --merge-list merge --make-bed --out cat2_hqp_q4
 ../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile cat2_hqp_q4  --make-grm-alg 1 --thread-num 4 --out cat2_hqp_q4
 
 ### GRM cutoff 
-../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat2_hqp_q1 --grm-cutoff 0.05 --make-grm --out cat2_hqp_q1_0.05
-../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat2_hqp_q2 --grm-cutoff 0.05 --make-grm --out cat2_hqp_q2_0.05
-../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat2_hqp_q3 --grm-cutoff 0.05 --make-grm --out cat2_hqp_q3_0.05
-../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat2_hqp_q4 --grm-cutoff 0.05 --make-grm --out cat2_hqp_q4_0.05
+#../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat2_hqp_q1 --grm-cutoff 0.05 --make-grm --out cat2_hqp_q1_0.05
+#../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat2_hqp_q2 --grm-cutoff 0.05 --make-grm --out cat2_hqp_q2_0.05
+#../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat2_hqp_q3 --grm-cutoff 0.05 --make-grm --out cat2_hqp_q3_0.05
+#../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat2_hqp_q4 --grm-cutoff 0.05 --make-grm --out cat2_hqp_q4_0.05
 
 ###############################################################################################################################################################
 # 							   category3 - [0.01,0.05)						       			      #
@@ -430,10 +375,10 @@ write.table(lb4_snp, "snp_group4.txt", row.names=F, quote=F, col.names=F)
 ../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile cat3_chr_all_hqp  --extract snp_group4.txt --make-grm-alg 1 --thread-num 4 --out cat3_hqp_q4
 
 ### GRM cutoff 
-../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat3_hqp_q1 --grm-cutoff 0.05 --make-grm --out cat3_hqp_q1_0.05
-../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat3_hqp_q2 --grm-cutoff 0.05 --make-grm --out cat3_hqp_q2_0.05
-../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat3_hqp_q3 --grm-cutoff 0.05 --make-grm --out cat3_hqp_q3_0.05
-../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat3_hqp_q4 --grm-cutoff 0.05 --make-grm --out cat3_hqp_q4_0.05
+#../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat3_hqp_q1 --grm-cutoff 0.05 --make-grm --out cat3_hqp_q1_0.05
+#../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat3_hqp_q2 --grm-cutoff 0.05 --make-grm --out cat3_hqp_q2_0.05
+#../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat3_hqp_q3 --grm-cutoff 0.05 --make-grm --out cat3_hqp_q3_0.05
+#../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat3_hqp_q4 --grm-cutoff 0.05 --make-grm --out cat3_hqp_q4_0.05
 
 
 ###############################################################################################################################################################
@@ -487,10 +432,10 @@ write.table(lb4_snp, "snp_group4.txt", row.names=F, quote=F, col.names=F)
 ../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile cat4_chr_hqp --extract snp_group4.txt --make-grm-alg 1 --thread-num 4 --out cat4_hqp_q4
 
 ### GRM cutoff 
-../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat4_hqp_q1 --grm-cutoff 0.05 --make-grm --out cat4_hqp_q1_0.05
-../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat4_hqp_q2 --grm-cutoff 0.05 --make-grm --out cat4_hqp_q2_0.05
-../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat4_hqp_q3 --grm-cutoff 0.05 --make-grm --out cat4_hqp_q3_0.05
-../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat4_hqp_q4 --grm-cutoff 0.05 --make-grm --out cat4_hqp_q4_0.05
+#../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat4_hqp_q1 --grm-cutoff 0.05 --make-grm --out cat4_hqp_q1_0.05
+#../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat4_hqp_q2 --grm-cutoff 0.05 --make-grm --out cat4_hqp_q2_0.05
+#../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat4_hqp_q3 --grm-cutoff 0.05 --make-grm --out cat4_hqp_q3_0.05
+#../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat4_hqp_q4 --grm-cutoff 0.05 --make-grm --out cat4_hqp_q4_0.05
 
 
 
@@ -499,26 +444,11 @@ write.table(lb4_snp, "snp_group4.txt", row.names=F, quote=F, col.names=F)
 ###############################################################################################################################################################
 
 ##cat1
-for i in {1..13}; do
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm Q1/cat1_hqp_q1.part_${i}_0.05 --pca 20 --threads 10 --out Q1/cat1_hqp_q1.part_${i}_0.05
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm Q2/cat1_hqp_q2.part_${i}_0.05 --pca 20 --threads 10 --out Q2/cat1_hqp_q2.part_${i}_0.05
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm Q3/cat1_hqp_q3.part_${i}_0.05 --pca 20 --threads 10 --out Q3/cat1_hqp_q3.part_${i}_0.05
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm Q4/cat1_hqp_q4.part_${i}_0.05 --pca 20 --threads 10 --out Q4/cat1_hqp_q4.part_${i}_0.05
-done
+../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm cat1_hqp_q1 --pca 20 --threads 10 --out cat1_hqp_q1
+../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm cat1_hqp_q2 --pca 20 --threads 10 --out cat1_hqp_q2
+../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm cat1_hqp_q3 --pca 20 --threads 10 --out cat1_hqp_q3
+../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm cat1_hqp_q4 --pca 20 --threads 10 --out cat1_hqp_q4
 
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --grm Q4/cat1_hqp_q4.part_8 --grm-cutoff 0.05 --make-grm --out Q4/cat1_hqp_q4.part_8_0.05 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm Q4/cat1_hqp_q4.part_8_0.05 --pca 20 --threads 10 --out Q4/cat1_hqp_q4.part_8_0.05
-
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1  --grm Q4/cat1_hqp_q4.part_11 --grm-cutoff 0.05 --make-grm --out Q4/cat1_hqp_q4.part_11_0.05 --thread-num 2
-../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm Q4/cat1_hqp_q4.part_11_0.05 --pca 20 --threads 10 --out Q4/cat1_hqp_q4.part_11_0.05
-
-cat Q1/cat1_hqp_q1.part_*_0.05.eigenvec > Q1/cat1_hqp_q1.eigenvec
-cat Q2/cat1_hqp_q2.part_*_0.05.eigenvec > Q2/cat1_hqp_q2.eigenvec
-cat Q3/cat1_hqp_q3.part_*_0.05.eigenvec > Q3/cat1_hqp_q3.eigenvec
-cat Q4/cat1_hqp_q4.part_*_0.05.eigenvec > Q4/cat1_hqp_q4.eigenvec
-
-### merge files for each quartile
-ls -l | grep 0.05.grm.id | awk ' { print $9 }' | sed 's|.grm.id||g' > merge
 
 ##cat2
 ../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat2_hqp_q1_0.05 --pca 20 --threads 10 --out cat2_hqp_q1_0.05
@@ -548,10 +478,10 @@ ls -l | grep 0.05.grm.id | awk ' { print $9 }' | sed 's|.grm.id||g' > merge
 cat phenotypes/Combined_4cohorts_NTproBNP_08222022.tsv | awk ' { print 0,"\t",$1,"\t" $10 } ' > phenotypes/Combined_4cohorts_NTproBNP_08222022.phen
 
 ### cat 1
-../../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --mgrm Q1/merge --reml-no-constrain --pheno ../../../../../../../phenotypes/Combined_4cohorts_NTproBNP_08222022.phen --qcovar Q1/cat1_hqp_q1.eigenvec --out cat1_hqp_q1_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
-../../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --mgrm Q2/merge --reml-no-constrain --pheno ../../../../../../../phenotypes/Combined_4cohorts_NTproBNP_08222022.phen --qcovar Q2/cat1_hqp_q2.eigenvec --out cat1_hqp_q2_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
-../../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --mgrm Q3/merge --reml-no-constrain --pheno ../../../../../../../phenotypes/Combined_4cohorts_NTproBNP_08222022.phen --qcovar Q3/cat1_hqp_q3.eigenvec --out cat1_hqp_q3_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
-../../../../../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --mgrm Q4/merge --reml-no-constrain --pheno ../../../../../../../phenotypes/Combined_4cohorts_NTproBNP_08222022.phen --qcovar Q4/cat1_hqp_q4.eigenvec --out cat1_hqp_q4_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm cat1_hqp_q1 --reml-no-constrain --pheno ../../../../../../../phenotypes/Combined_4cohorts_NTproBNP_08222022.phen --qcovar cat1_hqp_q1.eigenvec --out cat1_hqp_q1 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm cat1_hqp_q2 --reml-no-constrain --pheno ../../../../../../../phenotypes/Combined_4cohorts_NTproBNP_08222022.phen --qcovar cat1_hqp_q2.eigenvec --out cat1_hqp_q2 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm cat1_hqp_q3 --reml-no-constrain --pheno ../../../../../../../phenotypes/Combined_4cohorts_NTproBNP_08222022.phen --qcovar cat1_hqp_q3.eigenvec --out cat1_hqp_q3 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm cat1_hqp_q4 --reml-no-constrain --pheno ../../../../../../../phenotypes/Combined_4cohorts_NTproBNP_08222022.phen --qcovar cat1_hqp_q4.eigenvec --out cat1_hqp_q4 --thread-num 10 --reml-no-lrt --reml-maxit 10000
 
 
 ### cat 2
