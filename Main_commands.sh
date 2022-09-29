@@ -469,7 +469,7 @@ write.table(lb4_snp, "snp_group4.txt", row.names=F, quote=F, col.names=F)
 # 							 		REML							       			      #
 ###############################################################################################################################################################
 #Run unconstrained REML from multiple GRMs (for GREML-LDMS), fitting PCs as quantitative covariates
-#REML-no-lrt doesn't calculate the reduced model
+#REML-no-lrt doesn't calculate the reduced model - repeat the multi ethnic step with all other categories
 
 ## phenotype subset 6 different phenotypes
 cat phenotypes/Combined_4cohorts_NTproBNP_08222022.tsv | awk ' { print 0,"\t",$1,"\t" $10 } ' > phenotypes/Combined_4cohorts_NTproBNP_08222022.phen
@@ -479,6 +479,32 @@ cat phenotypes/Combined_4cohorts_NTproBNP_08222022.tsv | awk ' { print 0,"\t",$1
 ../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm cat1_hqp_q2_0.05 --reml-no-constrain --pheno ../../../../../../../phenotypes/Combined_4cohorts_NTproBNP_08222022.phen --qcovar cat1_hqp_q2_0.05.eigenvec --out cat1_hqp_q2_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
 ../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm cat1_hqp_q3_0.05 --reml-no-constrain --pheno ../../../../../../../phenotypes/Combined_4cohorts_NTproBNP_08222022.phen --qcovar cat1_hqp_q3_0.05.eigenvec --out cat1_hqp_q3_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
 ../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm cat1_hqp_q4_0.05 --reml-no-constrain --pheno ../../../../../../../phenotypes/Combined_4cohorts_NTproBNP_08222022.phen --qcovar cat1_hqp_q4_0.05.eigenvec --out cat1_hqp_q4_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+
+../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm cat1_hqp_q1_0.05 --reml-no-constrain --pheno ../../../../../../../phenotypes/black_NTproBNP_08222022.phen --qcovar cat1_hqp_q1_0.05.eigenvec --out cat1_hqp_q1_0.05_afr --thread-num 10 --reml-no-lrt --reml-maxit 10000
+../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm cat1_hqp_q2_0.05 --reml-no-constrain --pheno ../../../../../../../phenotypes/black_NTproBNP_08222022.phen --qcovar cat1_hqp_q2_0.05.eigenvec --out cat1_hqp_q2_0.05_afr --thread-num 10 --reml-no-lrt --reml-maxit 10000
+../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm cat1_hqp_q3_0.05 --reml-no-constrain --pheno ../../../../../../../phenotypes/black_NTproBNP_08222022.phen --qcovar cat1_hqp_q3_0.05.eigenvec --out cat1_hqp_q3_0.05_afr --thread-num 10 --reml-no-lrt --reml-maxit 10000
+../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm cat1_hqp_q4_0.05 --reml-no-constrain --pheno ../../../../../../../phenotypes/black_NTproBNP_08222022.phen --qcovar cat1_hqp_q4_0.05.eigenvec --out cat1_hqp_q4_0.05_afr --thread-num 10 --reml-no-lrt --reml-maxit 10000
+
+
+../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm cat1_hqp_q1_0.05 --reml-no-constrain --pheno ../../../../../../../phenotypes/white_NTproBNP_08222022.phen --qcovar cat1_hqp_q1_0.05.eigenvec --out cat1_hqp_q1_0.05_eur --thread-num 10 --reml-no-lrt --reml-maxit 10000
+../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm cat1_hqp_q2_0.05 --reml-no-constrain --pheno ../../../../../../../phenotypes/white_NTproBNP_08222022.phen --qcovar cat1_hqp_q2_0.05.eigenvec --out cat1_hqp_q2_0.05_eur --thread-num 10 --reml-no-lrt --reml-maxit 10000
+../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm cat1_hqp_q3_0.05 --reml-no-constrain --pheno ../../../../../../../phenotypes/white_NTproBNP_08222022.phen --qcovar cat1_hqp_q3_0.05.eigenvec --out cat1_hqp_q3_0.05_eur --thread-num 10 --reml-no-lrt --reml-maxit 10000
+../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm cat1_hqp_q4_0.05 --reml-no-constrain --pheno ../../../../../../../phenotypes/white_NTproBNP_08222022.phen --qcovar cat1_hqp_q4_0.05.eigenvec --out cat1_hqp_q4_0.05_eur --thread-num 10 --reml-no-lrt --reml-maxit 10000
+
+../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm cat1_hqp_q1_0.05 --reml-no-constrain --pheno ../../../../../../../phenotypes/others_NTproBNP_08222022.phen --qcovar cat1_hqp_q1_0.05.eigenvec --out cat1_hqp_q1_0.05_others --thread-num 10 --reml-no-lrt --reml-maxit 10000
+../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm cat1_hqp_q2_0.05 --reml-no-constrain --pheno ../../../../../../../phenotypes/others_NTproBNP_08222022.phen --qcovar cat1_hqp_q2_0.05.eigenvec --out cat1_hqp_q2_0.05_others --thread-num 10 --reml-no-lrt --reml-maxit 10000
+../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm cat1_hqp_q3_0.05 --reml-no-constrain --pheno ../../../../../../../phenotypes/others_NTproBNP_08222022.phen --qcovar cat1_hqp_q3_0.05.eigenvec --out cat1_hqp_q3_0.05_others --thread-num 10 --reml-no-lrt --reml-maxit 10000
+../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm cat1_hqp_q4_0.05 --reml-no-constrain --pheno ../../../../../../../phenotypes/others_NTproBNP_08222022.phen --qcovar cat1_hqp_q4_0.05.eigenvec --out cat1_hqp_q4_0.05_others --thread-num 10 --reml-no-lrt --reml-maxit 10000
+
+../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm cat1_hqp_q1_0.05 --reml-no-constrain --pheno ../../../../../../../phenotypes/male_NTproBNP_08222022.phen --qcovar cat1_hqp_q1_0.05.eigenvec --out cat1_hqp_q1_0.05_male --thread-num 10 --reml-no-lrt --reml-maxit 10000
+../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm cat1_hqp_q2_0.05 --reml-no-constrain --pheno ../../../../../../../phenotypes/male_NTproBNP_08222022.phen --qcovar cat1_hqp_q2_0.05.eigenvec --out cat1_hqp_q2_0.05_male --thread-num 10 --reml-no-lrt --reml-maxit 10000
+../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm cat1_hqp_q3_0.05 --reml-no-constrain --pheno ../../../../../../../phenotypes/male_NTproBNP_08222022.phen --qcovar cat1_hqp_q3_0.05.eigenvec --out cat1_hqp_q3_0.05_male --thread-num 10 --reml-no-lrt --reml-maxit 10000
+../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm cat1_hqp_q4_0.05 --reml-no-constrain --pheno ../../../../../../../phenotypes/male_NTproBNP_08222022.phen --qcovar cat1_hqp_q4_0.05.eigenvec --out cat1_hqp_q4_0.05_male --thread-num 10 --reml-no-lrt --reml-maxit 10000
+
+../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm cat1_hqp_q1_0.05 --reml-no-constrain --pheno ../../../../../../../phenotypes/female_NTproBNP_08222022.phen --qcovar cat1_hqp_q1_0.05.eigenvec --out cat1_hqp_q1_0.05_female --thread-num 10 --reml-no-lrt --reml-maxit 10000
+../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm cat1_hqp_q2_0.05 --reml-no-constrain --pheno ../../../../../../../phenotypes/female_NTproBNP_08222022.phen --qcovar cat1_hqp_q2_0.05.eigenvec --out cat1_hqp_q2_0.05_female --thread-num 10 --reml-no-lrt --reml-maxit 10000
+../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm cat1_hqp_q3_0.05 --reml-no-constrain --pheno ../../../../../../../phenotypes/female_NTproBNP_08222022.phen --qcovar cat1_hqp_q3_0.05.eigenvec --out cat1_hqp_q3_0.05_female --thread-num 10 --reml-no-lrt --reml-maxit 10000
+../gcta-1.94.1-linux-kernel-2-x86_64/gcta-1.94.1 --grm cat1_hqp_q4_0.05 --reml-no-constrain --pheno ../../../../../../../phenotypes/female_NTproBNP_08222022.phen --qcovar cat1_hqp_q4_0.05.eigenvec --out cat1_hqp_q4_0.05_female --thread-num 10 --reml-no-lrt --reml-maxit 10000
 
 
 ### cat 2
