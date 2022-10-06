@@ -1,3 +1,4 @@
+### ancestry subsets
 for i in  {1..22} ; do 
 plink2 --bfile freeze10.14k.chr${i}.0.0001_var_unrel --keep ../../../../../phenotypes/black_NTproBNP_08222022.phen --make-bed --out black/chr${i}  ; 
 plink2 --bfile freeze10.14k.chr${i}.0.0001_var_unrel --keep ../../../../../phenotypes/white_NTproBNP_08222022.phen --make-bed --out white/chr${i}  ; 
@@ -12,6 +13,139 @@ plink2 --bfile  white/chr${i} --freq --out white/chr${i}  ;
 plink2 --bfile male/chr${i} --freq  --out male/chr${i}   ; 
 plink2 --bfile male/chr${i} --freq  --out female/chr${i}  ; 
 done
+
+
+### Variants subset to maf bins
+
+#black
+require(data.table)
+category1 = data.frame() ## [0.0001,0.001)
+category2 = data.frame() ## [0.001,0.01)
+category3 = data.frame() ## [0.01,0.05)
+category4 = data.frame() ## [0.05]
+for(i in 1:22) {
+	tmp = fread(paste0("black/chr",i,".afreq"))
+	tmp = tmp[which(!(tmp$ALT_FREQS == 0)),]
+	tmp = tmp[which(tmp$ALT_FREQS >= 0.0001),]
+	tmp1 = tmp[which(tmp$ALT_FREQS >= 0.0001 & tmp$ALT_FREQS < 0.001),]
+	category1 = rbind(category1,tmp1)
+
+	tmp1 = tmp[which(tmp$ALT_FREQS >= 0.001 & tmp$ALT_FREQS < 0.01),]
+	category2 = rbind(category2,tmp1)
+	
+	tmp1 = tmp[which(tmp$ALT_FREQS >= 0.01 & tmp$ALT_FREQS < 0.05),]
+	category3 = rbind(category3,tmp1)
+	
+	tmp1 = tmp[which(tmp$ALT_FREQS >= 0.05),]
+	category4 = rbind(category4,tmp1)
+	
+	}
+
+save(category1,category2,category3,category4,file="black/allele_frequence_cutoff_4cat_unrel_10062022.rda")
+
+write.table(category1,file="black/category1_0.0001_0.001.csv",row.names=F,col.names=T,sep="\t",dec=".",quote=F)
+write.table(category2,file="black/category2_0.001_0.01.csv",row.names=F,col.names=T,sep="\t",dec=".",quote=F)
+write.table(category3,file="black/category3_0.01_0.05.csv",row.names=F,col.names=T,sep="\t",dec=".",quote=F)
+write.table(category4,file="black/category4_0.05.csv",row.names=F,col.names=T,sep="\t",dec=".",quote=F)
+
+
+
+#white
+require(data.table)
+category1 = data.frame() ## [0.0001,0.001)
+category2 = data.frame() ## [0.001,0.01)
+category3 = data.frame() ## [0.01,0.05)
+category4 = data.frame() ## [0.05]
+for(i in 1:22) {
+	tmp = fread(paste0("white/chr",i,".afreq"))
+	tmp = tmp[which(!(tmp$ALT_FREQS == 0)),]
+	tmp = tmp[which(tmp$ALT_FREQS >= 0.0001),]
+	tmp1 = tmp[which(tmp$ALT_FREQS >= 0.0001 & tmp$ALT_FREQS < 0.001),]
+	category1 = rbind(category1,tmp1)
+
+	tmp1 = tmp[which(tmp$ALT_FREQS >= 0.001 & tmp$ALT_FREQS < 0.01),]
+	category2 = rbind(category2,tmp1)
+	
+	tmp1 = tmp[which(tmp$ALT_FREQS >= 0.01 & tmp$ALT_FREQS < 0.05),]
+	category3 = rbind(category3,tmp1)
+	
+	tmp1 = tmp[which(tmp$ALT_FREQS >= 0.05),]
+	category4 = rbind(category4,tmp1)
+	
+	}
+
+save(category1,category2,category3,category4,file="white/allele_frequence_cutoff_4cat_unrel_10062022.rda")
+
+write.table(category1,file="white/category1_0.0001_0.001.csv",row.names=F,col.names=T,sep="\t",dec=".",quote=F)
+write.table(category2,file="white/category2_0.001_0.01.csv",row.names=F,col.names=T,sep="\t",dec=".",quote=F)
+write.table(category3,file="white/category3_0.01_0.05.csv",row.names=F,col.names=T,sep="\t",dec=".",quote=F)
+write.table(category4,file="white//category4_0.05.csv",row.names=F,col.names=T,sep="\t",dec=".",quote=F)
+
+
+
+#male
+require(data.table)
+category1 = data.frame() ## [0.0001,0.001)
+category2 = data.frame() ## [0.001,0.01)
+category3 = data.frame() ## [0.01,0.05)
+category4 = data.frame() ## [0.05]
+for(i in 1:22) {
+	tmp = fread(paste0("male/chr",i,".afreq"))
+	tmp = tmp[which(!(tmp$ALT_FREQS == 0)),]
+	tmp = tmp[which(tmp$ALT_FREQS >= 0.0001),]
+	tmp1 = tmp[which(tmp$ALT_FREQS >= 0.0001 & tmp$ALT_FREQS < 0.001),]
+	category1 = rbind(category1,tmp1)
+
+	tmp1 = tmp[which(tmp$ALT_FREQS >= 0.001 & tmp$ALT_FREQS < 0.01),]
+	category2 = rbind(category2,tmp1)
+	
+	tmp1 = tmp[which(tmp$ALT_FREQS >= 0.01 & tmp$ALT_FREQS < 0.05),]
+	category3 = rbind(category3,tmp1)
+	
+	tmp1 = tmp[which(tmp$ALT_FREQS >= 0.05),]
+	category4 = rbind(category4,tmp1)
+	
+	}
+
+save(category1,category2,category3,category4,file="male/allele_frequence_cutoff_4cat_unrel_10062022.rda")
+
+write.table(category1,file="male/category1_0.0001_0.001.csv",row.names=F,col.names=T,sep="\t",dec=".",quote=F)
+write.table(category2,file="male/category2_0.001_0.01.csv",row.names=F,col.names=T,sep="\t",dec=".",quote=F)
+write.table(category3,file="male/category3_0.01_0.05.csv",row.names=F,col.names=T,sep="\t",dec=".",quote=F)
+write.table(category4,file="male/category4_0.05.csv",row.names=F,col.names=T,sep="\t",dec=".",quote=F)
+
+
+
+#female
+require(data.table)
+category1 = data.frame() ## [0.0001,0.001)
+category2 = data.frame() ## [0.001,0.01)
+category3 = data.frame() ## [0.01,0.05)
+category4 = data.frame() ## [0.05]
+for(i in 1:22) {
+	tmp = fread(paste0("female/chr",i,".afreq"))
+	tmp = tmp[which(!(tmp$ALT_FREQS == 0)),]
+	tmp = tmp[which(tmp$ALT_FREQS >= 0.0001),]
+	tmp1 = tmp[which(tmp$ALT_FREQS >= 0.0001 & tmp$ALT_FREQS < 0.001),]
+	category1 = rbind(category1,tmp1)
+
+	tmp1 = tmp[which(tmp$ALT_FREQS >= 0.001 & tmp$ALT_FREQS < 0.01),]
+	category2 = rbind(category2,tmp1)
+	
+	tmp1 = tmp[which(tmp$ALT_FREQS >= 0.01 & tmp$ALT_FREQS < 0.05),]
+	category3 = rbind(category3,tmp1)
+	
+	tmp1 = tmp[which(tmp$ALT_FREQS >= 0.05),]
+	category4 = rbind(category4,tmp1)
+	
+	}
+
+save(category1,category2,category3,category4,file="female/allele_frequence_cutoff_4cat_unrel_10062022.rda")
+
+write.table(category1,file="female/category1_0.0001_0.001.csv",row.names=F,col.names=T,sep="\t",dec=".",quote=F)
+write.table(category2,file="female/category2_0.001_0.01.csv",row.names=F,col.names=T,sep="\t",dec=".",quote=F)
+write.table(category3,file="female/category3_0.01_0.05.csv",row.names=F,col.names=T,sep="\t",dec=".",quote=F)
+write.table(category4,file="female/category4_0.05.csv",row.names=F,col.names=T,sep="\t",dec=".",quote=F)
 
 
 
