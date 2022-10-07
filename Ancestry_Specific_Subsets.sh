@@ -148,6 +148,74 @@ write.table(category3,file="female/category3_0.01_0.05.csv",row.names=F,col.name
 write.table(category4,file="female/category4_0.05.csv",row.names=F,col.names=T,sep="\t",dec=".",quote=F)
 
 
+#### QC
+### Remove variants based on geno 0.05 , mind 0.05, phwe < 1e-6 
+for i in {1..22}; do
+plink2 --bfile black/chr${i} --geno 0.05 --mind 0.05 --hwe 1e-6 --make-bed --out black/chr${i}_qc
+plink2 --bfile white/chr${i} --geno 0.05 --mind 0.05 --hwe 1e-6 --make-bed --out white/chr${i}_qc
+plink2 --bfile male/chr${i} --geno 0.05 --mind 0.05 --hwe 1e-6 --make-bed --out male/chr${i}_qc
+plink2 --bfile female/chr${i} --geno 0.05 --mind 0.05 --hwe 1e-6 --make-bed --out female/chr${i}_qc
+done
+
+### Prunning to generate high quality variants
+for i in {1..22}; do
+plink2 --bfile black/chr${i}_qc --extract black/category1_0.0001_0.001.csv --indep-pairwise 50 5 0.1 --out black/prune/cat1_${i}
+plink2 --bfile black/chr${i}_qc --extract black/category2_0.001_0.01.csv --indep-pairwise 50 5 0.1 --out black/prune/cat2_${i}
+plink2 --bfile black/chr${i}_qc --extract black/category3_0.01_0.05.csv  --indep-pairwise 50 5 0.1 --out black/prune/cat3_${i}
+plink2 --bfile black/chr${i}_qc --extract black/category4_0.05.csv --indep-pairwise 50 5 0.1 --out black/prune/cat4_${i}
+done
+
+for i in {1..22}; do
+plink2 --bfile white/chr${i}_qc --extract white/category1_0.0001_0.001.csv --indep-pairwise 50 5 0.1 --out white/prune/cat1_${i}
+plink2 --bfile white/chr${i}_qc --extract white/category2_0.001_0.01.csv --indep-pairwise 50 5 0.1 --out white/prune/cat2_${i}
+plink2 --bfile white/chr${i}_qc --extract white/category3_0.01_0.05.csv  --indep-pairwise 50 5 0.1 --out white/prune/cat3_${i}
+plink2 --bfile white/chr${i}_qc --extract white/category4_0.05.csv --indep-pairwise 50 5 0.1 --out white/prune/cat4_${i}
+done
+
+
+for i in {1..22}; do
+plink2 --bfile male/chr${i}_qc --extract male/category1_0.0001_0.001.csv --indep-pairwise 50 5 0.1 --out male/prune/cat1_${i}
+plink2 --bfile male/chr${i}_qc --extract male/category2_0.001_0.01.csv --indep-pairwise 50 5 0.1 --out male/prune/cat2_${i}
+plink2 --bfile male/chr${i}_qc --extract male/category3_0.01_0.05.csv  --indep-pairwise 50 5 0.1 --out male/prune/cat3_${i}
+plink2 --bfile male/chr${i}_qc --extract male/category4_0.05.csv --indep-pairwise 50 5 0.1 --out male/prune/cat4_${i}
+done
+
+
+
+for i in {1..22}; do
+plink2 --bfile female/chr${i}_qc --extract female/category1_0.0001_0.001.csv --indep-pairwise 50 5 0.1 --out female/prune/cat1_${i}
+plink2 --bfile female/chr${i}_qc --extract female/category2_0.001_0.01.csv --indep-pairwise 50 5 0.1 --out female/prune/cat2_${i}
+plink2 --bfile female/chr${i}_qc --extract female/category3_0.01_0.05.csv  --indep-pairwise 50 5 0.1 --out female/prune/cat3_${i}
+plink2 --bfile female/chr${i}_qc --extract female/category4_0.05.csv --indep-pairwise 50 5 0.1 --out female/prune/cat4_${i}
+done
+
+ cat female/prune/cat1_*.prune.in > female/prune/cat1.prune.id
+ cat female/prune/cat2_*.prune.in > female/prune/cat2.prune.id
+ cat female/prune/cat3_*.prune.in > female/prune/cat3.prune.id
+ cat female/prune/cat4_*.prune.in > female/prune/cat4.prune.id
+
+ cat male/prune/cat1_*.prune.in > male/prune/cat1.prune.id
+ cat male/prune/cat2_*.prune.in > male/prune/cat2.prune.id
+ cat male/prune/cat3_*.prune.in > male/prune/cat3.prune.id
+ cat male/prune/cat4_*.prune.in > male/prune/cat4.prune.id
+
+
+ cat white/prune/cat1_*.prune.in > white/prune/cat1.prune.id
+ cat white/prune/cat2_*.prune.in > white/prune/cat2.prune.id
+ cat white/prune/cat3_*.prune.in > white/prune/cat3.prune.id
+ cat white/prune/cat4_*.prune.in > white/prune/cat4.prune.id
+
+
+ cat black/prune/cat1_*.prune.in > black/prune/cat1.prune.id
+ cat black/prune/cat2_*.prune.in > black/prune/cat2.prune.id
+ cat black/prune/cat3_*.prune.in > black/prune/cat3.prune.id
+ cat black/prune/cat4_*.prune.in > black/prune/cat4.prune.id
+
+
+## LD score calculation
+for i in {1..22}; do
+../../../softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile cat1_chr${i}_hqp --ld-score-region 200 --out  cat1_chr${i}_hqp --thread-num 100
+done
 
 
 ###############################################################################################################################################################
@@ -166,7 +234,7 @@ plink --bfile category1_chr1 --merge-list merge --make-bed --out cat1_chr_all
 
 ### Remove variants based on geno 0.05 , mind 0.05, phwe < 1e-6 
 for i in {1..22}; do
-plink --bfile category1_chr${i} --geno 0.05 --mind 0.05 --hwe 1e-6 --make-bed --out category1_chr${i}_qc
+plink --bfile black/chr${i} --geno 0.05 --mind 0.05 --hwe 1e-6 --make-bed --out black/chr${i}_qc
 done
 
 ### Prunning to generate high quality variants
