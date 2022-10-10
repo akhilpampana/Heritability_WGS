@@ -395,14 +395,57 @@ do
 /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1  --bfile black/chr${i}_qc --extract black/ld_sc/snp_cat4_group4.txt --make-grm --make-grm-alg 1  --out black/GRM/cat4_chr${i}_hqp_q4 --thread-num 2
 done
 
+### merge list merged files
+ls -l | grep cat1 | grep N.bin | grep q1 | awk ' { print $9 } ' | sed 's|.grm.N.bin||g'  > merge_cat1_q1
+ls -l | grep cat1 | grep N.bin | grep q2 | awk ' { print $9 } ' | sed 's|.grm.N.bin||g'  > merge_cat1_q2
+ls -l | grep cat1 | grep N.bin | grep q3 | awk ' { print $9 } ' | sed 's|.grm.N.bin||g'  > merge_cat1_q3
+ls -l | grep cat1 | grep N.bin | grep q4 | awk ' { print $9 } ' | sed 's|.grm.N.bin||g'  > merge_cat1_q4
+
+
+ls -l | grep cat2 | grep N.bin | grep q1 | awk ' { print $9 } ' | sed 's|.grm.N.bin||g'  > merge_cat2_q1
+ls -l | grep cat2 | grep N.bin | grep q2 | awk ' { print $9 } ' | sed 's|.grm.N.bin||g'  > merge_cat2_q2
+ls -l | grep cat2 | grep N.bin | grep q3 | awk ' { print $9 } ' | sed 's|.grm.N.bin||g'  > merge_cat2_q3
+ls -l | grep cat2 | grep N.bin | grep q4 | awk ' { print $9 } ' | sed 's|.grm.N.bin||g'  > merge_cat2_q4
+
+ls -l | grep cat3 | grep N.bin | grep q1 | awk ' { print $9 } ' | sed 's|.grm.N.bin||g'  > merge_cat3_q1
+ls -l | grep cat3 | grep N.bin | grep q2 | awk ' { print $9 } ' | sed 's|.grm.N.bin||g'  > merge_cat3_q2
+ls -l | grep cat3 | grep N.bin | grep q3 | awk ' { print $9 } ' | sed 's|.grm.N.bin||g'  > merge_cat3_q3
+ls -l | grep cat3 | grep N.bin | grep q4 | awk ' { print $9 } ' | sed 's|.grm.N.bin||g'  > merge_cat3_q4
+
+
+ls -l | grep cat4 | grep N.bin | grep q1 | awk ' { print $9 } ' | sed 's|.grm.N.bin||g'  > merge_cat4_q1
+ls -l | grep cat4 | grep N.bin | grep q2 | awk ' { print $9 } ' | sed 's|.grm.N.bin||g'  > merge_cat4_q2
+ls -l | grep cat4 | grep N.bin | grep q3 | awk ' { print $9 } ' | sed 's|.grm.N.bin||g'  > merge_cat4_q3
+ls -l | grep cat4 | grep N.bin | grep q4 | awk ' { print $9 } ' | sed 's|.grm.N.bin||g'  > merge_cat4_q4
+
 
 ### merge
-/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --mgrm merge1.txt --grm-cutoff 0.05 --make-grm --threads 10 --out cat4_hqp_q4
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --mgrm merge_cat1_q1  --make-grm --threads 10 --out cat1_hqp_q1
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --mgrm merge_cat1_q2  --make-grm --threads 10 --out cat1_hqp_q2
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --mgrm merge_cat1_q3  --make-grm --threads 10 --out cat1_hqp_q3
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --mgrm merge_cat1_q4  --make-grm --threads 10 --out cat1_hqp_q4
+
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --mgrm merge_cat2_q1  --make-grm --threads 10 --out cat2_hqp_q1
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --mgrm merge_cat2_q2  --make-grm --threads 10 --out cat2_hqp_q2
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --mgrm merge_cat2_q3  --make-grm --threads 10 --out cat2_hqp_q3
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --mgrm merge_cat2_q4  --make-grm --threads 10 --out cat2_hqp_q4
+
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --mgrm merge_cat3_q1  --make-grm --threads 10 --out cat3_hqp_q1
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --mgrm merge_cat3_q2  --make-grm --threads 10 --out cat3_hqp_q2
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --mgrm merge_cat3_q3  --make-grm --threads 10 --out cat3_hqp_q3
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --mgrm merge_cat3_q4  --make-grm --threads 10 --out cat3_hqp_q4
+
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --mgrm merge_cat4_q1  --make-grm --threads 10 --out cat4_hqp_q1
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --mgrm merge_cat4_q2  --make-grm --threads 10 --out cat4_hqp_q2
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --mgrm merge_cat4_q3  --make-grm --threads 10 --out cat4_hqp_q3
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --mgrm merge_cat4_q4  --make-grm --threads 10 --out cat4_hqp_q4
 
 
 
 
-### Subset to sparse GRM
+
+
+### Subset to sparse GRM - cd to GRM folder
 /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm black/GRM/cat1_hqp_q1 --grm-cutoff 0.05 --make-grm --threads 10 --out black/GRM/cat1_hqp_q1_0.05
 /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm black/GRM/cat1_hqp_q2 --grm-cutoff 0.05 --make-grm --threads 10 --out black/GRM/cat1_hqp_q2_0.05
 /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm black/GRM/cat1_hqp_q3 --grm-cutoff 0.05 --make-grm --threads 10 --out black/GRM/cat1_hqp_q3_0.05
@@ -422,6 +465,33 @@ done
 /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm black/GRM/cat4_hqp_q2 --grm-cutoff 0.05 --make-grm --threads 10 --out black/GRM/cat4_hqp_q2_0.05
 /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm black/GRM/cat4_hqp_q3 --grm-cutoff 0.05 --make-grm --threads 10 --out black/GRM/cat4_hqp_q3_0.05
 /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm black/GRM/cat4_hqp_q4 --grm-cutoff 0.05 --make-grm --threads 10 --out black/GRM/cat4_hqp_q4_0.05
+
+
+
+ 
+## PCs calculation for each category across each ancestry / sex group - cd to sparse GRM
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat1_hqp_q1_0.05 --pca 20 --threads 10 --out cat1_hqp_q1_0.05
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat1_hqp_q2_0.05 --pca 20 --threads 10 --out cat1_hqp_q2_0.05
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat1_hqp_q3_0.05 --pca 20 --threads 10 --out cat1_hqp_q3_0.05
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat1_hqp_q4_0.05 --pca 20 --threads 10 --out cat1_hqp_q4_0.05
+
+
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1  --grm cat2_hqp_q1_0.05 --pca 20 --threads 10 --out cat2_hqp_q1_0.05
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat2_hqp_q2_0.05 --pca 20 --threads 10 --out cat2_hqp_q2_0.05
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1  --grm cat2_hqp_q3_0.05 --pca 20 --threads 10 --out cat2_hqp_q3_0.05
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1  --grm cat2_hqp_q4_0.05 --pca 20 --threads 10 --out cat2_hqp_q4_0.05
+
+
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat3_hqp_q1_0.05 --pca 20 --threads 10 --out cat3_hqp_q1_0.05
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1  --grm cat3_hqp_q2_0.05 --pca 20 --threads 10 --out cat3_hqp_q2_0.05
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1  --grm cat3_hqp_q3_0.05 --pca 20 --threads 10 --out cat3_hqp_q3_0.05
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1  --grm cat3_hqp_q4_0.05 --pca 20 --threads 10 --out cat3_hqp_q4_0.05
+
+
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1  --grm cat4_hqp_q1_0.05 --pca 20 --threads 10 --out cat4_hqp_q1_0.05
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1  --grm cat4_hqp_q2_0.05 --pca 20 --threads 10 --out cat4_hqp_q2_0.05
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1  --grm cat4_hqp_q3_0.05 --pca 20 --threads 10 --out cat4_hqp_q3_0.05
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1  --grm cat4_hqp_q4_0.05 --pca 20 --threads 10 --out cat4_hqp_q4_0.05
 
 
 
