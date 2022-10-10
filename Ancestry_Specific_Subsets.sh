@@ -495,5 +495,34 @@ ls -l | grep cat4 | grep N.bin | grep q4 | awk ' { print $9 } ' | sed 's|.grm.N.
 
 
 
+### Heritability calculations
+### cat 1
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat1_hqp_q1_0.05 --reml-no-constrain --pheno /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/phenotypes/white_NTproBNP_08222022.phen --qcovar cat1_hqp_q1_0.05.eigenvec --out cat1_hqp_q1_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat1_hqp_q2_0.05 --reml-no-constrain --pheno /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/phenotypes/white_NTproBNP_08222022.phen --qcovar cat1_hqp_q2_0.05.eigenvec --out cat1_hqp_q2_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat1_hqp_q3_0.05 --reml-no-constrain --pheno /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/phenotypes/white_NTproBNP_08222022.phen --qcovar cat1_hqp_q3_0.05.eigenvec --out cat1_hqp_q3_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat1_hqp_q4_0.05 --reml-no-constrain --pheno /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/phenotypes/white_NTproBNP_08222022.phen --qcovar cat1_hqp_q4_0.05.eigenvec --out cat1_hqp_q4_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+
+### cat2 
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat2_hqp_q1_0.05 --reml-no-constrain --pheno /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/phenotypes/white_NTproBNP_08222022.phen --qcovar cat2_hqp_q1_0.05.eigenvec --out cat2_hqp_q1_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat2_hqp_q2_0.05 --reml-no-constrain --pheno /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/phenotypes/white_NTproBNP_08222022.phen --qcovar cat2_hqp_q2_0.05.eigenvec --out cat2_hqp_q2_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat2_hqp_q3_0.05 --reml-no-constrain --pheno /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/phenotypes/white_NTproBNP_08222022.phen --qcovar cat2_hqp_q3_0.05.eigenvec --out cat2_hqp_q3_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat2_hqp_q4_0.05 --reml-no-constrain --pheno /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/phenotypes/white_NTproBNP_08222022.phen --qcovar cat2_hqp_q4_0.05.eigenvec --out cat2_hqp_q4_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+
+
+### cat 3
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat3_hqp_q1_0.05 --reml-no-constrain --pheno /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/phenotypes/white_NTproBNP_08222022.phen --qcovar cat3_hqp_q1_0.05.eigenvec --out cat3_hqp_q1_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat3_hqp_q2_0.05 --reml-no-constrain --pheno /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/phenotypes/white_NTproBNP_08222022.phen --qcovar cat3_hqp_q2_0.05.eigenvec --out cat3_hqp_q2_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat3_hqp_q3_0.05 --reml-no-constrain --pheno /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/phenotypes/white_NTproBNP_08222022.phen --qcovar cat3_hqp_q3_0.05.eigenvec --out cat3_hqp_q3_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat3_hqp_q4_0.05 --reml-no-constrain --pheno /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/phenotypes/white_NTproBNP_08222022.phen --qcovar cat3_hqp_q4_0.05.eigenvec --out cat3_hqp_q4_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+
+### cat 4
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat4_hqp_q1_0.05 --reml-no-constrain --pheno /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/phenotypes/white_NTproBNP_08222022.phen --qcovar cat4_hqp_q1_0.05.eigenvec --out cat4_hqp_q1_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat4_hqp_q2_0.05 --reml-no-constrain --pheno /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/phenotypes/white_NTproBNP_08222022.phen --qcovar cat4_hqp_q2_0.05.eigenvec --out cat4_hqp_q2_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat4_hqp_q3_0.05 --reml-no-constrain --pheno /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/phenotypes/white_NTproBNP_08222022.phen --qcovar cat4_hqp_q3_0.05.eigenvec --out cat4_hqp_q3_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/softwares/gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --grm cat4_hqp_q4_0.05 --reml-no-constrain --pheno /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/phenotypes/white_NTproBNP_08222022.phen --qcovar cat4_hqp_q4_0.05.eigenvec --out cat4_hqp_q4_0.05 --thread-num 10 --reml-no-lrt --reml-maxit 10000
+
+
+
+
 
 
