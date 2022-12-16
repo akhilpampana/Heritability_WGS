@@ -557,8 +557,19 @@ plink --bfile chr8loci3 --clump ../conditional_analysis/snps_for_conditioning/ov
 plink --bfile chr8loci4 --clump ../conditional_analysis/snps_for_conditioning/overall_gwas_09162022.csv --clump-p1 5e-9 --clump-p2 5e-7 --clump-r2 0.60 --clump-kb 500 --out chr8loci4
 plink --bfile chr12loci5 --clump ../conditional_analysis/snps_for_conditioning/overall_gwas_09162022.csv --clump-p1 5e-9 --clump-p2 5e-7 --clump-r2 0.60 --clump-kb 500 --out chr12loci5
 
+#### Clumping and thresholding for all dataset p < 5e-7 
+for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 X
+do
+plink	--bfile ../../../heritability/plink_format/original/rsid/freeze10.14k.chr${i}.0.0001  --write-snplist --out snplist #_chr${i}
+cat snplist.snplist | sort | uniq -d > duplicated_snps.snplist
+plink --bfile ../../../heritability/plink_format/original/rsid/freeze10.14k.chr${i}.0.0001 --exclude duplicated_snps.snplist --make-bed --out freeze10.14k.chr${i}.0.0001
+plink --bfile freeze10.14k.chr${i}.0.0001 --clump gwas_variants_12162022.csv --clump-kb 500 --clump-p1 5e-7 --clump-p2 0.05 --clump-r2 0.60 --out group3_chr${i} 
+done
 
 
+######################################################################################################################################################
+# 							Coloc code for 5 loci (original)				     			     #
+######################################################################################################################################################
 ### upload 5 loci's to R
 load("eqtl_datasets_lipids_paper_based_cutoff_5e07.rda")
 
