@@ -570,13 +570,13 @@ done
 module load PLINK/1.90-foss-2016a
 for i in 14 15 16 17 18 19 20 21 22 
 do
-plink --bfile chr${i}.pass_only_all --clump /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/gwas/gwas_orginal/tophits_0.05_12272022.csv --clump-kb 500 --clump-p1 5e-7 --clump-p2 0.05 --clump-r2 0.60 --out chr${i}_5e07_0.05_500 
+plink --bfile chr${i}.pass_only_all --clump TOPMED/BNP/NTproBNP/NTproBNP_14k/gwas/gwas_orginal/tophits_0.05_12272022.csv --clump-kb 500 --clump-p1 5e-7 --clump-p2 0.05 --clump-r2 0.60 --out chr${i}_5e07_0.05_500 
 done
 
 
 for i in 16
 do
-plink --bfile chr${i}.pass_only_all --clump /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/gwas/gwas_orginal/tophits_0.05_12272022.csv --clump-kb 500 --clump-p1 5e-7 --clump-p2 0.05 --clump-r2 0.60 --out chr${i}_5e07_0.05_500 
+plink --bfile chr${i}.pass_only_all --clump TOPMED/BNP/NTproBNP/NTproBNP_14k/gwas/gwas_orginal/tophits_0.05_12272022.csv --clump-kb 500 --clump-p1 5e-7 --clump-p2 0.05 --clump-r2 0.60 --out chr${i}_5e07_0.05_500 
 done
 
 ######################################################################################################################################################
