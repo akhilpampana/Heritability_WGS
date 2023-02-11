@@ -31,6 +31,42 @@ for(file in files){
 #df1 = df[,c("SNPID","SNP","p.value")]
 #write.table(df1,file="Sentinel_snps_500kb_region_combined_02102023.tsv",row.names=F,col.names=F,sep="\t",dec=".",quote=F)
 
+for(file in files){
+  #var = gsub(".txt","",file)
+  tmp = fread(paste0(file))
+  #tmp = tmp[which(tmp$p.value < 0.05),]
+  #tmp$flip = ifelse(tmp$AF_Allele2 > 0.50,1,0)
+  
+  tmp1 = tmp[which(tmp$flip == 1),]
+  tmp1$Allele1 = tmp1$allele2
+  tmp1$Allele2 = tmp1$allele1
+  tmp1$final_maf = 1 - tmp1$maf
+  tmp1$BETA = abs(tmp1$beta)
+  
+  tmp2 = tmp[which(tmp$flip == 0),]
+  tmp2$Allele1 = tmp2$allele1
+  tmp2$Allele2 = tmp2$allele2
+  tmp2$final_maf = tmp2$maf
+  tmp2$BETA = tmp2$beta
+  
+  tmp = rbind(tmp1,tmp2)
+  tmp = tmp[,c(1,2,3,10,11,12,13,8,9)]
+  colnames(tmp) = c("rsid","chromosome","position","allele1","allele2","maf","beta","se","flip")
+  write.table(tmp,file=paste0(file,".txt"),row.names=F,col.names=T,sep=" ",dec=".",quote=F)
+}
+
+
+
+for(file in files){
+  var = gsub(".txt","",file)
+  tmp = fread(paste0(file))
+  write.table(tmp,file=paste0(var,".z"),row.names=F,col.names=T,sep=" ",dec=".",quote=F)
+}
+
+
+
+
+
 #####################################################################################################################################################
 #                               Subset the Original genotypes to these variants and create a raw file using plink                                   #
 #####################################################################################################################################################
@@ -51,6 +87,12 @@ do
 plink --bfile ../heritability/plink_format/original/rsid/freeze10.14k.chr1.0.0001    --extract ${i} --make-bed --out fine_mapping/${i} || plink --bfile ../heritability/plink_format/original/rsid/freeze10.14k.chr4.0.0001    --extract ${i} --make-bed --out fine_mapping/${i} || plink --bfile ../heritability/plink_format/original/rsid/freeze10.14k.chr8.0.0001    --extract ${i} --make-bed --out fine_mapping/${i} || plink --bfile ../heritability/plink_format/original/rsid/freeze10.14k.chr12.0.0001    --extract ${i} --make-bed --out fine_mapping/${i}
 done
 
+for i in rs1009591_500kb.z       rs1023252_500kb.z       rs10550903_500kb.z      rs10689649_500kb.z      rs10858903_500kb.z      rs11105282_500kb.z      rs111478946_500kb.z     rs11555351_500kb.z      rs1208984_500kb.z       rs12402363_500kb.z      rs12411044_500kb.z      rs13107325_500kb.z      rs1318408_500kb.z       rs142005893_500kb.z     rs143149865_500kb.z     rs145485557_500kb.z     rs148333765_500kb.z     rs198383_500kb.z        rs198389_500kb.z        rs198392_500kb.z        rs202088699_500kb.z     rs2066462_500kb.z       rs2273286_500kb.z       rs28455075_500kb.z      rs34710782_500kb.z      rs34954501_500kb.z      rs3753584_500kb.z       rs41275462_500kb.z      rs41300100_500kb.z      rs4845875_500kb.z       rs4845876_500kb.z       rs4845881_500kb.z       rs4846063_500kb.z       rs55714388_500kb.z      rs61757273_500kb.z      rs72640280_500kb.z      rs72640281_500kb.z      rs7299091_500kb.z       rs7314459_500kb.z       rs79593079_500kb.z      rs9727993_500kb.z
+do
+plink --bfile ${i} --recode A --out ${i}
+done
+
+
 
 #####################################################################################################################################################
 #                                                                 LD Matrix generation                                                              #
@@ -61,6 +103,32 @@ for i in rs1009591_500kb.z       rs1023252_500kb.z       rs10550903_500kb.z     
 do
 plink --bfile ${i} --r2 square --out ${i}
 done
+
+### Correlation matrix based on R using ldmat function in hibayes ~ testing
+install.packages("hibayes")
+
+require(data.table)
+library("hibayes")
+files = list.files()
+files = files[grep(".raw",files)]
+for(file in files){
+  
+  ############# LD matrix generation
+  data = as.data.frame(fread(file))
+  colnames(data) = gsub("[/A-Z]+$","",colnames(data))
+  colnames(data) = gsub("_","",colnames(data))
+  data1 = data[,c(7:ncol(data))]
+  data1 = as.matrix(data1)
+  data2 = ldmat(data1)
+  rownames(data2) = colnames(data1)
+  colnames(data2) = colnames(data1)
+  
+  ############# Subset variants to rsids present in ldmatrix
+  var = gsub(".raw",".z",file)
+  data = fread(paste0(var))
+  data = data[which(data$rsid %in% colnames(data2)),]
+  
+  }
 
 
 ### Validation of equal number of lines between ld file and bim file
