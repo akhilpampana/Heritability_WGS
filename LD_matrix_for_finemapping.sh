@@ -137,7 +137,24 @@ do
 if [ $(wc -l ${i}) -eq $w(wc -l ${i}.ld) ]; then echo "Warning: No Match!"; fi 
 done
 
-
+#####################################################################################################################################################
+#                               Coverting Variants position to HG19 to match with PAINTOR annotations                                               #
+#####################################################################################################################################################
+require(data.table)
+files = list.files()
+files = gsub("z.z.ld","z.z",files)
+files - unique(files)
+lifted = fread("gwas/lifted_grch38_grch37/Lifted_overall.bed",header=F)
+for(file in files) {
+  var = gsub("500kb.z.z","grch37",file)
+  tmp = fread(paste0(file))
+  tmp = merge(tmp,lifted,by.x=c("rsid"),by.y=c("V4"))
+  tmp = tmp[,c("chromosome","V2","rsid","beta","se")]
+  tmp$z = tmp$beta/tmp$se
+  tmp = tmp[,c(1,2,3,6)]
+  colnames(tmp) = c("CHR","POS","RSID","ZSCORE")
+  write.table(tmp,file=paste0(var,".txt"),row.names=F,col.names=T,sep=" ",quote=F,dec=".")
+}
 #####################################################################################################################################################
 #                               Use these correlation matrix for finemapping using  PAINTOR                                                         #
 #####################################################################################################################################################
@@ -149,7 +166,7 @@ cat rs198389_500kb.txt | awk ' { print $3 "\t" $1 "\t" $2 "\t" $4 "\t" $5 "\t" $
 
 /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/gwas/coloc/fine_mapping
 
-
+/data/project/Arora_lab/akhil/SOFTWARES/PAINTOR_V3.0/PAINTOR
 
 /data/project/Arora_lab/akhil/SOFTWARES/finemap_v1.4.1_x86_64/finemap_v1.4.1_x86_64 
 
@@ -157,7 +174,7 @@ cat rs198389_500kb.txt | awk ' { print $3 "\t" $1 "\t" $2 "\t" $4 "\t" $5 "\t" $
 
 /data/project/Arora_lab/akhil/SOFTWARES/finemap_v1.4.1_x86_64/finemap_v1.4.1_x86_64 --config --in-files master --rsids rs198389
 
-
+/data/project/Arora_lab/akhil/ANNOTATIONS/Functional_Annotations
 
 
 
