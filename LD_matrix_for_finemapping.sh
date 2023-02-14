@@ -84,7 +84,7 @@ ls -l | grep z | awk ' { print $9 } '  > rsid
 
 for i in rs1009591_500kb.z       rs1023252_500kb.z       rs10550903_500kb.z      rs10689649_500kb.z      rs10858903_500kb.z      rs11105282_500kb.z      rs111478946_500kb.z     rs11555351_500kb.z      rs1208984_500kb.z       rs12402363_500kb.z      rs12411044_500kb.z      rs13107325_500kb.z      rs1318408_500kb.z       rs142005893_500kb.z     rs143149865_500kb.z     rs145485557_500kb.z     rs148333765_500kb.z     rs198383_500kb.z        rs198389_500kb.z        rs198392_500kb.z        rs202088699_500kb.z     rs2066462_500kb.z       rs2273286_500kb.z       rs28455075_500kb.z      rs34710782_500kb.z      rs34954501_500kb.z      rs3753584_500kb.z       rs41275462_500kb.z      rs41300100_500kb.z      rs4845875_500kb.z       rs4845876_500kb.z       rs4845881_500kb.z       rs4846063_500kb.z       rs55714388_500kb.z      rs61757273_500kb.z      rs72640280_500kb.z      rs72640281_500kb.z      rs7299091_500kb.z       rs7314459_500kb.z       rs79593079_500kb.z      rs9727993_500kb.z
 do
-plink --bfile ../heritability/plink_format/original/rsid/freeze10.14k.chr1.0.0001    --extract ${i} --make-bed --out fine_mapping/${i} || plink --bfile ../heritability/plink_format/original/rsid/freeze10.14k.chr4.0.0001    --extract ${i} --make-bed --out fine_mapping/${i} || plink --bfile ../heritability/plink_format/original/rsid/freeze10.14k.chr8.0.0001    --extract ${i} --make-bed --out fine_mapping/${i} || plink --bfile ../heritability/plink_format/original/rsid/freeze10.14k.chr12.0.0001    --extract ${i} --make-bed --out fine_mapping/${i}
+plink --bfile /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/gwas/conditional_analysis/snps_for_conditioning/tophits_0.05/heritability/plink_format/original/rsid/freeze10.14k.chr1.0.0001    --extract ${i} --make-bed --out fine_mapping/${i} || plink --bfile ../heritability/plink_format/original/rsid/freeze10.14k.chr4.0.0001    --extract ${i} --make-bed --out fine_mapping/${i} || plink --bfile ../heritability/plink_format/original/rsid/freeze10.14k.chr8.0.0001    --extract ${i} --make-bed --out fine_mapping/${i} || plink --bfile ../heritability/plink_format/original/rsid/freeze10.14k.chr12.0.0001    --extract ${i} --make-bed --out fine_mapping/${i}
 done
 
 for i in rs1009591_500kb.z       rs1023252_500kb.z       rs10550903_500kb.z      rs10689649_500kb.z      rs10858903_500kb.z      rs11105282_500kb.z      rs111478946_500kb.z     rs11555351_500kb.z      rs1208984_500kb.z       rs12402363_500kb.z      rs12411044_500kb.z      rs13107325_500kb.z      rs1318408_500kb.z       rs142005893_500kb.z     rs143149865_500kb.z     rs145485557_500kb.z     rs148333765_500kb.z     rs198383_500kb.z        rs198389_500kb.z        rs198392_500kb.z        rs202088699_500kb.z     rs2066462_500kb.z       rs2273286_500kb.z       rs28455075_500kb.z      rs34710782_500kb.z      rs34954501_500kb.z      rs3753584_500kb.z       rs41275462_500kb.z      rs41300100_500kb.z      rs4845875_500kb.z       rs4845876_500kb.z       rs4845881_500kb.z       rs4846063_500kb.z       rs55714388_500kb.z      rs61757273_500kb.z      rs72640280_500kb.z      rs72640281_500kb.z      rs7299091_500kb.z       rs7314459_500kb.z       rs79593079_500kb.z      rs9727993_500kb.z
@@ -93,6 +93,11 @@ plink --bfile ${i} --recode A --out ${i}
 done
 
 
+### Final Version
+for i in rs1009591_500kb.z       rs1023252_500kb.z       rs10550903_500kb.z      rs10689649_500kb.z      rs10858903_500kb.z      rs11105282_500kb.z      rs111478946_500kb.z     rs11555351_500kb.z      rs1208984_500kb.z       rs12402363_500kb.z      rs12411044_500kb.z      rs13107325_500kb.z      rs1318408_500kb.z       rs142005893_500kb.z     rs143149865_500kb.z     rs145485557_500kb.z     rs148333765_500kb.z     rs198383_500kb.z        rs198389_500kb.z        rs198392_500kb.z        rs202088699_500kb.z     rs2066462_500kb.z       rs2273286_500kb.z       rs28455075_500kb.z      rs34710782_500kb.z      rs34954501_500kb.z      rs3753584_500kb.z       rs41275462_500kb.z      rs41300100_500kb.z      rs4845875_500kb.z       rs4845876_500kb.z       rs4845881_500kb.z       rs4846063_500kb.z       rs55714388_500kb.z      rs61757273_500kb.z      rs72640280_500kb.z      rs72640281_500kb.z      rs7299091_500kb.z       rs7314459_500kb.z       rs79593079_500kb.z      rs9727993_500kb.z
+do
+plink --bfile /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/gwas/conditional_analysis/snps_for_conditioning/tophits_0.05/chr1.pass_only_all   --update-name  eqtl_colocquail/Sentinel_snps_500kb_region_combined_02102023_v1.csv 1 2 --extract fine_mapping/${i} --make-bed --out fine_mapping/${i} || plink --bfile /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/gwas/conditional_analysis/snps_for_conditioning/tophits_0.05/chr4.pass_only_all --update-name  eqtl_colocquail/Sentinel_snps_500kb_region_combined_02102023_v1.csv 1 2  --extract fine_mapping/${i} --make-bed --out fine_mapping/${i} || plink --bfile /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/gwas/conditional_analysis/snps_for_conditioning/tophits_0.05/chr8.pass_only_all --update-name  eqtl_colocquail/Sentinel_snps_500kb_region_combined_02102023_v1.csv 1 2  --extract fine_mapping/${i} --make-bed --out fine_mapping/${i} || plink --bfile /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/gwas/conditional_analysis/snps_for_conditioning/tophits_0.05/chr12.pass_only_all  --update-name  eqtl_colocquail/Sentinel_snps_500kb_region_combined_02102023_v1.csv 1 2   --extract fine_mapping/${i} --make-bed --out fine_mapping/${i}
+done
 
 #####################################################################################################################################################
 #                                                                 LD Matrix generation                                                              #
@@ -101,7 +106,7 @@ done
 
 for i in rs1009591_500kb.z       rs1023252_500kb.z       rs10550903_500kb.z      rs10689649_500kb.z      rs10858903_500kb.z      rs11105282_500kb.z      rs111478946_500kb.z     rs11555351_500kb.z      rs1208984_500kb.z       rs12402363_500kb.z      rs12411044_500kb.z      rs13107325_500kb.z      rs1318408_500kb.z       rs142005893_500kb.z     rs143149865_500kb.z     rs145485557_500kb.z     rs148333765_500kb.z     rs198383_500kb.z        rs198389_500kb.z        rs198392_500kb.z        rs202088699_500kb.z     rs2066462_500kb.z       rs2273286_500kb.z       rs28455075_500kb.z      rs34710782_500kb.z      rs34954501_500kb.z      rs3753584_500kb.z       rs41275462_500kb.z      rs41300100_500kb.z      rs4845875_500kb.z       rs4845876_500kb.z       rs4845881_500kb.z       rs4846063_500kb.z       rs55714388_500kb.z      rs61757273_500kb.z      rs72640280_500kb.z      rs72640281_500kb.z      rs7299091_500kb.z       rs7314459_500kb.z       rs79593079_500kb.z      rs9727993_500kb.z
 do
-plink --bfile ${i} --r2 square --out ${i}
+plink --bfile ${i} --r square --out ${i}
 done
 
 ### Correlation matrix based on R using ldmat function in hibayes ~ testing
@@ -138,6 +143,12 @@ if [ $(wc -l ${i}) -eq $w(wc -l ${i}.ld) ]; then echo "Warning: No Match!"; fi
 done
 
 #####################################################################################################################################################
+#                                               Fine Mapping using FINEMAP tools                                                                    #
+#####################################################################################################################################################
+
+/data/project/Arora_lab/akhil/SOFTWARES/finemap_v1.4.1_x86_64/finemap_v1.4.1_x86_64 --config --in-files master1 --rsids rs198389
+
+#####################################################################################################################################################
 #                               Coverting Variants position to HG19 to match with PAINTOR annotations                                               #
 #####################################################################################################################################################
 require(data.table)
@@ -160,7 +171,11 @@ for(file in files) {
 #####################################################################################################################################################
 
 module load glibc/2.33-GCCcore-10.2.0
+../../../../../../../../SOFTWARES/ldstore_v2.0_x86_64 
+cat  rs198389_500kb.z.txt | awk ' { print $1" "$2" "$3" "$4" "$5 } ' >  rs198389_500kb_v1.z
+plink2 --bfile rs198389_500kb.z --export bgen-1.3 --out rs198389_500kb_v1.z
 
+../../../../../../../../SOFTWARES/bgen.tgz/bin/bgenix
 
 cat rs198389_500kb.txt | awk ' { print $3 "\t" $1 "\t" $2 "\t" $4 "\t" $5 "\t" $7 "\t" $10 "\t" $11 } ' >  rs198389_500kb.z
 
@@ -170,11 +185,14 @@ cat rs198389_500kb.txt | awk ' { print $3 "\t" $1 "\t" $2 "\t" $4 "\t" $5 "\t" $
 
 /data/project/Arora_lab/akhil/SOFTWARES/finemap_v1.4.1_x86_64/finemap_v1.4.1_x86_64 
 
-
+PAINTOR_test/ldstore_v2.0_x86_64/ldstore_v2.0_x86_64 --in-files /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/gwas/coloc/fine_mapping/master_v1 --write-bcor --read-only-bgen
 
 /data/project/Arora_lab/akhil/SOFTWARES/finemap_v1.4.1_x86_64/finemap_v1.4.1_x86_64 --config --in-files master --rsids rs198389
 
 /data/project/Arora_lab/akhil/ANNOTATIONS/Functional_Annotations
 
+python3 /data/project/Arora_lab/akhil/SOFTWARES/PAINTOR_V3.0/PAINTOR_Utilities/AnnotateLocus.py --input /data/project/Arora_lab/akhil/ANNOTATIONS/Functional_Annotations/Annotation_Paths --locus rs1009591_grch37.txt --out rs1009591_grch37 --chr CHR --pos POS
 
-
+# Tissues Annotations removed
+/data/project/Arora_lab/akhil/ANNOTATIONS/Functional_Annotations/RoadMap_Assayed_NarrowPeak/.E085-H3K36me3.narrowPeak.Fetal_Intestine_Small.yIuNle
+/data/project/Arora_lab/akhil/ANNOTATIONS/Functional_Annotations/Hnisz_Cell2013_SuperEnhancer/mmc2.pdf
