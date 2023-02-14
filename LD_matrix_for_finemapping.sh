@@ -146,7 +146,7 @@ done
 #                                               Fine Mapping using FINEMAP tools                                                                    #
 #####################################################################################################################################################
 
-/data/project/Arora_lab/akhil/SOFTWARES/finemap_v1.4.1_x86_64/finemap_v1.4.1_x86_64 --config --in-files master1 --rsids rs198389
+/data/project/Arora_lab/akhil/SOFTWARES/finemap_v1.4.1_x86_64/finemap_v1.4.1_x86_64 --in-files master1  --sss --flip-beta
 
 #####################################################################################################################################################
 #                               Coverting Variants position to HG19 to match with PAINTOR annotations                                               #
