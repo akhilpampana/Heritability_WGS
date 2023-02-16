@@ -153,9 +153,9 @@ done
 #####################################################################################################################################################
 require(data.table)
 files = list.files()
-files = gsub("z.z.ld","z.z",files)
+files = gsub("z.ld","z.z",files)
 files - unique(files)
-lifted = fread("gwas/lifted_grch38_grch37/Lifted_overall.bed",header=F)
+lifted = fread("../../../../gwas/lifted_grch38_grch37/Lifted_overall.bed",header=F)
 for(file in files) {
   var = gsub("500kb.z.z","grch37",file)
   tmp = fread(paste0(file))
@@ -169,11 +169,14 @@ for(file in files) {
 #####################################################################################################################################################
 #                               Use these correlation matrix for finemapping using  PAINTOR                                                         #
 #####################################################################################################################################################
-
+## Annotations for this dataset
 module load glibc/2.33-GCCcore-10.2.0
-../../../../../../../../SOFTWARES/ldstore_v2.0_x86_64 
-cat  rs198389_500kb.z.txt | awk ' { print $1" "$2" "$3" "$4" "$5 } ' >  rs198389_500kb_v1.z
-plink2 --bfile rs198389_500kb.z --export bgen-1.3 --out rs198389_500kb_v1.z
+sbatch --array=0-40 script_final_invitae_v1.sh
+
+
+
+
+
 
 ../../../../../../../../SOFTWARES/bgen.tgz/bin/bgenix
 
@@ -191,7 +194,6 @@ PAINTOR_test/ldstore_v2.0_x86_64/ldstore_v2.0_x86_64 --in-files /data/project/Ar
 
 /data/project/Arora_lab/akhil/ANNOTATIONS/Functional_Annotations
 
-python3 /data/project/Arora_lab/akhil/SOFTWARES/PAINTOR_V3.0/PAINTOR_Utilities/AnnotateLocus.py --input /data/project/Arora_lab/akhil/ANNOTATIONS/Functional_Annotations/Annotation_Paths --locus rs1009591_grch37.txt --out rs1009591_grch37 --chr CHR --pos POS
 
 # Tissues Annotations removed
 /data/project/Arora_lab/akhil/ANNOTATIONS/Functional_Annotations/RoadMap_Assayed_NarrowPeak/.E085-H3K36me3.narrowPeak.Fetal_Intestine_Small.yIuNle
