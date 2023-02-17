@@ -164,19 +164,37 @@ for(file in files) {
   tmp$z = tmp$beta/tmp$se
   tmp = tmp[,c(1,2,3,6)]
   colnames(tmp) = c("CHR","POS","RSID","ZSCORE")
-  write.table(tmp,file=paste0(var,".txt"),row.names=F,col.names=T,sep=" ",quote=F,dec=".")
+  write.table(tmp,file=paste0(var,".txt"),row.names=F,col.names=T,sep="",quote=F,dec=".")
 }
 #####################################################################################################################################################
 #                               Use these correlation matrix for finemapping using  PAINTOR                                                         #
 #####################################################################################################################################################
 ## Annotations for this dataset
 module load glibc/2.33-GCCcore-10.2.0
+
+# Tissues Annotations removed
+/data/project/Arora_lab/akhil/ANNOTATIONS/Functional_Annotations/RoadMap_Assayed_NarrowPeak/.E085-H3K36me3.narrowPeak.Fetal_Intestine_Small.yIuNle
+/data/project/Arora_lab/akhil/ANNOTATIONS/Functional_Annotations/Hnisz_Cell2013_SuperEnhancer/mmc2.pdf
+
+# sbatch submission
 sbatch --array=0-40 script_final_invitae_v1.sh
 
+# Tissues Annotations removed
+/data/project/Arora_lab/akhil/ANNOTATIONS/Functional_Annotations/RoadMap_Assayed_NarrowPeak/.E094-H3K9me3.narrowPeak.Gastric.P486F3
+
+sbatch --array=2,3,4,5,6,15,16,17,18,37,38 script_final_invitae_v2.sh
+
+# Rename files to same names
+rename grch37_v1.annotations grch37.txt.annotations *
+rename 500kb.z.ld grch37.txt.ld *
+rename grch37_v1.annotations grch37.txt.annotations *
+rename 500kb.z.ld grch37.txt.ld *
+rename .txt  *
+ls -l | grep grch37.txt | awk ' { print $9 } ' > input.files
+cat input.files | sed 's|.annotations||g' | sed 's|.ld||g' | uniq > input_final.files
 
 
-
-
+/data/project/Arora_lab/akhil/SOFTWARES/PAINTOR_V3.0/PAINTOR -input input_final.files -in /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/gwas/coloc/fine_mapping/PAINTOR_test/ -out /data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/gwas/coloc/fine_mapping/PAINTOR_test/ -Zhead ZSCORE -LDname ld -enumerate 2 -annotations E083_15_coreMarks_mnemonics.bed.11_BivFlnk.Fetal_Heart
 
 ../../../../../../../../SOFTWARES/bgen.tgz/bin/bgenix
 
@@ -195,6 +213,9 @@ PAINTOR_test/ldstore_v2.0_x86_64/ldstore_v2.0_x86_64 --in-files /data/project/Ar
 /data/project/Arora_lab/akhil/ANNOTATIONS/Functional_Annotations
 
 
-# Tissues Annotations removed
-/data/project/Arora_lab/akhil/ANNOTATIONS/Functional_Annotations/RoadMap_Assayed_NarrowPeak/.E085-H3K36me3.narrowPeak.Fetal_Intestine_Small.yIuNle
-/data/project/Arora_lab/akhil/ANNOTATIONS/Functional_Annotations/Hnisz_Cell2013_SuperEnhancer/mmc2.pdf
+rs9727993_grch37colnames
+
+
+
+
+
