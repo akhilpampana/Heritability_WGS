@@ -109,6 +109,14 @@ do
 plink --bfile ${i} --r square spaces --out ${i}
 done
 
+
+### V1
+
+for i in rs1009591_500kb.z       rs1023252_500kb.z       rs10550903_500kb.z      rs10689649_500kb.z      rs10858903_500kb.z      rs11105282_500kb.z      rs111478946_500kb.z     rs11555351_500kb.z      rs1208984_500kb.z       rs12402363_500kb.z      rs12411044_500kb.z      rs13107325_500kb.z      rs1318408_500kb.z       rs142005893_500kb.z     rs143149865_500kb.z     rs145485557_500kb.z     rs148333765_500kb.z     rs198383_500kb.z        rs198389_500kb.z        rs198392_500kb.z        rs202088699_500kb.z     rs2066462_500kb.z       rs2273286_500kb.z       rs28455075_500kb.z      rs34710782_500kb.z      rs34954501_500kb.z      rs3753584_500kb.z       rs41275462_500kb.z      rs41300100_500kb.z      rs4845875_500kb.z       rs4845876_500kb.z       rs4845881_500kb.z       rs4846063_500kb.z       rs55714388_500kb.z      rs61757273_500kb.z      rs72640280_500kb.z      rs72640281_500kb.z      rs7299091_500kb.z       rs7314459_500kb.z       rs79593079_500kb.z      rs9727993_500kb.z
+do
+plink --bfile ${i} --r --out ${i}_v1
+done
+
 ### Correlation matrix based on R using ldmat function in hibayes ~ testing
 install.packages("hibayes")
 
