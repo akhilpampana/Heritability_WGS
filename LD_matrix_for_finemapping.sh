@@ -8,6 +8,20 @@
 module load R
 cd eqtl_colocquail/
 
+### Subset snps
+require(data.table)
+tophits = fread("topsnps_with_regions.txt")
+gwas = fread("/data/project/Arora_lab/akhil/TOPMED/BNP/NTproBNP/NTproBNP_14k/gwas/gwas_orginal/GWAS_NTproBNP_updated_14k.txt.gz")
+for(i in 1:nrow(tophits)){
+  tmp = gwas[which(gwas$CHR == tophits$V1[i] & (gwas$POS >= tophits$V2[i] & gwas$POS <= tophits$V3[i])),]
+  tmp$SNPID = paste0(tmp$CHR,":",tmp$POS,":",tmp$Allele1,":",tmp$Allele2)
+  tmp = tmp[(tmp$p.value < 0.05),]
+  tmp$sentinel = ifelse(tmp$p.value < 1.79e-9,1,0)
+  write.table(tmp,file=paste0("SUMSTATS/",tophits$V1[i],"_",tophits$V2[i],"_",tophits$V3[i],".txt"),row.names=F,col.names=T,sep="\t",dec=".",quote=F)
+}
+
+
+
 #### Code to run in R
 setwd("eqtl_colocquail/")
 require(data.table)
