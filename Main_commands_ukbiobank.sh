@@ -1,7 +1,7 @@
 
 ##############################################################################################################################################################
-# Script used to run GCTA/plink/bcftools for the analyses in the GREML-LDMS WGS 2022 paper		        				    		     #	
-# It contains the most important commands for performing GREML-LDMS from imputed dataset                                  										     #	
+# Script used to run GCTA/plink/bcftools for the analyses in the GREML-LDMS WGS 2022 paper		        			    		     #	
+# It contains the most important commands for performing GREML-LDMS from imputed dataset                                  				     #	
 # The Online Methods describe with greater details all the QC steps performed										     #
 # Some steps are added from the original github page													     #
 # Additional R scripts are also available in this git													     #
@@ -15,10 +15,16 @@ sample_list="/mnt/project/NTproBNP_OLINK/hqp_ntprobnp.fam" #List of samples with
 # 			Create BED files and perform first filtering on SVM variants and other QC metrics - submitted as slurm job			      #
 ###############################################################################################################################################################
 ###### Create BED files and perform first filtering on SVM variants and other QC metrics - submitted as slurm job
+## Use more memory for chromosome 1-5
 
 for i in  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 ; 
 do  
 echo "y" |  dx run app-swiss-army-knife -icmd="plink2 --bgen /mnt/project/${input_path}/chr${i}.bgen ref-first --sample chr2_topmed_imputed.txt --maf 0.0001 --allow-extra-chr --keep-allele-order  --keep /mnt/project/NTproBNP_OLINK/hqp_ntprobnp.fam --geno 0.05 --hwe 0.000001 --threads 20 --make-bed --out chr${i}_hqp" --destination "${path}/Subset_from_BGEN/" --tag "subset_from_bgen" --name "Subset from bgen: chr${i}"  --instance-type "mem1_ssd1_v2_x8"; 
+done  
+
+for i in  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 ; 
+do  
+echo "y" |  dx run app-swiss-army-knife -icmd="plink2 --bgen /mnt/project/${input_path}/chr${i}.bgen ref-first --sample chr2_topmed_imputed.txt --maf 0.0001 --allow-extra-chr --keep-allele-order  --keep /mnt/project/NTproBNP_OLINK/hqp_ntprobnp.fam --geno 0.05 --hwe 0.000001 --threads 20 --make-bed --out chr${i}_hqp" --destination "${path}/Subset_from_BGEN/" --tag "subset_from_bgen" --name "Subset from bgen: chr${i}"  --instance-type "mem1_hdd1_v2_x96"; 
 done  
 
 
@@ -26,14 +32,18 @@ done
 # 								Allele Frequency Calculations								      #
 ###############################################################################################################################################################
 ## CHange from here
-for i in {1..22}; do
-plink2 --bfile freeze10.14k.chr${i}.0.0001 --freq --out freeze10.14k.chr${i}
-done
+
+for i in  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 X ; 
+do  
+echo "y" |  dx run app-swiss-army-knife -icmd="plink2 --bfile ${path}/Subset_from_BGEN/chr{i} --freq --out chr{i}" --destination "${path}/Heritbaility/AF_CALC/" --tag "subset_from_bgen" --name "Subset from bgen: chr${i}"  --instance-type "mem1_hdd1_v2_x96"; 
+done  
+
 
 
 ###############################################################################################################################################################
 # 							Subset variants as per freeze10 pca's generation encore	    					      #
 ###############################################################################################################################################################
+## CHange from here
 module load PLINK
 for i in {1..22}; do
 plink2 --bfile originial/freeze10.14k.chr${i}.0.0001 --extract variants to filter to --make-bed  --out plink_format/prunned_list_included_in_encore_pcs_generation/freeze10.14k.chr${i}.pruned
@@ -57,6 +67,7 @@ king -b freeze10.14k.hqp_encore.bed --kinship
 # 					Extraction and seperation on unrelated vs related using kinship score < 0.025 (king.kin)                 	      #
 ###############################################################################################################################################################
  # IN house R script used
+ 
 
 ###############################################################################################################################################################
 # 								Subset to unrelated individuals								      #
