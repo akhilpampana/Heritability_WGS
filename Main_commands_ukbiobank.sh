@@ -19,8 +19,20 @@ sample_list="/mnt/project/NTproBNP_OLINK/hqp_ntprobnp.fam" #List of samples with
 
 for i in  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 ; 
 do  
-echo "y" |  dx run app-swiss-army-knife -icmd="plink2 --bgen /mnt/project/${input_path}/chr${i}.bgen ref-first --sample chr2_topmed_imputed.txt --maf 0.0001 --allow-extra-chr --keep-allele-order  --keep /mnt/project/NTproBNP_OLINK/hqp_ntprobnp.fam --geno 0.05 --hwe 0.000001 --threads 20 --make-bed --out chr${i}_hqp" --destination "${path}/Subset_from_BGEN/" --tag "subset_from_bgen" --name "Subset from bgen: chr${i}"  --instance-type "mem1_ssd1_v2_x8"; 
+echo "y" |  dx run app-swiss-army-knife -icmd="plink2 --bgen /mnt/project/${input_path}/chr${i}.bgen ref-first --sample chr2_topmed_imputed.txt --maf 0.0001 --allow-extra-chr --keep-allele-order  --keep /mnt/project/SBP/Null_Models/FEMALE/females_final.fam --geno 0.05 --hwe 0.000001 --threads 20 --make-bed --out chr${i}_hqp" --destination "${path}/Subset_from_BGEN/" --tag "subset_from_bgen" --name "Subset from bgen: chr${i}"  --instance-type "mem1_ssd1_v2_x8"; 
 done  
+
+for i in  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 ; 
+do  
+echo "y" |  dx run app-swiss-army-knife -icmd="plink2 --bgen /mnt/project/Bulk/Imputation/Imputation\ from\ genotype\ \(TOPmed\)/ukb21007_c${i}_b0_v1.bgen ref-first --sample /mnt/project/NTproBNP_OLINK/chr2_topmed_imputed.txt --maf 0.0001 --allow-extra-chr --keep-allele-order  --keep /mnt/project/SBP/Null_Models/FEMALE/females_final.fam --geno 0.05 --hwe 0.000001 --threads 20 --make-bed --out female_chr${i}_hqp" --destination "Test 3.0:SBP/Heritability/" --tag "subset_from_bgen" --name "Subset from bgen: chr${i}"  --instance-type "mem1_ssd1_v2_x72"; 
+done  
+
+
+for i in  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 ; 
+do  
+echo "y" |  dx run app-swiss-army-knife -icmd="plink2 --bgen /mnt/project/Bulk/Imputation/Imputation\ from\ genotype\ \(TOPmed\)/ukb21007_c${i}_b0_v1.bgen ref-first --sample /mnt/project/NTproBNP_OLINK/chr2_topmed_imputed.txt --maf 0.0001 --allow-extra-chr --keep-allele-order  --keep /mnt/project/SBP/Null_Models/MALE/males_final.fam --geno 0.05 --hwe 0.000001 --threads 20 --make-bed --out male_chr${i}_hqp" --destination "Test 3.0:SBP/Heritability/" --tag "subset_from_bgen" --name "Male Subset from bgen: chr${i}"  --instance-type "mem1_ssd1_v2_x"; 
+done  
+
 
 for i in  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 ; 
 do  
@@ -28,18 +40,70 @@ echo "y" |  dx run app-swiss-army-knife -icmd="plink2 --bgen /mnt/project/${inpu
 done  
 
 
-###############################################################################################################################################################
-# 								Allele Frequency Calculations								      #
-###############################################################################################################################################################
-## CHange from here
-
-for i in  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 X ; 
+for i in  1 2 3 4 5 6 7 8 9 10 11 12 ; 
 do  
-echo "y" |  dx run app-swiss-army-knife -icmd="plink2 --bfile ${path}/Subset_from_BGEN/chr{i} --freq --out chr{i}" --destination "${path}/Heritbaility/AF_CALC/" --tag "subset_from_bgen" --name "Subset from bgen: chr${i}"  --instance-type "mem1_hdd1_v2_x96"; 
+echo "y" |  dx run app-swiss-army-knife -icmd="plink2 --bgen /mnt/project/Bulk/Imputation/Imputation\ from\ genotype\ \(TOPmed\)/ukb21007_c${i}_b0_v1.bgen ref-first --sample /mnt/project/NTproBNP_OLINK/chr2_topmed_imputed.txt --maf 0.0001 --allow-extra-chr --keep-allele-order  --keep /mnt/project/SBP/Null_Models/FEMALE/females_final.fam --geno 0.05 --hwe 0.000001 --threads 20 --make-bed --out female_chr${i}_hqp" --destination "Test 3.0:SBP/Heritability/" --tag "subset_from_bgen" --name "Subset from bgen: chr${i}"  --instance-type "mem1_ssd1_v2_x72"; 
+done  
+
+
+for i in  1 2 3 4 5 6 7 8 9 10 11 12 ; 
+do  
+echo "y" |  dx run app-swiss-army-knife -icmd="plink2 --bgen /mnt/project/Bulk/Imputation/Imputation\ from\ genotype\ \(TOPmed\)/ukb21007_c${i}_b0_v1.bgen ref-first --sample /mnt/project/NTproBNP_OLINK/chr2_topmed_imputed.txt --maf 0.0001 --allow-extra-chr --keep-allele-order  --keep /mnt/project/SBP/Null_Models/MALE/males_final.fam --geno 0.05 --hwe 0.000001 --threads 20 --make-bed --out male_chr${i}_hqp" --destination "Test 3.0:SBP/Heritability/" --tag "subset_from_bgen" --name "Male Subset from bgen: chr${i}"  --instance-type "mem1_ssd1_v2_x72"; 
 done  
 
 
 
+
+###############################################################################################################################################################
+# 								Allele Frequency Calculations								      #
+###############################################################################################################################################################
+## Subset to unrelated and qc filtering 
+for i in  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 ; 
+do  
+echo "y" |  dx run app-swiss-army-knife -icmd="plink2 --bfile /mnt/project/SBP/Heritability/male_chr${i}_hqp  --keep /mnt/project/SBP/Heritability/unrelated_ukbiobank_reported.tsv --set-all-var-ids @:#:'$r':'$a' --geno 0.05 --mind 0.05 --hwe 1e-6  --make-bed --out male_chr${i}_unrel" --destination "/mnt/project/SBP/Heritability/unrelated_qced/" --tag "qc_filter" --name "Subset from bgen: chr${i}"  --instance-type "mem1_hdd1_v2_x96"; 
+done  
+
+for i in  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 ; 
+do  
+echo "y" |  dx run app-swiss-army-knife -icmd="plink2 --bfile /mnt/project/SBP/Heritability/female_chr${i}_hqp  --keep /mnt/project/SBP/Heritability/unrelated_ukbiobank_reported.tsv --set-all-var-ids @:#:'$r':'$a' --geno 0.05 --mind 0.05 --hwe 1e-6  --make-bed --out female_chr${i}_unrel" --destination "/mnt/project/SBP/Heritability/unrelated_qced" --tag "qc_filter" --name "Subset from bgen: chr${i}"  --instance-type "mem1_hdd1_v2_x96"; 
+done  
+
+
+
+###############################################################################################################################################################
+# 								Filtering to unrelated and genotype missingness, phwe filter				      #
+###############################################################################################################################################################
+## Subset to unrelated and qc filtering 
+for i in  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 ; 
+do  
+echo "y" |  dx run app-swiss-army-knife -icmd="plink2 --bfile /mnt/project/SBP/Heritability/male_chr${i}_hqp  --keep /mnt/project/SBP/Heritability/unrelated_ukbiobank_reported.tsv --set-all-var-ids @:#:'$r':'$a' --geno 0.05 --mind 0.05 --hwe 1e-6  --make-bed --out male_chr{i}_unrel" --destination "/mnt/project/SBP/Heritability/unrelated_qced/" --tag "qc_filter" --name "Subset from bgen: chr${i}"  --instance-type "mem1_hdd1_v2_x96"; 
+done  
+
+for i in  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 ; 
+do  
+echo "y" |  dx run app-swiss-army-knife -icmd="plink2 --bfile /mnt/project/SBP/Heritability/female_chr${i}_hqp  --keep /mnt/project/SBP/Heritability/unrelated_ukbiobank_reported.tsv --set-all-var-ids @:#:'$r':'$a' --geno 0.05 --mind 0.05 --hwe 1e-6  --make-bed --out female_chr{i}_unrel/" --destination "/mnt/project/SBP/Heritability/unrelated_qced" --tag "qc_filter" --name "Subset from bgen: chr${i}"  --instance-type "mem1_hdd1_v2_x96"; 
+done  
+
+
+
+
+###############################################################################################################################################################
+# 							 LD prunning 											      #
+###############################################################################################################################################################
+## Subset to unrelated and qc filtering 
+for i in  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 ; 
+do  
+echo "y" |  dx run app-swiss-army-knife -icmd="plink --bfile /mnt/project/mnt/project/SBP/Heritability/unrelated_qced/male_chr{i}_unrel  --indep-pairwise 50 5 0.1 --make-bed --out male_chr{i}_prunned" --destination "'Test 3.0':/SBP/Heritability/unrelated_qced/" --tag "qc_filter" --name "Subset from bgen: chr${i}"  --instance-type "mem1_hdd1_v2_x96"; 
+done  
+
+for i in  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 ; 
+do  
+echo "y" |  dx run app-swiss-army-knife -icmd="plink --bfile /mnt/project/mnt/project/SBP/Heritability/unrelated_qced/female_chr{i}_unrel  --indep-pairwise 50 5 0.1 --make-bed --out female_chr{i}_prunned" --destination "'Test 3.0':/SBP/Heritability/unrelated_qced/" --tag "qc_filter" --name "Subset from bgen: chr${i}"  --instance-type "mem1_hdd1_v2_x96"; 
+done  
+
+
+
+## Old Code
 ###############################################################################################################################################################
 # 							Subset variants as per freeze10 pca's generation encore	    					      #
 ###############################################################################################################################################################
@@ -47,6 +111,14 @@ done
 module load PLINK
 for i in {1..22}; do
 plink2 --bfile originial/freeze10.14k.chr${i}.0.0001 --extract variants to filter to --make-bed  --out plink_format/prunned_list_included_in_encore_pcs_generation/freeze10.14k.chr${i}.pruned
+done
+
+for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22; do
+./plink2 --bfile /mnt/project/SBP/Heritability/female_chr${i}_hqp --keep unrelated_ukbiobank_reported.tsv --set-all-var-ids @:#:'$r':'$a' --geno 0.05 --mind 0.05 --hwe 1e-6  --make-bed --out female_unrel_chr${i}
+done
+
+for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22; do
+./plink2 --bfile /mnt/project/SBP/Heritability/male_chr${i}_hqp --keep unrelated_ukbiobank_reported.tsv --set-all-var-ids @:#:'$r':'$a' --geno 0.05 --mind 0.05 --hwe 1e-6  --make-bed --out male_unrel_chr${i}
 done
 
 module load PLINK
