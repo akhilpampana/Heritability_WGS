@@ -80,6 +80,19 @@ plink --bfile freeze10.14k.chr${i}.0.0001_var_unrel --freq --out freeze10.14k.ch
 done
 
 
+#### 
+tmp1 = tmp[which(tmp$AF >= 0.0001 & tmp$MAF < 0.001),]
+category1 = rbind(category1,tmp1)
+
+tmp1 = tmp[which(tmp$AF >= 0.001 & tmp$AF < 0.01),]
+category2 = rbind(category2,tmp1)
+	
+tmp1 = tmp[which(tmp$AF >= 0.01 & tmp$AF < 0.05),]
+category3 = rbind(category3,tmp1)
+	
+tmp1 = tmp[which(tmp$AF >= 0.05),]
+category4 = rbind(category4,tmp1)
+
 ###############################################################################################################################################################
 # 		Subset Variants to 4 MAF bins [0.05],[0.01,0.05),[0.001,0.01),[0.0001,0.001) based on allele frequences of unrelated individuals	      #																			      #
 ###############################################################################################################################################################
