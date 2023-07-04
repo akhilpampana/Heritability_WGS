@@ -76,12 +76,12 @@ done
 ## Subset to unrelated and qc filtering 
 for i in  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 ; 
 do  
-echo "y" |  dx run app-swiss-army-knife -icmd="plink2 --bfile /mnt/project/SBP/Heritability/male_chr${i}_hqp  --keep /mnt/project/SBP/Heritability/unrelated_ukbiobank_reported.tsv --set-all-var-ids @:#:'$r':'$a' --geno 0.05 --mind 0.05 --hwe 1e-6  --make-bed --out male_chr${i}_unrel" --destination "/mnt/project/SBP/Heritability/unrelated_qced/" --tag "qc_filter" --name "Subset from bgen: chr${i}"  --instance-type "mem1_hdd1_v2_x96"; 
+echo "y" |  dx run app-swiss-army-knife -icmd="plink2 --bfile /mnt/project/SBP/Heritability/male_chr${i}_hqp  --keep /mnt/project/SBP/Heritability/unrelated_ukbiobank_reported.tsv  --set-all-var-ids "@:#:'$r':'$a'" --new-id-max-allele-len 1600 --geno 0.05 --mind 0.05 --hwe 1e-6  --make-bed --out male_chr${i}_unrel" --destination "/mnt/project/SBP/Heritability/unrelated_qced/" --tag "qc_filter" --name "Subset from bgen: chr${i}"  --instance-type "mem1_hdd1_v2_x96"; 
 done  
 
 for i in  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 ; 
 do  
-echo "y" |  dx run app-swiss-army-knife -icmd="plink2 --bfile /mnt/project/SBP/Heritability/female_chr${i}_hqp  --keep /mnt/project/SBP/Heritability/unrelated_ukbiobank_reported.tsv --set-all-var-ids @:#:'$r':'$a' --geno 0.05 --mind 0.05 --hwe 1e-6  --make-bed --out female_chr${i}_unrel" --destination "/mnt/project/SBP/Heritability/unrelated_qced" --tag "qc_filter" --name "Subset from bgen: chr${i}"  --instance-type "mem1_hdd1_v2_x96"; 
+echo "y" |  dx run app-swiss-army-knife -icmd="plink2 --bfile /mnt/project/SBP/Heritability/female_chr${i}_hqp  --keep /mnt/project/SBP/Heritability/unrelated_ukbiobank_reported.tsv --set-all-var-ids "@:#:'$r':'$a'" --geno 0.05 --mind 0.05 --hwe 1e-6  --make-bed --out female_chr${i}_unrel" --destination "/mnt/project/SBP/Heritability/unrelated_qced" --tag "qc_filter" --name "Subset from bgen: chr${i}"  --instance-type "mem1_hdd1_v2_x96"; 
 done  
 
 
