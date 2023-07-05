@@ -130,13 +130,52 @@ done
 
 for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 ; 
 do  
-echo "y" |  dx run app-swiss-army-knife -icmd="plink2 --bfile /mnt/project/SBP/Heritability/unrelated_qced/male_chr${i}_prunned --extract /mnt/project/SBP/Heritability/unrelated_qced/PRS_Variants/male_posterior_prob_03292023.tsv --make-bed --out male_chr${i}_prunned_prs" --destination "Test 3.0:/SBP/Heritability/unrelated_qced/PRS_Variants/" --tag "subset_to_prs" --name "Subset from bgen: chr${i}"  --instance-type "mem1_hdd1_v2_x96"; 
+echo "y" |  dx run app-swiss-army-knife -icmd="plink2 --bfile /mnt/project/SBP/Heritability/unrelated_qced/male_chr${i}_prunned --extract /mnt/project/SBP/Heritability/unrelated_qced/PRS_Variants/male.tsv --make-bed --out male_chr${i}_prunned_prs" --destination "Test 3.0:/SBP/Heritability/unrelated_qced/PRS_Variants/" --tag "subset_to_prs" --name "Subset from bgen: chr${i}"  --instance-type "mem1_hdd1_v2_x96"; 
 done  
   
 for i in  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 ; 
 do  
-echo "y" |  dx run app-swiss-army-knife -icmd="plink2 --bfile /mnt/project/SBP/Heritability/unrelated_qced/female_chr${i}_prunned  --extract /mnt/project/SBP/Heritability/unrelated_qced/PRS_Variants/female_posterior_prob_03292023.tsv --make-bed --out female_chr${i}_prunned_prs" --destination "Test 3.0:/SBP/Heritability/unrelated_qced/PRS_Variants/" --tag "subset_to_prs"  --name "Subset from bgen: chr${i}"  --instance-type "mem1_hdd1_v2_x96"; 
+echo "y" |  dx run app-swiss-army-knife -icmd="plink2 --bfile /mnt/project/SBP/Heritability/unrelated_qced/female_chr${i}_prunned  --extract /mnt/project/SBP/Heritability/unrelated_qced/PRS_Variants/female.tsv --make-bed --out female_chr${i}_prunned_prs" --destination "Test 3.0:/SBP/Heritability/unrelated_qced/PRS_Variants/" --tag "subset_to_prs"  --name "Subset from bgen: chr${i}"  --instance-type "mem1_hdd1_v2_x96"; 
 done  
+
+
+for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 ; 
+do  
+./plink2 --bfile /mnt/project/SBP/Heritability/unrelated_qced/PRS_Variants/male_chr${i}_prunned_prs  --set-all-var-ids @:#:'$r':'$a' --make-bed --out male_chr${i}_prunned_prs
+done
+  
+for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 ; 
+do  
+./plink2 --bfile /mnt/project/SBP/Heritability/unrelated_qced/PRS_Variants/female_chr${i}_prunned_prs  --set-all-var-ids @:#:'$r':'$a' --make-bed --out female_chr${i}_prunned_prs
+done
+
+######################################################################
+#     GRM for each part
+######################################################################
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_male --make-grm-part 10 1 --thread-num 10 --out male
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_male --make-grm-part 10 2 --thread-num 10 --out male
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_male --make-grm-part 10 3 --thread-num 10 --out male
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_male --make-grm-part 10 4 --thread-num 10 --out male
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_male --make-grm-part 10 5 --thread-num 10 --out male
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_male --make-grm-part 10 6 --thread-num 10 --out male
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_male --make-grm-part 10 7 --thread-num 10 --out male
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_male --make-grm-part 10 8 --thread-num 10 --out male
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_male --make-grm-part 10 9 --thread-num 10 --out male
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_male --make-grm-part 10 10 --thread-num 10 --out male
+
+
+
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_female --make-grm-part 10 1 --thread-num 10 --out female
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_female --make-grm-part 10 2 --thread-num 10 --out female
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_female --make-grm-part 10 3 --thread-num 10 --out female
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_female --make-grm-part 10 4 --thread-num 10 --out female
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_female --make-grm-part 10 5 --thread-num 10 --out female
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_female --make-grm-part 10 6 --thread-num 10 --out female
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_female --make-grm-part 10 7 --thread-num 10 --out female
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_female --make-grm-part 10 8 --thread-num 10 --out female
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_female --make-grm-part 10 9 --thread-num 10 --out female
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_female --make-grm-part 10 10 --thread-num 10 --out female
+
 ## Old Code
 ###############################################################################################################################################################
 # 							Subset variants as per freeze10 pca's generation encore	    					      #
