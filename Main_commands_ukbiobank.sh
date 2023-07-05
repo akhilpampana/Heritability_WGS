@@ -76,12 +76,12 @@ done
 ## Subset to unrelated and qc filtering 
 for i in  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 ; 
 do  
-echo "y" |  dx run app-swiss-army-knife -icmd="plink2 --bfile /mnt/project/SBP/Heritability/male_chr${i}_hqp  --keep /mnt/project/SBP/Heritability/unrelated_ukbiobank_reported.tsv --set-all-var-ids @:#:'$r':'$a' --geno 0.05 --mind 0.05 --hwe 1e-6  --make-bed --out male_chr{i}_unrel" --destination "/mnt/project/SBP/Heritability/unrelated_qced/" --tag "qc_filter" --name "Subset from bgen: chr${i}"  --instance-type "mem1_hdd1_v2_x96"; 
+echo "y" |  dx run app-swiss-army-knife -icmd="plink2 --bfile /mnt/project/SBP/Heritability/male_chr${i}_hqp  --keep /mnt/project/SBP/Heritability/unrelated_ukbiobank_reported.tsv  --set-all-var-ids "@:#:'$r':'$a'" --new-id-max-allele-len 1600 --geno 0.05 --mind 0.05 --hwe 1e-6  --make-bed --out male_chr${i}_unrel" --destination "/mnt/project/SBP/Heritability/unrelated_qced/" --tag "qc_filter" --name "Subset from bgen: chr${i}"  --instance-type "mem1_hdd1_v2_x96"; 
 done  
 
 for i in  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 ; 
 do  
-echo "y" |  dx run app-swiss-army-knife -icmd="plink2 --bfile /mnt/project/SBP/Heritability/female_chr${i}_hqp  --keep /mnt/project/SBP/Heritability/unrelated_ukbiobank_reported.tsv --set-all-var-ids @:#:'$r':'$a' --geno 0.05 --mind 0.05 --hwe 1e-6  --make-bed --out female_chr{i}_unrel/" --destination "/mnt/project/SBP/Heritability/unrelated_qced" --tag "qc_filter" --name "Subset from bgen: chr${i}"  --instance-type "mem1_hdd1_v2_x96"; 
+echo "y" |  dx run app-swiss-army-knife -icmd="plink2 --bfile /mnt/project/SBP/Heritability/female_chr${i}_hqp  --keep /mnt/project/SBP/Heritability/unrelated_ukbiobank_reported.tsv --set-all-var-ids "@:#:'$r':'$a'" --geno 0.05 --mind 0.05 --hwe 1e-6  --make-bed --out female_chr${i}_unrel" --destination "/mnt/project/SBP/Heritability/unrelated_qced" --tag "qc_filter" --name "Subset from bgen: chr${i}"  --instance-type "mem1_hdd1_v2_x96"; 
 done  
 
 
@@ -90,18 +90,91 @@ done
 ###############################################################################################################################################################
 # 							 LD prunning 											      #
 ###############################################################################################################################################################
-## Subset to unrelated and qc filtering 
-for i in  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 ; 
+## Subset to unrelated and qc filtering 10
+#1 2 3 4
+for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 ; 
 do  
-echo "y" |  dx run app-swiss-army-knife -icmd="plink --bfile /mnt/project/mnt/project/SBP/Heritability/unrelated_qced/male_chr{i}_unrel  --indep-pairwise 50 5 0.1 --make-bed --out male_chr{i}_prunned" --destination "'Test 3.0':/SBP/Heritability/unrelated_qced/" --tag "qc_filter" --name "Subset from bgen: chr${i}"  --instance-type "mem1_hdd1_v2_x96"; 
+echo "y" |  dx run app-swiss-army-knife -icmd="plink --bfile /mnt/project/mnt/project/SBP/Heritability/unrelated_qced/male_chr${i}_unrel  --indep-pairwise 50 5 0.1  --out male_chr${i}_prunned" --destination "Test 3.0:/SBP/Heritability/unrelated_qced/" --tag "qc_filter" --name "Subset from bgen: chr${i}"  --instance-type "mem1_hdd1_v2_x96"; 
+done  
+  
+#1 2 
+for i in  3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 ; 
+do  
+echo "y" |  dx run app-swiss-army-knife -icmd="plink --bfile /mnt/project/mnt/project/SBP/Heritability/unrelated_qced/female_chr${i}_unrel  --indep-pairwise 50 5 0.1 --out female_chr${i}_prunned" --destination "Test 3.0:/SBP/Heritability/unrelated_qced/" --tag "qc_filter" --name "Subset from bgen: chr${i}"  --instance-type "mem1_hdd1_v2_x96"; 
 done  
 
+for i in  1 2; 
+do  
+echo "y" |  dx run app-swiss-army-knife -icmd="plink --bfile /mnt/project/mnt/project/SBP/Heritability/unrelated_qced/female_chr${i}_unrel  --indep-pairwise 50 5 0.1 --out female_chr${i}_prunned" --destination "Test 3.0:/SBP/Heritability/unrelated_qced/" --tag "qc_filter" --name "Subset from bgen: chr${i}"  --instance-type "mem1_hdd1_v2_x96"; 
+done  
+
+###############################################################################################################################################################
+# 							  			Subset to pruned set							      #
+###############################################################################################################################################################
+## Subset to unrelated and qc filtering 10
+#1 2 3 4
+for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 ; 
+do  
+echo "y" |  dx run app-swiss-army-knife -icmd="plink2 --bfile /mnt/project/mnt/project/SBP/Heritability/unrelated_qced/male_chr${i}_unrel  --extract  /mnt/project/SBP/Heritability/unrelated_qced/male_chr${i}_prunned.prune.in --make-bed --out male_chr${i}_prunned" --destination "Test 3.0:/SBP/Heritability/unrelated_qced/" --tag "qc_filter" --name "Subset from bgen: chr${i}"  --instance-type "mem1_hdd1_v2_x96"; 
+done  
+  
 for i in  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 ; 
 do  
-echo "y" |  dx run app-swiss-army-knife -icmd="plink --bfile /mnt/project/mnt/project/SBP/Heritability/unrelated_qced/female_chr{i}_unrel  --indep-pairwise 50 5 0.1 --make-bed --out female_chr{i}_prunned" --destination "'Test 3.0':/SBP/Heritability/unrelated_qced/" --tag "qc_filter" --name "Subset from bgen: chr${i}"  --instance-type "mem1_hdd1_v2_x96"; 
+echo "y" |  dx run app-swiss-army-knife -icmd="plink2 --bfile /mnt/project/mnt/project/SBP/Heritability/unrelated_qced/female_chr${i}_unrel   --extract  /mnt/project/SBP/Heritability/unrelated_qced/female_chr${i}_prunned.prune.in --make-bed --out female_chr${i}_prunned" --destination "Test 3.0:/SBP/Heritability/unrelated_qced/" --tag "qc_filter" --name "Subset from bgen: chr${i}"  --instance-type "mem1_hdd1_v2_x96"; 
 done  
 
 
+##################################################################################################################################################################
+# Merging and AF groups and LD score groups
+####################################################################################################################################################################
+
+for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 ; 
+do  
+echo "y" |  dx run app-swiss-army-knife -icmd="plink2 --bfile /mnt/project/SBP/Heritability/unrelated_qced/male_chr${i}_prunned --extract /mnt/project/SBP/Heritability/unrelated_qced/PRS_Variants/male.tsv --make-bed --out male_chr${i}_prunned_prs" --destination "Test 3.0:/SBP/Heritability/unrelated_qced/PRS_Variants/" --tag "subset_to_prs" --name "Subset from bgen: chr${i}"  --instance-type "mem1_hdd1_v2_x96"; 
+done  
+  
+for i in  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 ; 
+do  
+echo "y" |  dx run app-swiss-army-knife -icmd="plink2 --bfile /mnt/project/SBP/Heritability/unrelated_qced/female_chr${i}_prunned  --extract /mnt/project/SBP/Heritability/unrelated_qced/PRS_Variants/female.tsv --make-bed --out female_chr${i}_prunned_prs" --destination "Test 3.0:/SBP/Heritability/unrelated_qced/PRS_Variants/" --tag "subset_to_prs"  --name "Subset from bgen: chr${i}"  --instance-type "mem1_hdd1_v2_x96"; 
+done  
+
+
+for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 ; 
+do  
+./plink2 --bfile /mnt/project/SBP/Heritability/unrelated_qced/PRS_Variants/male_chr${i}_prunned_prs  --set-all-var-ids @:#:'$r':'$a' --make-bed --out male_chr${i}_prunned_prs
+done
+  
+for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 ; 
+do  
+./plink2 --bfile /mnt/project/SBP/Heritability/unrelated_qced/PRS_Variants/female_chr${i}_prunned_prs  --set-all-var-ids @:#:'$r':'$a' --make-bed --out female_chr${i}_prunned_prs
+done
+
+######################################################################
+#     GRM for each part
+######################################################################
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_male --make-grm-part 10 1 --thread-num 10 --out male
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_male --make-grm-part 10 2 --thread-num 10 --out male
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_male --make-grm-part 10 3 --thread-num 10 --out male
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_male --make-grm-part 10 4 --thread-num 10 --out male
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_male --make-grm-part 10 5 --thread-num 10 --out male
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_male --make-grm-part 10 6 --thread-num 10 --out male
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_male --make-grm-part 10 7 --thread-num 10 --out male
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_male --make-grm-part 10 8 --thread-num 10 --out male
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_male --make-grm-part 10 9 --thread-num 10 --out male
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_male --make-grm-part 10 10 --thread-num 10 --out male
+
+
+
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_female --make-grm-part 10 1 --thread-num 10 --out female
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_female --make-grm-part 10 2 --thread-num 10 --out female
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_female --make-grm-part 10 3 --thread-num 10 --out female
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_female --make-grm-part 10 4 --thread-num 10 --out female
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_female --make-grm-part 10 5 --thread-num 10 --out female
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_female --make-grm-part 10 6 --thread-num 10 --out female
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_female --make-grm-part 10 7 --thread-num 10 --out female
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_female --make-grm-part 10 8 --thread-num 10 --out female
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_female --make-grm-part 10 9 --thread-num 10 --out female
+gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 --bfile merged_female --make-grm-part 10 10 --thread-num 10 --out female
 
 ## Old Code
 ###############################################################################################################################################################
