@@ -125,6 +125,9 @@ for i in {1..22}; do
 plink --bfile category1_chr${i}_qc --indep-pairwise 50 5 0.1 --out cat1_${i}
 done
 
+## Used as per the method in this paper https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9119698/ for the author who proposed this method 
+plink --bfile category1_chr${i}_qc --indep-pairwise 100 5 0.05 --out cat1_${i}
+
 ## subset to prunned variants
 for i in {1..22}; do
 plink --bfile category1_chr${i}_qc --extract cat1_${i}.prune.in --make-bed --out cat1_chr${i}_hqp
